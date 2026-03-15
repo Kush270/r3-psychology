@@ -3,7 +3,7 @@ const Footer = () =>
     <div className="container">
       <div className="flex flex-col md:flex-row items-center justify-between gap-6">
         <div>
-          <h3 className="text-xl font-display font-bold text-primary-foreground">R3 Psychology
+          <h3 className="text-xl font-display font-bold text-primary-foreground"> Psychology
           <span className="text-gold">.</span>
           </h3>
           <p className="text-primary-foreground/50 text-sm font-body mt-1">
