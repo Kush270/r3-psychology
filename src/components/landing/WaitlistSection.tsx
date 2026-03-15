@@ -179,9 +179,9 @@ const WaitlistSection = () => {
               </div>
             </div>
 
-            <Button variant="hero" size="lg" type="submit" className="w-full text-base py-6 mt-2">
-              Get Early Access
-              <ArrowRight className="ml-2 h-5 w-5" />
+            <Button variant="hero" size="lg" type="submit" disabled={submitting} className="w-full text-base py-6 mt-2">
+              {submitting ? "Submitting..." : "Get Early Access"}
+              {!submitting && <ArrowRight className="ml-2 h-5 w-5" />}
             </Button>
 
             <p className="text-xs text-muted-foreground text-center font-body">
