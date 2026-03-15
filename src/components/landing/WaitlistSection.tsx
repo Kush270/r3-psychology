@@ -75,7 +75,7 @@ const WaitlistSection = () => {
               Join the Beta Program
             </h2>
             <p className="text-muted-foreground font-body leading-relaxed">
-              Be among the first production teams to use Vantage. Limited beta spots available 
+              Be among the first production teams to use R3 Psychology. Limited beta spots available 
               for Melbourne-based productions.
             </p>
           </div>

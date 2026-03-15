@@ -11,7 +11,7 @@ const Footer = () => (
           </p>
         </div>
         <div className="text-primary-foreground/40 text-xs font-body text-center md:text-right">
-          <p>© {new Date().getFullYear()} Vantage Psychosocial Consulting. Melbourne, Australia.</p>
+          <p>© {new Date().getFullYear()} R3 Psychology. Melbourne, Australia.</p>
           <p className="mt-1">All data processed under Australian data sovereignty.</p>
         </div>
       </div>

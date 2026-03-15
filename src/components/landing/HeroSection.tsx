@@ -35,6 +35,10 @@ const HeroSection = () => {
             <span className="text-gold">Film & Creative Industries</span>
           </h1>
 
+          <p className="text-sm font-display font-medium tracking-[0.15em] uppercase text-gold/80 mb-2">
+            Resolve · Renew · Recover
+          </p>
+
           <p className="text-lg md:text-xl font-body text-primary-foreground/75 max-w-2xl mb-4 leading-relaxed">
             Designed by a Military & Forensic Psychologist. Clinically validated sentiment analysis 
             that identifies workplace hazards—before they become incidents.
