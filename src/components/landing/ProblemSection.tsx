@@ -6,19 +6,13 @@ const problems = [
     icon: AlertTriangle,
     title: "Invisible Psychosocial Hazards",
     description:
-      "Bullying, burnout, and high-pressure communication on fast-moving sets go undetected until it's too late. Standard HR tools weren't built for the intensity of production environments.",
-  },
-  {
-    icon: Clock,
-    title: "Manual Tracking Is Impossible",
-    description:
-      "With shifting crews, tight deadlines, and 14-hour days, no production manager can manually monitor psychosocial risk across every department in real time.",
+      "Bullying, burnout, and high-pressure communication on fast-moving sets go undetected until it's too late. Standard HR tools weren't built for production environments.",
   },
   {
     icon: FileWarning,
     title: "Compliance Gaps Are Costly",
     description:
-      "WorkSafe Victoria's psychosocial hazard regulations are explicit. Non-compliance doesn't just risk fines—it risks the wellbeing of your crew and the reputation of your production.",
+      "WorkSafe Victoria's psychosocial hazard regulations are explicit. Non-compliance risks fines, crew wellbeing, and your production's reputation.",
   },
 ];
 
