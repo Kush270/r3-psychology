@@ -1,30 +1,24 @@
 import { motion } from "framer-motion";
-import { Brain, ShieldCheck, BarChart3, Lock } from "lucide-react";
+import { Brain, ShieldCheck, Lock } from "lucide-react";
 
 const features = [
   {
     icon: Brain,
     title: "AI Sentiment Analysis",
     description:
-      "Real-time analysis of voice tone and conversational content identifies bullying, coercion, and burnout signals that humans miss under pressure.",
-  },
-  {
-    icon: BarChart3,
-    title: "Automated Risk Reports",
-    description:
-      "Actionable, production-ready reports generated automatically—mapped directly to WorkSafe Victoria's psychosocial hazard framework.",
+      "Real-time analysis of voice tone and content identifies bullying, coercion, and burnout signals that humans miss under pressure.",
   },
   {
     icon: ShieldCheck,
     title: "Clinically Designed",
     description:
-      "Built on evidence-based psychological frameworks by a practising Psychologist with Military and Forensic experience. Not a tech gimmick.",
+      "Built on evidence-based psychological frameworks by a practising Psychologist with Military and Forensic experience.",
   },
   {
     icon: Lock,
     title: "Australian Data Sovereignty",
     description:
-      "All data is processed and stored on Australian soil. Your crew's sensitive information never leaves the country. Privacy is non-negotiable.",
+      "All data processed and stored on Australian soil. Your crew's sensitive information never leaves the country.",
   },
 ];
 
@@ -45,12 +39,12 @@ const SolutionSection = () => (
           Purpose-Built Intelligence for Creative Workplaces
         </h2>
         <p className="text-muted-foreground font-body leading-relaxed">
-          Vantage combines clinical psychology with AI to give you visibility into 
+          R3 Psychology combines clinical expertise with AI to give you visibility into 
           psychosocial risk—without disrupting the creative process.
         </p>
       </motion.div>
 
-      <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+      <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
         {features.map((item, i) => (
           <motion.div
             key={item.title}

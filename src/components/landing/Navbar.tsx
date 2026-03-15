@@ -8,9 +8,12 @@ const Navbar = () => {
   return (
     <nav className="absolute top-0 left-0 right-0 z-50 py-5">
       <div className="container flex items-center justify-between">
-        <h2 className="text-2xl font-display font-bold text-primary-foreground">
-          Vantage<span className="text-gold">.</span>
-        </h2>
+        <div>
+          <h2 className="text-2xl font-display font-bold text-primary-foreground">
+            R3<span className="text-gold">.</span>
+          </h2>
+          <p className="text-[10px] font-body tracking-[0.2em] uppercase text-primary-foreground/50">Resolve · Renew · Recover</p>
+        </div>
         <Button variant="hero" size="sm" onClick={scrollToWaitlist} className="px-6">
           Get Early Access
         </Button>

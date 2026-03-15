@@ -40,7 +40,7 @@ const AuthoritySection = () => (
           <span className="text-gold">A Clinical Tool.</span>
         </h2>
         <p className="text-muted-foreground font-body leading-relaxed">
-          Vantage is the product of clinical rigour meeting industry-specific need—designed by 
+          R3 Psychology is the product of clinical rigour meeting industry-specific need—designed by 
           someone who has assessed risk in warzones, courtrooms, and now, on your set.
         </p>
       </motion.div>
