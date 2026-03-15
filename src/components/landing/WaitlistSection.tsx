@@ -22,10 +22,25 @@ const WaitlistSection = () => {
     budgeting: "",
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const [submitting, setSubmitting] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!form.email || !form.name) {
       toast.error("Please fill in your name and email.");
+      return;
+    }
+    setSubmitting(true);
+    const { error } = await supabase.from("waitlist_submissions").insert({
+      name: form.name,
+      email: form.email,
+      role: form.role || null,
+      challenge: form.challenge || null,
+      budgeting: form.budgeting || null,
+    });
+    setSubmitting(false);
+    if (error) {
+      toast.error("Something went wrong. Please try again.");
       return;
     }
     setSubmitted(true);
