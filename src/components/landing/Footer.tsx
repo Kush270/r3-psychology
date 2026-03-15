@@ -1,10 +1,10 @@
-const Footer = () => (
-  <footer className="bg-primary py-12">
+const Footer = () =>
+<footer className="bg-primary py-12">
     <div className="container">
       <div className="flex flex-col md:flex-row items-center justify-between gap-6">
         <div>
-          <h3 className="text-xl font-display font-bold text-primary-foreground">
-            R3<span className="text-gold">.</span>
+          <h3 className="text-xl font-display font-bold text-primary-foreground">R3 Psychology
+          <span className="text-gold">.</span>
           </h3>
           <p className="text-primary-foreground/50 text-sm font-body mt-1">
             Resolve · Renew · Recover
@@ -16,7 +16,7 @@ const Footer = () => (
         </div>
       </div>
     </div>
-  </footer>
-);
+  </footer>;
+
 
 export default Footer;
