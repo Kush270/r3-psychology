@@ -6,25 +6,19 @@ const features = [
     icon: Brain,
     title: "AI Sentiment Analysis",
     description:
-      "Real-time analysis of voice tone and conversational content identifies bullying, coercion, and burnout signals that humans miss under pressure.",
-  },
-  {
-    icon: BarChart3,
-    title: "Automated Risk Reports",
-    description:
-      "Actionable, production-ready reports generated automatically—mapped directly to WorkSafe Victoria's psychosocial hazard framework.",
+      "Real-time analysis of voice tone and content identifies bullying, coercion, and burnout signals that humans miss under pressure.",
   },
   {
     icon: ShieldCheck,
     title: "Clinically Designed",
     description:
-      "Built on evidence-based psychological frameworks by a practising Psychologist with Military and Forensic experience. Not a tech gimmick.",
+      "Built on evidence-based psychological frameworks by a practising Psychologist with Military and Forensic experience.",
   },
   {
     icon: Lock,
     title: "Australian Data Sovereignty",
     description:
-      "All data is processed and stored on Australian soil. Your crew's sensitive information never leaves the country. Privacy is non-negotiable.",
+      "All data processed and stored on Australian soil. Your crew's sensitive information never leaves the country.",
   },
 ];
 
