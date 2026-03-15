@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Brain, ShieldCheck, BarChart3, Lock } from "lucide-react";
+import { Brain, ShieldCheck, Lock } from "lucide-react";
 
 const features = [
   {
