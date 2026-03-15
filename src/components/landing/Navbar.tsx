@@ -9,7 +9,7 @@ const Navbar = () => {
     <nav className="absolute top-0 left-0 right-0 z-50 py-5">
       <div className="container flex items-center justify-between">
         <div>
-          <h2 className="text-2xl font-display font-bold text-primary-foreground"> Psychology
+          <h2 className="text-2xl font-display font-bold bg-transparent text-accent">R3 Psychology
             <span className="text-gold">.</span>
           </h2>
           <p className="text-[10px] font-body tracking-[0.2em] uppercase text-primary-foreground/50">Resolve · Renew · Recover</p>
