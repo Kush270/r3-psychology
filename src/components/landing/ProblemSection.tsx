@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { AlertTriangle, Clock, FileWarning } from "lucide-react";
+import { AlertTriangle, FileWarning } from "lucide-react";
 
 const problems = [
   {
