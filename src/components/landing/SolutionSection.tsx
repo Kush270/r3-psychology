@@ -45,7 +45,7 @@ const SolutionSection = () => (
           Purpose-Built Intelligence for Creative Workplaces
         </h2>
         <p className="text-muted-foreground font-body leading-relaxed">
-          Vantage combines clinical psychology with AI to give you visibility into 
+          R3 Psychology combines clinical expertise with AI to give you visibility into 
           psychosocial risk—without disrupting the creative process.
         </p>
       </motion.div>
