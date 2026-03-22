@@ -1,4 +1,4 @@
-import { Home, Rocket } from "lucide-react";
+import { Home, Rocket, BookOpen } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
 import {
   Sidebar,
