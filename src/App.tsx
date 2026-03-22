@@ -5,6 +5,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import SidebarLayout from "./layouts/SidebarLayout";
 import Home from "./pages/Home";
+import Blog from "./pages/Blog";
 import Pilot from "./pages/Pilot";
 import NotFound from "./pages/NotFound";
 
@@ -19,6 +20,7 @@ const App = () => (
         <Routes>
           <Route element={<SidebarLayout />}>
             <Route path="/" element={<Home />} />
+            <Route path="/blog" element={<Blog />} />
             <Route path="/pilot" element={<Pilot />} />
           </Route>
           <Route path="*" element={<NotFound />} />

@@ -1,4 +1,4 @@
-import { Home, Rocket } from "lucide-react";
+import { Home, Rocket, BookOpen } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
 import {
   Sidebar,
@@ -14,6 +14,7 @@ import {
 
 const items = [
   { title: "Home", url: "/", icon: Home },
+  { title: "Blog", url: "/blog", icon: BookOpen },
   { title: "Join the Pilot Program", url: "/pilot", icon: Rocket },
 ];
 
