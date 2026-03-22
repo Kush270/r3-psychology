@@ -14,6 +14,30 @@ export type Database = {
   }
   public: {
     Tables: {
+      blog_comments: {
+        Row: {
+          author_name: string | null
+          content: string
+          created_at: string
+          id: string
+          post_slug: string
+        }
+        Insert: {
+          author_name?: string | null
+          content: string
+          created_at?: string
+          id?: string
+          post_slug?: string
+        }
+        Update: {
+          author_name?: string | null
+          content?: string
+          created_at?: string
+          id?: string
+          post_slug?: string
+        }
+        Relationships: []
+      }
       waitlist_submissions: {
         Row: {
           budgeting: string | null
