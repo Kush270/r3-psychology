@@ -14,6 +14,7 @@ import {
 
 const items = [
   { title: "Home", url: "/", icon: Home },
+  { title: "Blog", url: "/blog", icon: BookOpen },
   { title: "Join the Pilot Program", url: "/pilot", icon: Rocket },
 ];
 

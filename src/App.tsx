@@ -20,6 +20,7 @@ const App = () => (
         <Routes>
           <Route element={<SidebarLayout />}>
             <Route path="/" element={<Home />} />
+            <Route path="/blog" element={<Blog />} />
             <Route path="/pilot" element={<Pilot />} />
           </Route>
           <Route path="*" element={<NotFound />} />
