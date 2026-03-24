@@ -1,4 +1,4 @@
-import { Home, Rocket, BookOpen, Lock, Brain } from "lucide-react";
+import { Home, Rocket, BookOpen, Lock, Brain, ClipboardCheck } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
 import { useAuth } from "@/hooks/useAuth";
 import {
