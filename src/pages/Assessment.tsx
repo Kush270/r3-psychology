@@ -8,7 +8,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Loader2, ShieldCheck, ShieldAlert, AlertTriangle, CheckCircle } from "lucide-react";
-import AuthModal from "@/components/AuthModal";
+import { AuthModal } from "@/components/AuthModal";
 
 const scoredQuestions = [
   {
