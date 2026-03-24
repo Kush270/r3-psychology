@@ -1,5 +1,6 @@
-import { Home, Rocket, BookOpen, Lock } from "lucide-react";
+import { Home, Rocket, BookOpen, Lock, Brain } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
+import { useAuth } from "@/hooks/useAuth";
 import {
   Sidebar,
   SidebarContent,
@@ -12,16 +13,23 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar";
 
-const items = [
+const guestItems = [
   { title: "Home", url: "/", icon: Home },
   { title: "Blog", url: "/blog", icon: BookOpen },
   { title: "Members Only", url: "/members", icon: Lock },
   { title: "Join the Pilot Program", url: "/pilot", icon: Rocket },
 ];
 
+const memberItems = [
+  { title: "Home", url: "/", icon: Home },
+  { title: "The Neuroscience of Stress", url: "/members/neuroscience-of-stress", icon: Brain },
+];
+
 export function AppSidebar() {
   const { state } = useSidebar();
+  const { user } = useAuth();
   const collapsed = state === "collapsed";
+  const items = user ? memberItems : guestItems;
 
   return (
     <Sidebar collapsible="icon">
