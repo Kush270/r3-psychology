@@ -11,6 +11,7 @@ import Pilot from "./pages/Pilot";
 import MembersOnly from "./pages/MembersOnly";
 import NeuroscienceOfStress from "./pages/NeuroscienceOfStress";
 import Assessment from "./pages/Assessment";
+import AssessmentResults from "./pages/AssessmentResults";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -29,6 +30,8 @@ const App = () => (
               <Route path="/pilot" element={<Pilot />} />
               <Route path="/members" element={<MembersOnly />} />
               <Route path="/members/neuroscience-of-stress" element={<NeuroscienceOfStress />} />
+              <Route path="/assessment" element={<Assessment />} />
+              <Route path="/assessment/results" element={<AssessmentResults />} />
               <Route path="/members/assessment" element={<Assessment />} />
             </Route>
             <Route path="*" element={<NotFound />} />

@@ -1,201 +1,75 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Loader2, ShieldCheck, ShieldAlert, AlertTriangle, CheckCircle } from "lucide-react";
+import { Loader2, ChevronRight, ChevronLeft, ShieldCheck } from "lucide-react";
 import { AuthModal } from "@/components/AuthModal";
+import { QuestionCard } from "@/components/assessment/QuestionCard";
+import { ProgressBar } from "@/components/assessment/ProgressBar";
+import {
+  scoredQuestions,
+  profileQuestions,
+  openQuestion,
+  calculateResult,
+} from "@/data/assessmentQuestions";
+import { motion, AnimatePresence } from "framer-motion";
 
-const scoredQuestions = [
-  {
-    id: "q1",
-    text: "How does your production identify psychosocial hazards (e.g., bullying, fatigue, sexual harassment)?",
-    options: [
-      { value: "A", label: "We have a formal, documented risk assessment process that is reviewed regularly." },
-      { value: "B", label: "We have an informal process or rely on individual reports." },
-      { value: "C", label: "We don't have a specific process for psychosocial hazards." },
-    ],
-  },
-  {
-    id: "q2",
-    text: "What controls are in place to manage excessive working hours and fatigue?",
-    options: [
-      { value: "A", label: "Enforced maximum hours, mandatory rest breaks, and fatigue management plans." },
-      { value: "B", label: "General guidelines exist, but enforcement is inconsistent." },
-      { value: "C", label: "Hours are managed on a case-by-case basis by individual crew." },
-    ],
-  },
-  {
-    id: "q3",
-    text: "How does your production address power imbalances between senior crew and junior staff?",
-    options: [
-      { value: "A", label: "Clear reporting channels, anti-bullying policies, and trained bystander intervention." },
-      { value: "B", label: "We have a code of conduct, but limited enforcement mechanisms." },
-      { value: "C", label: "We rely on crew to manage their own interpersonal dynamics." },
-    ],
-  },
-  {
-    id: "q4",
-    text: "What support is available for crew exposed to traumatic or distressing content?",
-    options: [
-      { value: "A", label: "Pre-production risk assessment, on-set support, and post-production debriefing." },
-      { value: "B", label: "Access to an EAP (Employee Assistance Program) is available." },
-      { value: "C", label: "Support is available if someone asks for it." },
-    ],
-  },
-  {
-    id: "q5",
-    text: "How does your production handle complaints about psychosocial hazards?",
-    options: [
-      { value: "A", label: "A documented, confidential complaints process with clear timelines and follow-up." },
-      { value: "B", label: "Complaints go to the producer or line manager on an ad-hoc basis." },
-      { value: "C", label: "There is no formal complaints process." },
-    ],
-  },
-  {
-    id: "q6",
-    text: "How are psychosocial risks communicated to crew before a production begins?",
-    options: [
-      { value: "A", label: "A pre-production briefing covering identified risks, controls, and reporting pathways." },
-      { value: "B", label: "Risks are mentioned in a general safety induction." },
-      { value: "C", label: "Psychosocial risks are not specifically communicated." },
-    ],
-  },
-  {
-    id: "q7",
-    text: "Who is responsible for monitoring psychosocial safety on your production?",
-    options: [
-      { value: "A", label: "A designated psychosocial safety lead with authority and training." },
-      { value: "B", label: "It falls under the general duties of the line producer or safety officer." },
-      { value: "C", label: "No one person is specifically responsible." },
-    ],
-  },
-  {
-    id: "q8",
-    text: "How does your production use data to track psychosocial wellbeing?",
-    options: [
-      { value: "A", label: "Regular anonymous surveys, incident tracking, and trend analysis." },
-      { value: "B", label: "We collect some data, but don't analyse it systematically." },
-      { value: "C", label: "We don't collect data on psychosocial wellbeing." },
-    ],
-  },
-  {
-    id: "q9",
-    text: "How does your organisation review and improve its psychosocial safety systems?",
-    options: [
-      { value: "A", label: "Post-production reviews, annual audits, and continuous improvement cycles." },
-      { value: "B", label: "We discuss what went well and what didn't at the end of a production." },
-      { value: "C", label: "We don't have a formal review process." },
-    ],
-  },
-  {
-    id: "q10",
-    text: "How does your production's approach align with the hierarchy of control for psychosocial hazards?",
-    options: [
-      { value: "A", label: "We prioritise eliminating and substituting hazards at the systemic level." },
-      { value: "B", label: "We use a mix of systemic and individual controls." },
-      { value: "C", label: "We primarily rely on individual resilience and coping strategies." },
-    ],
-  },
-];
-
-const textQuestions = [
-  { id: "q11", text: "Describe your production's biggest psychosocial safety challenge in the last 12 months." },
-  { id: "q12", text: "What wellbeing initiatives currently exist on your productions?" },
-  { id: "q13", text: "How do you currently measure the effectiveness of your safety controls?" },
-  { id: "q14", text: "What barriers do you face in implementing psychosocial safety measures?" },
-  { id: "q15", text: "Is there anything else you'd like to share about your production's safety culture?" },
-];
-
-type Interpretation = "defensible_maturity" | "governance_gap" | "high_statutory_risk";
-
-interface AssessmentResult {
-  total_a: number;
-  total_b: number;
-  total_c: number;
-  interpretation: Interpretation;
-}
-
-function calculateResult(scored: Record<string, string>): AssessmentResult {
-  let total_a = 0, total_b = 0, total_c = 0;
-  Object.values(scored).forEach((v) => {
-    if (v === "A") total_a++;
-    else if (v === "B") total_b++;
-    else if (v === "C") total_c++;
-  });
-
-  let interpretation: Interpretation;
-  if (total_c >= total_a && total_c >= total_b) {
-    interpretation = "high_statutory_risk";
-  } else if (total_b >= total_a) {
-    interpretation = "governance_gap";
-  } else {
-    interpretation = "defensible_maturity";
-  }
-
-  return { total_a, total_b, total_c, interpretation };
-}
-
-const interpretationData: Record<Interpretation, { title: string; description: string; icon: typeof ShieldCheck; colorClass: string }> = {
-  defensible_maturity: {
-    title: "Defensible Maturity",
-    description: "Your production shows high defensible maturity. You are likely compliant with the 2025 Regulations, but you should continue annual monitoring to maintain this status.",
-    icon: ShieldCheck,
-    colorClass: "text-green-600 dark:text-green-400",
-  },
-  governance_gap: {
-    title: "Governance Gap",
-    description: "You have a governance gap. While you have wellness initiatives, you are vulnerable to statutory liability because you are not addressing risks at the \"Work-as-Done\" systemic level. A psychosocial risk assessment is strongly recommended to build a defensible safety architecture.",
-    icon: AlertTriangle,
-    colorClass: "text-amber-600 dark:text-amber-400",
-  },
-  high_statutory_risk: {
-    title: "High Statutory Risk",
-    description: "Your production is at high statutory risk. You are relying on individual crew \"coping\" (Level 3 controls) for systemic hazards, which is now a breach of the hierarchy of control mandates. Failure to act could result in criminal prosecution and significant fines (up to $17M+ in recent Victorian precedents). A formal psychosocial risk assessment is immediately required.",
-    icon: ShieldAlert,
-    colorClass: "text-destructive",
-  },
-};
+const STEP_LABELS = ["Compliance", "Profile", "Review"];
+const SCORED_PER_STEP = 10;
 
 export default function Assessment() {
   const { user, loading: authLoading } = useAuth();
+  const navigate = useNavigate();
   const [authOpen, setAuthOpen] = useState(false);
+  const [step, setStep] = useState(0); // 0: scored, 1: profile, 2: review/submit
   const [scoredAnswers, setScoredAnswers] = useState<Record<string, string>>({});
-  const [textAnswers, setTextAnswers] = useState<Record<string, string>>({});
+  const [profileAnswers, setProfileAnswers] = useState<Record<string, string>>({});
+  const [openAnswer, setOpenAnswer] = useState("");
   const [submitting, setSubmitting] = useState(false);
-  const [existingResult, setExistingResult] = useState<AssessmentResult | null>(null);
-  const [loadingResult, setLoadingResult] = useState(true);
+  const [hasExisting, setHasExisting] = useState<boolean | null>(null);
 
   useEffect(() => {
-    if (!user) { setLoadingResult(false); return; }
+    if (!user) { setHasExisting(false); return; }
     supabase
       .from("assessment_responses")
-      .select("total_a, total_b, total_c, interpretation")
+      .select("id")
       .eq("user_id", user.id)
       .maybeSingle()
       .then(({ data }) => {
-        if (data) setExistingResult(data as AssessmentResult);
-        setLoadingResult(false);
+        if (data) {
+          navigate("/assessment/results", { replace: true });
+        } else {
+          setHasExisting(false);
+        }
       });
-  }, [user]);
+  }, [user, navigate]);
 
   useEffect(() => {
     if (!authLoading && !user) setAuthOpen(true);
   }, [authLoading, user]);
 
-  const allScoredAnswered = scoredQuestions.every((q) => scoredAnswers[q.id]);
+  const allScoredDone = scoredQuestions.every((q) => scoredAnswers[q.id]);
+  const allProfileDone = profileQuestions.every((q) => profileAnswers[q.id]);
+
+  const canAdvance = () => {
+    if (step === 0) return allScoredDone;
+    if (step === 1) return allProfileDone;
+    return true;
+  };
 
   const handleSubmit = async () => {
-    if (!user || !allScoredAnswered) return;
+    if (!user) return;
     setSubmitting(true);
     const result = calculateResult(scoredAnswers);
     const { error } = await supabase.from("assessment_responses").insert({
       user_id: user.id,
-      responses: { scored: scoredAnswers, text: textAnswers },
+      responses: {
+        scored: scoredAnswers,
+        profile: profileAnswers,
+        open: { q15: openAnswer },
+      },
       total_a: result.total_a,
       total_b: result.total_b,
       total_c: result.total_c,
@@ -205,12 +79,12 @@ export default function Assessment() {
     if (error) {
       toast.error(error.message);
     } else {
-      setExistingResult(result);
       toast.success("Assessment submitted successfully.");
+      navigate("/assessment/results");
     }
   };
 
-  if (authLoading || loadingResult) {
+  if (authLoading || hasExisting === null) {
     return (
       <div className="flex items-center justify-center min-h-[60vh]">
         <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
@@ -220,86 +94,169 @@ export default function Assessment() {
 
   if (!user) {
     return (
-      <div className="max-w-2xl mx-auto py-16 px-4 text-center">
-        <ShieldAlert className="mx-auto h-12 w-12 text-accent mb-4" />
-        <h1 className="text-2xl font-display font-bold text-foreground mb-2">Psychosocial Compliance Assessment</h1>
-        <p className="text-muted-foreground mb-6">Sign in to complete your compliance assessment.</p>
-        <Button onClick={() => setAuthOpen(true)} className="bg-accent text-accent-foreground">Sign In to Begin</Button>
+      <div className="max-w-xl mx-auto py-20 px-4 text-center">
+        <ShieldCheck className="mx-auto h-14 w-14 text-accent mb-5" />
+        <h1 className="text-3xl font-display font-bold text-foreground mb-3">
+          Production Governance & Statutory Risk Diagnostic
+        </h1>
+        <p className="text-muted-foreground mb-8 leading-relaxed max-w-md mx-auto">
+          Sign in to complete your psychosocial compliance assessment under the 2025 WorkSafe Victoria regulations.
+        </p>
+        <Button onClick={() => setAuthOpen(true)} className="bg-accent text-accent-foreground px-8">
+          Sign In to Begin
+        </Button>
         <AuthModal open={authOpen} onOpenChange={setAuthOpen} />
       </div>
     );
   }
 
-  if (existingResult) {
-    const info = interpretationData[existingResult.interpretation];
-    const Icon = info.icon;
-    return (
-      <div className="max-w-2xl mx-auto py-12 px-4">
-        <h1 className="text-2xl font-display font-bold text-foreground mb-8">Your Assessment Result</h1>
-        <Card className="border-border">
-          <CardHeader>
-            <div className="flex items-center gap-3">
-              <Icon className={`h-8 w-8 ${info.colorClass}`} />
-              <CardTitle className={`text-xl ${info.colorClass}`}>{info.title}</CardTitle>
-            </div>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <p className="text-foreground/90 leading-relaxed">{info.description}</p>
-            <div className="flex gap-6 pt-2 text-sm text-muted-foreground">
-              <span>A answers: <strong className="text-foreground">{existingResult.total_a}</strong></span>
-              <span>B answers: <strong className="text-foreground">{existingResult.total_b}</strong></span>
-              <span>C answers: <strong className="text-foreground">{existingResult.total_c}</strong></span>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-    );
-  }
-
   return (
-    <div className="max-w-3xl mx-auto py-12 px-4">
-      <h1 className="text-2xl font-display font-bold text-foreground mb-2">Psychosocial Compliance Assessment</h1>
-      <p className="text-muted-foreground mb-8">Answer the following questions to assess your production's compliance with the 2025 WorkSafe Victoria psychosocial hazard regulations.</p>
+    <div className="max-w-3xl mx-auto py-8 md:py-12 px-4">
+      {/* Header */}
+      <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} className="mb-8">
+        <h1 className="text-2xl md:text-3xl font-display font-bold text-foreground mb-2">
+          Production Governance & Statutory Risk Diagnostic
+        </h1>
+        <p className="text-sm text-muted-foreground leading-relaxed max-w-2xl">
+          Assess your organisation's defensible maturity and statutory compliance under the Occupational Health and Safety (Psychological Health) Regulations 2025.
+        </p>
+      </motion.div>
 
-      <div className="space-y-8">
-        {scoredQuestions.map((q, i) => (
-          <Card key={q.id} className="border-border">
-            <CardContent className="pt-6">
-              <p className="font-medium text-foreground mb-4">{i + 1}. {q.text}</p>
-              <RadioGroup value={scoredAnswers[q.id] || ""} onValueChange={(v) => setScoredAnswers((p) => ({ ...p, [q.id]: v }))}>
-                {q.options.map((opt) => (
-                  <div key={opt.value} className="flex items-start space-x-3 py-2">
-                    <RadioGroupItem value={opt.value} id={`${q.id}-${opt.value}`} className="mt-0.5" />
-                    <Label htmlFor={`${q.id}-${opt.value}`} className="text-sm text-foreground/80 leading-relaxed cursor-pointer">{opt.label}</Label>
-                  </div>
-                ))}
-              </RadioGroup>
-            </CardContent>
-          </Card>
-        ))}
+      {/* Progress */}
+      <div className="mb-10">
+        <ProgressBar currentStep={step} totalSteps={3} stepLabels={STEP_LABELS} />
+      </div>
 
-        <div className="pt-4">
-          <h2 className="text-lg font-display font-semibold text-foreground mb-4">Additional Context</h2>
-          <p className="text-sm text-muted-foreground mb-6">These responses are not scored but help us understand your production's safety culture.</p>
-          {textQuestions.map((q, i) => (
-            <div key={q.id} className="mb-6">
-              <Label htmlFor={q.id} className="text-sm font-medium text-foreground">{10 + i + 1}. {q.text}</Label>
-              <Textarea
-                id={q.id}
-                className="mt-2 bg-card border-border"
-                rows={3}
-                maxLength={300}
-                value={textAnswers[q.id] || ""}
-                onChange={(e) => setTextAnswers((p) => ({ ...p, [q.id]: e.target.value }))}
+      {/* Steps */}
+      <AnimatePresence mode="wait">
+        {step === 0 && (
+          <motion.div
+            key="step-0"
+            initial={{ opacity: 0, x: 30 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -30 }}
+            transition={{ duration: 0.3 }}
+            className="space-y-5"
+          >
+            {scoredQuestions.map((q, i) => (
+              <QuestionCard
+                key={q.id}
+                questionNumber={i + 1}
+                text={q.text}
+                type="radio"
+                options={q.options}
+                value={scoredAnswers[q.id] || ""}
+                onChange={(v) => setScoredAnswers((p) => ({ ...p, [q.id]: v }))}
               />
-            </div>
-          ))}
-        </div>
+            ))}
+          </motion.div>
+        )}
 
-        <Button onClick={handleSubmit} disabled={!allScoredAnswered || submitting} className="w-full bg-accent text-accent-foreground hover:bg-accent/90">
-          {submitting ? <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Submitting...</> : <><CheckCircle className="mr-2 h-4 w-4" /> Submit Assessment</>}
+        {step === 1 && (
+          <motion.div
+            key="step-1"
+            initial={{ opacity: 0, x: 30 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -30 }}
+            transition={{ duration: 0.3 }}
+            className="space-y-5"
+          >
+            {profileQuestions.map((q, i) => (
+              <QuestionCard
+                key={q.id}
+                questionNumber={11 + i}
+                text={q.text}
+                type="radio"
+                options={q.options}
+                value={profileAnswers[q.id] || ""}
+                onChange={(v) => setProfileAnswers((p) => ({ ...p, [q.id]: v }))}
+              />
+            ))}
+            <QuestionCard
+              questionNumber={15}
+              text={openQuestion.text}
+              type="textarea"
+              value={openAnswer}
+              onChange={setOpenAnswer}
+            />
+          </motion.div>
+        )}
+
+        {step === 2 && (
+          <motion.div
+            key="step-2"
+            initial={{ opacity: 0, x: 30 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -30 }}
+            transition={{ duration: 0.3 }}
+            className="space-y-6"
+          >
+            <div className="rounded-xl border border-border bg-card p-6 md:p-8 text-center">
+              <ShieldCheck className="mx-auto h-12 w-12 text-accent mb-4" />
+              <h2 className="text-xl font-display font-semibold text-foreground mb-3">
+                Ready to Submit
+              </h2>
+              <p className="text-sm text-muted-foreground leading-relaxed max-w-md mx-auto mb-6">
+                You've answered all 15 questions. Your responses will be securely saved and your compliance score calculated immediately.
+              </p>
+
+              <div className="flex justify-center gap-8 text-sm text-muted-foreground mb-6">
+                <div>
+                  <span className="block text-2xl font-bold text-foreground">{Object.keys(scoredAnswers).length}</span>
+                  Scored
+                </div>
+                <div>
+                  <span className="block text-2xl font-bold text-foreground">{Object.keys(profileAnswers).length + (openAnswer ? 1 : 0)}</span>
+                  Profile
+                </div>
+              </div>
+
+              <Button
+                onClick={handleSubmit}
+                disabled={submitting}
+                className="bg-accent text-accent-foreground hover:bg-accent/90 px-10 py-3 text-base"
+              >
+                {submitting ? (
+                  <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Submitting...</>
+                ) : (
+                  "Submit Assessment"
+                )}
+              </Button>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Navigation */}
+      <div className="flex justify-between items-center mt-10 pt-6 border-t border-border">
+        <Button
+          variant="ghost"
+          onClick={() => setStep((s) => s - 1)}
+          disabled={step === 0}
+          className="text-muted-foreground"
+        >
+          <ChevronLeft className="mr-1 h-4 w-4" /> Back
         </Button>
-        {!allScoredAnswered && <p className="text-sm text-muted-foreground text-center">Please answer all 10 scored questions to submit.</p>}
+
+        {step < 2 && (
+          <div className="flex items-center gap-3">
+            {!canAdvance() && (
+              <span className="text-xs text-muted-foreground">
+                Answer all questions to continue
+              </span>
+            )}
+            <Button
+              onClick={() => {
+                setStep((s) => s + 1);
+                window.scrollTo({ top: 0, behavior: "smooth" });
+              }}
+              disabled={!canAdvance()}
+              className="bg-primary text-primary-foreground"
+            >
+              Continue <ChevronRight className="ml-1 h-4 w-4" />
+            </Button>
+          </div>
+        )}
       </div>
     </div>
   );
