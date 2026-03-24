@@ -1,4 +1,4 @@
-import { Home, Rocket, BookOpen, Lock, Brain } from "lucide-react";
+import { Home, Rocket, BookOpen, Lock, Brain, ClipboardCheck } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
 import { useAuth } from "@/hooks/useAuth";
 import {
@@ -23,6 +23,7 @@ const guestItems = [
 const memberItems = [
   { title: "Home", url: "/", icon: Home },
   { title: "The Neuroscience of Stress", url: "/members/neuroscience-of-stress", icon: Brain },
+  { title: "Compliance Assessment", url: "/members/assessment", icon: ClipboardCheck },
 ];
 
 export function AppSidebar() {

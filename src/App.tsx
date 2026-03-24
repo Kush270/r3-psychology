@@ -10,6 +10,7 @@ import Blog from "./pages/Blog";
 import Pilot from "./pages/Pilot";
 import MembersOnly from "./pages/MembersOnly";
 import NeuroscienceOfStress from "./pages/NeuroscienceOfStress";
+import Assessment from "./pages/Assessment";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -28,6 +29,7 @@ const App = () => (
               <Route path="/pilot" element={<Pilot />} />
               <Route path="/members" element={<MembersOnly />} />
               <Route path="/members/neuroscience-of-stress" element={<NeuroscienceOfStress />} />
+              <Route path="/members/assessment" element={<Assessment />} />
             </Route>
             <Route path="*" element={<NotFound />} />
           </Routes>
