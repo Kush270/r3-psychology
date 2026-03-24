@@ -6,50 +6,50 @@
 
 @layer base {
   :root {
-    --background: 220 25% 97%;
-    --foreground: 220 30% 12%;
+    --background: 32 90% 95%;
+    --foreground: 220 60% 15%;
 
     --card: 0 0% 100%;
-    --card-foreground: 220 30% 12%;
+    --card-foreground: 220 60% 15%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 220 30% 12%;
+    --popover-foreground: 220 60% 15%;
 
-    --primary: 220 45% 16%;
-    --primary-foreground: 42 100% 95%;
+    --primary: 220 60% 20%;
+    --primary-foreground: 32 90% 95%;
 
-    --secondary: 220 20% 92%;
-    --secondary-foreground: 220 30% 12%;
+    --secondary: 32 60% 88%;
+    --secondary-foreground: 220 60% 15%;
 
-    --muted: 220 15% 94%;
-    --muted-foreground: 220 10% 46%;
+    --muted: 32 40% 90%;
+    --muted-foreground: 220 20% 40%;
 
-    --accent: 38 85% 55%;
-    --accent-foreground: 220 45% 10%;
+    --accent: 30 95% 55%;
+    --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 220 15% 88%;
-    --input: 220 15% 88%;
-    --ring: 38 85% 55%;
+    --border: 32 30% 82%;
+    --input: 32 30% 82%;
+    --ring: 30 95% 55%;
 
     --radius: 0.5rem;
 
-    --hero-gradient: linear-gradient(145deg, hsl(220 45% 10%), hsl(220 40% 18%), hsl(215 35% 22%));
-    --gold-gradient: linear-gradient(135deg, hsl(38 85% 55%), hsl(42 90% 65%));
-    --section-alt: 220 20% 95%;
+    --hero-gradient: linear-gradient(145deg, hsl(220 60% 14%), hsl(220 55% 20%), hsl(220 50% 26%));
+    --gold-gradient: linear-gradient(135deg, hsl(30 95% 55%), hsl(35 100% 60%));
+    --section-alt: 32 70% 92%;
     --clinical-green: 160 45% 40%;
     --clinical-green-soft: 160 30% 94%;
 
-    --sidebar-background: 0 0% 98%;
-    --sidebar-foreground: 240 5.3% 26.1%;
-    --sidebar-primary: 240 5.9% 10%;
-    --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 240 4.8% 95.9%;
-    --sidebar-accent-foreground: 240 5.9% 10%;
-    --sidebar-border: 220 13% 91%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --sidebar-background: 220 60% 16%;
+    --sidebar-foreground: 32 90% 92%;
+    --sidebar-primary: 30 95% 55%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 220 50% 22%;
+    --sidebar-accent-foreground: 32 90% 92%;
+    --sidebar-border: 220 50% 24%;
+    --sidebar-ring: 30 95% 55%;
   }
 }
 
@@ -85,7 +85,7 @@
     background-color: hsl(var(--section-alt));
   }
   .text-gold {
-    color: hsl(38 85% 55%);
+    color: hsl(30 95% 55%);
   }
   .text-clinical {
     color: hsl(var(--clinical-green));
