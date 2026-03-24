@@ -27,7 +27,9 @@ const memberItems = [
 
 export function AppSidebar() {
   const { state } = useSidebar();
+  const { user } = useAuth();
   const collapsed = state === "collapsed";
+  const items = user ? memberItems : guestItems;
 
   return (
     <Sidebar collapsible="icon">
