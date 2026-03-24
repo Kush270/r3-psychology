@@ -85,7 +85,7 @@
     background-color: hsl(var(--section-alt));
   }
   .text-gold {
-    color: hsl(38 85% 55%);
+    color: hsl(30 95% 55%);
   }
   .text-clinical {
     color: hsl(var(--clinical-green));

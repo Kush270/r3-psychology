@@ -57,7 +57,7 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
-        gold: "hsl(38 85% 55%)",
+        gold: "hsl(30 95% 55%)",
         clinical: "hsl(160 45% 40%)",
       },
       fontFamily: {
