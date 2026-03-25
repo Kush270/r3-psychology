@@ -1,168 +1,241 @@
 import { motion } from "framer-motion";
-import { Shield, Brain, FileCheck, Lock, Users, Activity, Mic, Search, ClipboardCheck } from "lucide-react";
+import { Link } from "react-router-dom";
+import { Shield, Target, Users, ArrowRight, Award, TrendingUp, DollarSign } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import Navbar from "@/components/landing/Navbar";
+import Footer from "@/components/landing/Footer";
 
 const fadeUp = {
-  initial: { opacity: 0, y: 20 },
+  initial: { opacity: 0, y: 24 },
   whileInView: { opacity: 1, y: 0 },
-  viewport: { once: true },
-  transition: { duration: 0.5 },
+  viewport: { once: true, margin: "-60px" },
+  transition: { duration: 0.6, ease: "easeOut" as const },
 };
+
+const pillars = [
+  {
+    icon: Shield,
+    title: "The Governance Shield",
+    subtitle: "Statutory Compliance",
+    desc: "Protect Officers from personal criminal liability under the new Victorian regulations. Ensure your governance framework meets the mandatory duty to identify and control psychosocial hazards.",
+  },
+  {
+    icon: Target,
+    title: "Safety Architecture",
+    subtitle: "Work-as-Done Diagnostic",
+    desc: "Identify the gap between your written policies and daily task-load reality. Quantify where systemic friction points create unmanaged psychosocial risk on the ground.",
+  },
+  {
+    icon: Users,
+    title: "Psychosocial Safety Climate",
+    subtitle: "Cultural Maturity",
+    desc: "Quantify senior management commitment to psychological safety. Measure the cultural indicators that predict whether your controls will hold under operational pressure.",
+  },
+];
+
+const stats = [
+  {
+    icon: Shield,
+    value: "$17M+",
+    label: "Regulatory Reality",
+    desc: "In penalties issued for OHS breaches in 2025. Non-compliance is no longer a theoretical risk.",
+  },
+  {
+    icon: DollarSign,
+    value: "$58,615",
+    label: "The Economic Imperative",
+    desc: "Median cost per mental health workers' compensation claim. Prevention is significantly cheaper than remediation.",
+  },
+  {
+    icon: TrendingUp,
+    value: "$2.30",
+    label: "The ROI of Redesign",
+    desc: "Return for every dollar invested in psychosocial risk controls. Work redesign pays for itself.",
+  },
+];
 
 const Home = () => {
   return (
-    <div className="max-w-4xl mx-auto px-6 py-12 space-y-16">
-      {/* Hero */}
-      <motion.section {...fadeUp} className="text-center space-y-4">
-        <h1 className="text-4xl md:text-5xl font-display font-bold text-foreground">
-          Automating Psychosocial Safety
-        </h1>
-        <p className="text-lg text-muted-foreground font-body max-w-2xl mx-auto leading-relaxed">
-          Meet your WorkSafe Victoria obligations with clinical-grade AI sentiment
-          analysis—designed for the high-pressure world of film and TV.
-        </p>
-      </motion.section>
+    <div className="min-h-screen flex flex-col">
+      <Navbar />
 
-      {/* Section 1 */}
-      <motion.section {...fadeUp} className="space-y-6">
-        <h2 className="text-2xl md:text-3xl font-display font-bold text-foreground">
-          1. The Compliance Gap
-        </h2>
-        <p className="text-muted-foreground font-body leading-relaxed">
-          As of December 2025, Victorian employers have a legal "duty to identify" psychosocial
-          hazards—such as bullying, high job demands, and poor workplace relationships—with the
-          same rigour as physical risks.
-        </p>
-        <div className="grid sm:grid-cols-2 gap-4">
-          <div className="bg-card border border-border rounded-xl p-6 space-y-2">
-            <div className="flex items-center gap-2 text-accent">
-              <Activity className="h-5 w-5" />
-              <h3 className="font-body font-semibold text-foreground">The Problem</h3>
+      {/* ── Hero ── */}
+      <section className="relative min-h-[92vh] flex items-center bg-hero-gradient overflow-hidden">
+        {/* subtle texture */}
+        <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: "url(\"data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\")" }} />
+
+        <div className="container relative z-10 py-24 lg:py-36 max-w-4xl mx-auto px-6">
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            className="space-y-8"
+          >
+            <div className="inline-flex items-center gap-2 rounded-full border border-accent/30 bg-accent/10 px-4 py-1.5">
+              <Shield className="h-4 w-4 text-gold" />
+              <span className="text-sm font-body font-medium text-primary-foreground/80">
+                December 2025 Regulations Now In Effect
+              </span>
             </div>
-            <p className="text-sm text-muted-foreground font-body">
-              Traditional surveys are slow, prone to bias, and fail to capture the real-time
-              intensity of a film set.
+
+            <h1 className="text-3xl md:text-4xl lg:text-5xl font-display font-bold leading-[1.15] text-primary-foreground">
+              Is your board truly ready to discharge its mandatory duties under the new Victorian Psychological Health Regulations
+              <span className="text-gold">—or are you relying on a wellness policy that won't hold up in court?</span>
+            </h1>
+
+            <p className="text-lg md:text-xl font-body text-primary-foreground/70 max-w-3xl leading-relaxed">
+              Answer targeted questions to identify the systemic friction points in your safety architecture and receive a quantified{" "}
+              <span className="font-semibold text-primary-foreground">Defensible Maturity</span> score for your organization.
             </p>
-          </div>
-          <div className="bg-card border border-border rounded-xl p-6 space-y-2">
-            <div className="flex items-center gap-2 text-destructive">
-              <Shield className="h-5 w-5" />
-              <h3 className="font-body font-semibold text-foreground">The Risk</h3>
+
+            <div className="flex flex-col sm:flex-row gap-4 pt-4">
+              <Button variant="hero" size="lg" asChild className="text-base px-8 py-6 rounded-full">
+                <Link to="/assessment">
+                  Defensible Maturity Scorecard
+                  <ArrowRight className="ml-2 h-5 w-5" />
+                </Link>
+              </Button>
             </div>
-            <p className="text-sm text-muted-foreground font-body">
-              Failure to document "reasonably practicable" controls can lead to significant
-              WorkSafe intervention and production delays.
+
+            <p className="text-sm font-body text-primary-foreground/40 pt-2">
+              Takes less than 3 minutes · Free for Executive Teams · Immediate actionable outcomes
             </p>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ── Three Pillars ── */}
+      <section className="py-20 lg:py-28 bg-background">
+        <div className="container max-w-5xl mx-auto px-6">
+          <motion.div {...fadeUp} className="text-center mb-16 space-y-4">
+            <p className="text-sm font-body font-semibold tracking-[0.2em] uppercase text-accent">
+              The Three Pillars
+            </p>
+            <h2 className="text-3xl md:text-4xl font-display font-bold text-foreground">
+              A Framework for Defensible Maturity
+            </h2>
+            <p className="text-muted-foreground font-body max-w-2xl mx-auto">
+              Our diagnostic evaluates your organization across three critical dimensions of psychosocial risk governance.
+            </p>
+          </motion.div>
+
+          <div className="grid md:grid-cols-3 gap-6">
+            {pillars.map((p, i) => (
+              <motion.div
+                key={p.title}
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: i * 0.12 }}
+                className="bg-card border border-border rounded-2xl p-8 space-y-4 hover:shadow-lg transition-shadow duration-300"
+              >
+                <div className="h-12 w-12 rounded-xl bg-primary/10 flex items-center justify-center">
+                  <p.icon className="h-6 w-6 text-accent" />
+                </div>
+                <div>
+                  <h3 className="font-display font-bold text-lg text-foreground">{p.title}</h3>
+                  <p className="text-sm font-body font-medium text-accent">{p.subtitle}</p>
+                </div>
+                <p className="text-sm text-muted-foreground font-body leading-relaxed">{p.desc}</p>
+              </motion.div>
+            ))}
           </div>
         </div>
-      </motion.section>
+      </section>
 
-      {/* Section 2 */}
-      <motion.section {...fadeUp} className="space-y-6">
-        <h2 className="text-2xl md:text-3xl font-display font-bold text-foreground">
-          2. The Clinical Solution: R3 Psychology
-        </h2>
-        <p className="text-muted-foreground font-body leading-relaxed">
-          We bridge the gap between creative freedom and regulatory compliance. Our tool uses
-          proprietary AI to analyse voice tone and content during key production interactions
-          to flag risks before they escalate.
-        </p>
-        <div className="grid sm:grid-cols-2 gap-4">
-          {[
-            { icon: Brain, title: "Sentiment Analysis", desc: "Identifies emerging friction, burnout indicators, and communication breakdowns." },
-            { icon: FileCheck, title: "Automated Reporting", desc: "Generates a \"Hazard Log\" that serves as documented evidence of your risk management process." },
-            { icon: Users, title: "Psychologist-Led", desc: "Built by a specialist with 5+ years of Military and Forensic experience." },
-          ].map((item) => (
-            <div key={item.title} className="bg-card border border-border rounded-xl p-6 space-y-2">
-              <div className="flex items-center gap-2 text-clinical">
-                <item.icon className="h-5 w-5" />
-                <h3 className="font-body font-semibold text-foreground">{item.title}</h3>
+      {/* ── Credibility Stats ── */}
+      <section className="py-20 lg:py-28 bg-section-alt">
+        <div className="container max-w-5xl mx-auto px-6">
+          <motion.div {...fadeUp} className="text-center mb-16 space-y-4">
+            <p className="text-sm font-body font-semibold tracking-[0.2em] uppercase text-accent">
+              The Numbers
+            </p>
+            <h2 className="text-3xl md:text-4xl font-display font-bold text-foreground">
+              The Cost of Inaction Is Quantifiable
+            </h2>
+          </motion.div>
+
+          <div className="grid md:grid-cols-3 gap-6">
+            {stats.map((s, i) => (
+              <motion.div
+                key={s.label}
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: i * 0.12 }}
+                className="bg-card border border-border rounded-2xl p-8 text-center space-y-3"
+              >
+                <div className="h-10 w-10 mx-auto rounded-full bg-primary/10 flex items-center justify-center">
+                  <s.icon className="h-5 w-5 text-accent" />
+                </div>
+                <p className="text-4xl font-display font-bold text-foreground">{s.value}</p>
+                <p className="font-body font-semibold text-sm text-foreground">{s.label}</p>
+                <p className="text-sm text-muted-foreground font-body leading-relaxed">{s.desc}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── Expert Bio ── */}
+      <section className="py-20 lg:py-28 bg-background">
+        <div className="container max-w-4xl mx-auto px-6">
+          <motion.div {...fadeUp} className="bg-card border border-border rounded-2xl p-10 md:p-14 space-y-5">
+            <div className="flex items-center gap-3 mb-2">
+              <div className="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center">
+                <Award className="h-6 w-6 text-accent" />
               </div>
-              <p className="text-sm text-muted-foreground font-body">{item.desc}</p>
+              <div>
+                <h3 className="font-display font-bold text-xl text-foreground">Kush Mohun</h3>
+                <p className="text-sm font-body font-medium text-accent">
+                  Entrepreneurial Organizational Psychologist & High-Reliability Sector Lead
+                </p>
+              </div>
             </div>
-          ))}
+            <p className="text-muted-foreground font-body leading-relaxed">
+              With three years as a <span className="font-semibold text-foreground">Military Psychologist</span> and
+              two years as a <span className="font-semibold text-foreground">Forensic Psychologist</span>, Kush
+              brings deep expertise in high-stakes environments where safety and performance are inseparable.
+              Specialising in Schema Therapy, hypnotherapy, and performance coaching, he has designed the
+              Defensible Maturity framework to bridge the gap between clinical evidence and operational compliance.
+            </p>
+            <p className="text-muted-foreground font-body leading-relaxed">
+              His approach ensures that psychosocial risk management is not just a regulatory checkbox—but a
+              genuine competitive advantage for organisations operating under pressure.
+            </p>
+          </motion.div>
         </div>
-      </motion.section>
+      </section>
 
-      {/* Section 3 */}
-      <motion.section {...fadeUp} className="space-y-6">
-        <h2 className="text-2xl md:text-3xl font-display font-bold text-foreground">
-          3. Why Producers Trust Us
-        </h2>
-        <div className="grid sm:grid-cols-3 gap-4">
-          {[
-            { icon: Lock, title: "Australia-First Security", desc: "100% Australian data sovereignty. No data leaves our shores, ensuring total privacy for your cast and crew." },
-            { icon: Activity, title: "Non-Invasive", desc: "Designed to integrate into existing production workflows without slowing down the \"roll.\"" },
-            { icon: Shield, title: "Evidence-Based", desc: "Built on Schema Therapy and military performance coaching frameworks to ensure your crew stays high-performing, not just \"compliant.\"" },
-          ].map((item) => (
-            <div key={item.title} className="bg-card border border-border rounded-xl p-6 space-y-2">
-              <div className="flex items-center gap-2 text-gold">
-                <item.icon className="h-5 w-5" />
-                <h3 className="font-body font-semibold text-foreground text-sm">{item.title}</h3>
-              </div>
-              <p className="text-sm text-muted-foreground font-body">{item.desc}</p>
+      {/* ── Final CTA ── */}
+      <section className="py-20 lg:py-28 bg-hero-gradient">
+        <div className="container max-w-3xl mx-auto px-6 text-center">
+          <motion.div {...fadeUp} className="space-y-8">
+            <h2 className="text-3xl md:text-4xl font-display font-bold text-primary-foreground">
+              Quantify Your Defensible Maturity Today
+            </h2>
+            <p className="text-lg font-body text-primary-foreground/70 max-w-2xl mx-auto">
+              Discover where your organisation sits on the compliance spectrum—and what to fix first.
+            </p>
+            <Button variant="hero" size="lg" asChild className="text-base px-10 py-6 rounded-full">
+              <Link to="/assessment">
+                Start Your Scorecard
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </Link>
+            </Button>
+            <div className="flex flex-wrap justify-center gap-6 pt-4">
+              {["Takes less than 3 minutes", "Free for Executive Teams", "Immediate actionable outcomes"].map((t) => (
+                <span key={t} className="text-sm font-body text-primary-foreground/50 flex items-center gap-1.5">
+                  <span className="h-1.5 w-1.5 rounded-full bg-accent" />
+                  {t}
+                </span>
+              ))}
             </div>
-          ))}
+          </motion.div>
         </div>
-      </motion.section>
+      </section>
 
-      {/* Section 4 */}
-      <motion.section {...fadeUp} className="space-y-6">
-        <h2 className="text-2xl md:text-3xl font-display font-bold text-foreground">
-          4. How It Works
-        </h2>
-        <div className="grid sm:grid-cols-3 gap-4">
-          {[
-            { icon: Mic, step: "1", title: "Capture", desc: "Securely record production meetings or on-set interactions." },
-            { icon: Search, step: "2", title: "Analyse", desc: "Our AI scans for 15+ psychosocial hazards (as defined by WorkSafe Vic)." },
-            { icon: ClipboardCheck, step: "3", title: "Comply", desc: "Receive an actionable report with control measures ready for your OHS log." },
-          ].map((item) => (
-            <div key={item.step} className="bg-card border border-border rounded-xl p-6 space-y-3">
-              <div className="h-8 w-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-sm font-body font-bold">
-                {item.step}
-              </div>
-              <div className="flex items-center gap-2">
-                <item.icon className="h-4 w-4 text-accent" />
-                <h3 className="font-body font-semibold text-foreground">{item.title}</h3>
-              </div>
-              <p className="text-sm text-muted-foreground font-body">{item.desc}</p>
-            </div>
-          ))}
-        </div>
-      </motion.section>
-
-      {/* Section 5 */}
-      <motion.section {...fadeUp} className="space-y-4">
-        <h2 className="text-2xl md:text-3xl font-display font-bold text-foreground">
-          5. About the Founder
-        </h2>
-        <div className="bg-card border border-border rounded-xl p-8 space-y-3">
-          <h3 className="font-display font-bold text-lg text-foreground">
-            Kush, Registered Psychologist
-          </h3>
-          <p className="text-muted-foreground font-body leading-relaxed">
-            Specialising in hypnotherapy and performance coaching, Kush brings three years of
-            experience as a <span className="font-semibold text-foreground">Military Psychologist</span> and
-            two years as a <span className="font-semibold text-foreground">Forensic Psychologist</span>.
-            This unique background ensures a deep understanding of high-stakes, high-pressure
-            environments where safety and performance are inseparable.
-          </p>
-        </div>
-      </motion.section>
-
-      {/* CTA */}
-      <motion.section {...fadeUp} className="bg-hero-gradient rounded-xl p-8 text-center space-y-4">
-        <h2 className="text-2xl font-display font-bold text-primary-foreground">
-          Register Your Interest
-        </h2>
-        <p className="text-primary-foreground/80 font-body">
-          Join the 2026 Melbourne Pilot Program. We are currently selecting three Melbourne-based
-          productions for a guided beta launch.
-        </p>
-        <div className="font-body text-sm text-primary-foreground/70 space-y-1">
-          <p>E. kush.mohun1@gmail.com</p>
-          <p>M. 0420 704 305</p>
-        </div>
-      </motion.section>
+      <Footer />
     </div>
   );
 };
