@@ -38,11 +38,7 @@ export default function Assessment() {
       .eq("user_id", user.id)
       .maybeSingle()
       .then(({ data }) => {
-        if (data) {
-          navigate("/assessment/results", { replace: true });
-        } else {
-          setHasExisting(false);
-        }
+        setHasExisting(!!data);
       });
   }, [user, navigate]);
 
@@ -88,6 +84,42 @@ export default function Assessment() {
     return (
       <div className="flex items-center justify-center min-h-[60vh]">
         <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
+      </div>
+    );
+  }
+
+  if (hasExisting) {
+    return (
+      <div className="max-w-xl mx-auto py-20 px-4 text-center">
+        <ShieldCheck className="mx-auto h-14 w-14 text-accent mb-5" />
+        <h1 className="text-3xl font-display font-bold text-foreground mb-3">
+          You've already completed this assessment
+        </h1>
+        <p className="text-muted-foreground mb-8 leading-relaxed max-w-md mx-auto">
+          You can view your existing results or retake the assessment with fresh responses.
+        </p>
+        <div className="flex flex-col sm:flex-row gap-3 justify-center">
+          <Button onClick={() => navigate("/assessment/results")} className="bg-accent text-accent-foreground px-8">
+            View Results
+          </Button>
+          <Button
+            variant="outline"
+            onClick={async () => {
+              if (!user) return;
+              const { error } = await supabase
+                .from("assessment_responses")
+                .delete()
+                .eq("user_id", user.id);
+              if (error) {
+                toast.error("Could not reset assessment");
+              } else {
+                setHasExisting(false);
+              }
+            }}
+          >
+            Retake Assessment
+          </Button>
+        </div>
       </div>
     );
   }
