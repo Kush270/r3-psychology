@@ -38,11 +38,7 @@ export default function Assessment() {
       .eq("user_id", user.id)
       .maybeSingle()
       .then(({ data }) => {
-        if (data) {
-          navigate("/assessment/results", { replace: true });
-        } else {
-          setHasExisting(false);
-        }
+        setHasExisting(!!data);
       });
   }, [user, navigate]);
 

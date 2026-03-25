@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
-import { Loader2, Download, Share2, ArrowLeft } from "lucide-react";
+import { Loader2, Download, Share2, ArrowLeft, RotateCcw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { GaugeChart } from "@/components/assessment/GaugeChart";
 import { interpretationData, type AssessmentResult } from "@/data/assessmentQuestions";
@@ -166,6 +166,24 @@ Occupational Health and Safety (Psychological Health) Regulations 2025
         </Button>
         <Button onClick={handleShare} variant="outline" className="flex-1">
           <Share2 className="mr-2 h-4 w-4" /> Share Results
+        </Button>
+        <Button
+          variant="ghost"
+          className="flex-1 text-muted-foreground"
+          onClick={async () => {
+            if (!user) return;
+            const { error } = await supabase
+              .from("assessment_responses")
+              .delete()
+              .eq("user_id", user.id);
+            if (error) {
+              toast.error("Could not reset assessment");
+            } else {
+              navigate("/assessment", { replace: true });
+            }
+          }}
+        >
+          <RotateCcw className="mr-2 h-4 w-4" /> Retake Assessment
         </Button>
       </motion.div>
     </div>
