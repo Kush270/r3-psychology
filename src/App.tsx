@@ -12,6 +12,7 @@ import MembersOnly from "./pages/MembersOnly";
 import NeuroscienceOfStress from "./pages/NeuroscienceOfStress";
 import Assessment from "./pages/Assessment";
 import AssessmentResults from "./pages/AssessmentResults";
+import Audit from "./pages/Audit";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -33,6 +34,7 @@ const App = () => (
               <Route path="/assessment" element={<Assessment />} />
               <Route path="/assessment/results" element={<AssessmentResults />} />
               <Route path="/members/assessment" element={<Assessment />} />
+              <Route path="/audit" element={<Audit />} />
             </Route>
             <Route path="*" element={<NotFound />} />
           </Routes>
