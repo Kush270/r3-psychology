@@ -1,61 +1,37 @@
 
 
-## Plan: Replace Landing Page with Diagnostic Tool & Remove Compliance Assessment
+## Plan: Replace Audit Page with Updated Diagnostic
 
 ### Overview
-Replace the root `/` page with the uploaded HTML diagnostic landing page. The "Start Diagnostic" button navigates to `/audit`. Store name, email, and results in Supabase. Remove the Compliance Assessment page entirely.
+Rewrite `src/pages/Audit.tsx` to match the uploaded HTML diagnostic. Key differences from current implementation:
 
-### Changes
+### What changes
 
-**1. Create `audit_submissions` table (migration)**
-```sql
-CREATE TABLE public.audit_submissions (
-  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
-  name text NOT NULL,
-  email text NOT NULL,
-  score integer NOT NULL,
-  maturity_level text NOT NULL,
-  responses jsonb NOT NULL DEFAULT '{}'::jsonb,
-  created_at timestamptz NOT NULL DEFAULT now()
-);
+**Questions (Q1–Q10 scored, Q11–Q15 contextual)**
+- Q1–Q10: Replace all 15 scored questions with the HTML's 10 scored questions (0/5/10 points, max 100). Topics: Regulatory Compliance, Risk Documentation, Workflow Integration, Early Hazard ID, Burnout Prevention, Cost Tracking, Insurance Strategy, Talent Retention, Stakeholder Assurance, Proactive Sustainability.
+- Q11–Q14: 4 contextual radio questions (Production Environment, Critical Objective, Biggest Obstacle, Implementation Approach) — not scored.
+- Q15: Free-text textarea ("Is there anything else we should know?").
+- Add "Part 1: The Defensible Maturity Index" and "Part 2: Production Context" section headers.
 
--- Allow anonymous inserts (no auth required for this public diagnostic)
-CREATE POLICY "Allow anonymous inserts on audit_submissions"
-  ON public.audit_submissions FOR INSERT
-  TO anon, authenticated
-  WITH CHECK (true);
-```
+**Scoring (3 tiers instead of 4, out of 100)**
+- Safe Architecture (80+, green): Strong foundations, defensible safety architecture.
+- Process Friction (50–79, amber): Good intentions but vulnerable, system redesign needed.
+- Statutory Liability (0–49, red): Significant regulatory exposure, immediate intervention required.
 
-**2. Rewrite `src/pages/Home.tsx`** — New landing page matching the uploaded HTML:
-- Hook heading: "Are you ready to protect your production's bottom line..."
-- Value proposition cards (Legal Compliance, Operational Efficiency, Financial ROI)
-- Credibility section (Kush Mohun bio)
-- Lead capture form (name + email) → stores in React state, navigates to `/audit` with name/email passed via route state
+**Results page**
+- Score display: `{score}/100` with color-coded background (emerald/amber/rose).
+- "The Three Insights" section: Dynamic text for Legal (based on Q1), Operational (based on Q4), Financial (based on Q7).
+- "Recommended Next Step" based on Q14 (budget preference) and Q11 (environment): High-value → One-to-One Meeting, Mid-tier → Group Webinar, Lower-tier → Free toolkit/video guide.
+- Contact links: Email (mailto) and LinkedIn.
+- Retake button.
 
-**3. Rewrite `src/pages/Audit.tsx`** — Update to match uploaded HTML's 15 questions:
-- Replace current 10+4+1 question set with the HTML's 15 scored questions (Q1 hardcoded + Q2-Q15 from JS array), all worth 0/5/10 points, max 150
-- Four maturity tiers: Defensible Maturity (120+), Proactive Management (80-119), Reactive Compliance (40-79), Initial/At Risk (0-39)
-- Results show: score, maturity level, summary, and 3 tailored recommendations
-- CTA: "Book Your Strategy Session" email link
-- Read name/email from route state; on submit, insert name + email + score + level + responses into `audit_submissions` via Supabase
-- Retake button resets state
+**Supabase persistence** — unchanged pattern, still saves name/email/score/level/responses.
 
-**4. Update `src/App.tsx`**
-- Remove imports and routes for `Assessment` and `AssessmentResults`
-- Keep `/audit` route
-
-**5. Update `src/components/AppSidebar.tsx`**
-- Remove "Compliance Assessment" from `memberItems`
-- Keep "Psychosocial Audit" in both arrays
-
-**6. Clean up**
-- Delete `src/pages/Assessment.tsx` and `src/pages/AssessmentResults.tsx` (or leave unused — they'll be unreachable)
-- Remove `src/data/assessmentQuestions.ts` and `src/components/assessment/` if no longer referenced
+**State changes**
+- Add `contextAnswers: Record<number, string>` for Q11–Q14 (string values, not numeric).
+- Add `freeText: string` for Q15.
+- Include all answers in the `responses` JSON saved to Supabase.
 
 ### Files changed
-- **Migration SQL**: Create `audit_submissions` table
-- `src/pages/Home.tsx` — rewrite as diagnostic landing page
-- `src/pages/Audit.tsx` — rewrite with new 15 questions + Supabase persistence
-- `src/App.tsx` — remove assessment routes
-- `src/components/AppSidebar.tsx` — remove assessment nav item
+- `src/pages/Audit.tsx` — full rewrite
 
