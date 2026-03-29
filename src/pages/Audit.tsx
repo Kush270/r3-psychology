@@ -56,7 +56,7 @@ const scoredQuestions: ScoredQuestion[] = [
   },
   {
     id: 4,
-    text: "Early Hazard Identification: Have you implemented a process for early identification to reduce conflicts or "walk-offs"?",
+    text: 'Early Hazard Identification: Have you implemented a process for early identification to reduce conflicts or "walk-offs"?',
     options: [
       { value: 'A', label: 'Yes; we use "Work-as-Done" mapping to identify systemic friction before injuries occur.', points: 10 },
       { value: 'B', label: 'We investigate hazards only after a formal complaint or injury report is filed.', points: 5 },
@@ -65,7 +65,7 @@ const scoredQuestions: ScoredQuestion[] = [
   },
   {
     id: 5,
-    text: "Burnout Prevention: Do you have active measures in place to prevent team burnout during high-intensity periods?",
+    text: 'Burnout Prevention: Do you have active measures in place to prevent team burnout during high-intensity periods?',
     options: [
       { value: 'A', label: 'Yes; we use Level 2 Redesign controls like "Surge-Mode" rules to adjust task-loads.', points: 10 },
       { value: 'B', label: 'We rely on Level 3 Administrative controls like resilience workshops and EAP access.', points: 5 },
@@ -74,7 +74,7 @@ const scoredQuestions: ScoredQuestion[] = [
   },
   {
     id: 6,
-    text: "Cost Tracking: Are you tracking the "invisible" costs of neglect, such as the financial impact of high turnover?",
+    text: 'Cost Tracking: Are you tracking the "invisible" costs of neglect, such as the financial impact of high turnover?',
     options: [
       { value: 'A', label: 'Yes; the financial impact of absenteeism, turnover, and claims is quantified for leadership.', points: 10 },
       { value: 'B', label: 'We track high-level HR metrics but do not link them to psychosocial hazard costs.', points: 5 },
@@ -83,7 +83,7 @@ const scoredQuestions: ScoredQuestion[] = [
   },
   {
     id: 7,
-    text: "Insurance Strategy: Can you demonstrate proactive risk management to insurers to argue for lower premiums?",
+    text: 'Insurance Strategy: Can you demonstrate proactive risk management to insurers to argue for lower premiums?',
     options: [
       { value: 'A', label: 'Yes; we use quantified safety data to prove hazard reduction to our insurers.', points: 10 },
       { value: 'B', label: 'We report hazard data to insurers only reactively following a significant claim.', points: 5 },
@@ -92,7 +92,7 @@ const scoredQuestions: ScoredQuestion[] = [
   },
   {
     id: 8,
-    text: "Talent Retention: Does your production leverage its reputation for safety to aid in talent retention?",
+    text: 'Talent Retention: Does your production leverage its reputation for safety to aid in talent retention?',
     options: [
       { value: 'A', label: 'Yes; our Psychosocial Safety Climate (PSC) is a documented key for attracting high-quality staff.', points: 10 },
       { value: 'B', label: 'We mention safety in job previews but lack data to prove a healthy culture.', points: 5 },
@@ -101,7 +101,7 @@ const scoredQuestions: ScoredQuestion[] = [
   },
   {
     id: 9,
-    text: "Stakeholder Assurance: Have you established a status to present to investors and broadcasters to minimize risk?",
+    text: 'Stakeholder Assurance: Have you established a status to present to investors and broadcasters to minimize risk?',
     options: [
       { value: 'A', label: 'Yes; we provide "Defensible Maturity" scores to Boards to confirm governance compliance.', points: 10 },
       { value: 'B', label: 'We provide safety updates to stakeholders only if a specific incident is queried.', points: 5 },
@@ -110,7 +110,7 @@ const scoredQuestions: ScoredQuestion[] = [
   },
   {
     id: 10,
-    text: "Proactive Sustainability: Has your company moved away from "firefighting" toward long-term people sustainability?",
+    text: 'Proactive Sustainability: Has your company moved away from "firefighting" toward long-term people sustainability?',
     options: [
       { value: 'A', label: 'Yes; our strategy focuses on Work Redesign to prevent harm through system architecture.', points: 10 },
       { value: 'B', label: 'We are still in a "reactive" mode, fixing systems only after a breakdown occurs.', points: 5 },
