@@ -44,7 +44,7 @@ const MembersOnly = () => {
   }
 
   if (user) {
-    return <Navigate to="/members/neuroscience-of-stress" replace />;
+    return <Navigate to="/members/evolutionary-psychology" replace />;
   }
 
   return (

@@ -7,7 +7,6 @@ import { AuthProvider } from "./hooks/useAuth";
 import SidebarLayout from "./layouts/SidebarLayout";
 import Home from "./pages/Home";
 import Blog from "./pages/Blog";
-import Pilot from "./pages/Pilot";
 import MembersOnly from "./pages/MembersOnly";
 import NeuroscienceOfStress from "./pages/NeuroscienceOfStress";
 import Audit from "./pages/Audit";
@@ -25,9 +24,8 @@ const App = () => (
           <Routes>
             <Route path="/" element={<Home />} />
             <Route element={<SidebarLayout />}>
-              <Route path="/blog" element={<Blog />} />
-              <Route path="/pilot" element={<Pilot />} />
               <Route path="/members" element={<MembersOnly />} />
+              <Route path="/members/evolutionary-psychology" element={<Blog />} />
               <Route path="/members/neuroscience-of-stress" element={<NeuroscienceOfStress />} />
               <Route path="/audit" element={<Audit />} />
             </Route>
