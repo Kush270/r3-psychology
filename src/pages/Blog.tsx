@@ -66,6 +66,10 @@ const Blog = () => {
   const [commentForm, setCommentForm] = useState({ name: "", content: "" });
   const [submitting, setSubmitting] = useState(false);
 
+  useEffect(() => {
+    if (user) fetchComments();
+  }, [user]);
+
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
@@ -77,10 +81,6 @@ const Blog = () => {
   if (!user) {
     return <Navigate to="/members" replace />;
   }
-
-  useEffect(() => {
-    fetchComments();
-  }, []);
 
   const fetchComments = async () => {
     const { data } = await supabase
