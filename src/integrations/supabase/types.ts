@@ -47,6 +47,36 @@ export type Database = {
         }
         Relationships: []
       }
+      audit_submissions: {
+        Row: {
+          created_at: string
+          email: string
+          id: string
+          maturity_level: string
+          name: string
+          responses: Json
+          score: number
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          id?: string
+          maturity_level: string
+          name: string
+          responses?: Json
+          score: number
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          id?: string
+          maturity_level?: string
+          name?: string
+          responses?: Json
+          score?: number
+        }
+        Relationships: []
+      }
       blog_comments: {
         Row: {
           author_name: string | null
