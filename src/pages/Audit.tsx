@@ -235,13 +235,13 @@ export default function Audit() {
 
     // Save to Supabase
     if (leadData.name && leadData.email) {
-      const { error } = await supabase.from("audit_submissions").insert({
+      const { error } = await supabase.from("audit_submissions").insert([{
         name: leadData.name,
         email: leadData.email,
         score: total,
         maturity_level: verdict.level,
-        responses: answers as unknown as Record<string, unknown>,
-      });
+        responses: answers as unknown as import("@/integrations/supabase/types").Json,
+      }]);
       if (error) {
         console.error("Failed to save audit:", error);
         toast.error("Could not save your results. Please try again.");
