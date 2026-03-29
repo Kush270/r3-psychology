@@ -15,7 +15,7 @@ import {
 
 const guestItems = [
   { title: "Home", url: "/", icon: Home },
-  { title: "Blog", url: "/blog", icon: BookOpen },
+  { title: "Evolutionary Psychology", url: "/blog", icon: BookOpen },
   { title: "Members Only", url: "/members", icon: Lock },
   { title: "Join the Pilot Program", url: "/pilot", icon: Rocket },
   { title: "Psychosocial Audit", url: "/audit", icon: ShieldCheck },
