@@ -1,4 +1,4 @@
-import { Home, Rocket, BookOpen, Lock, Brain, ShieldCheck } from "lucide-react";
+import { Home, BookOpen, Lock, Brain, ShieldCheck } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
 import { useAuth } from "@/hooks/useAuth";
 import {
@@ -15,14 +15,13 @@ import {
 
 const guestItems = [
   { title: "Home", url: "/", icon: Home },
-  { title: "Evolutionary Psychology", url: "/blog", icon: BookOpen },
   { title: "Members Only", url: "/members", icon: Lock },
-  { title: "Join the Pilot Program", url: "/pilot", icon: Rocket },
   { title: "Psychosocial Audit", url: "/audit", icon: ShieldCheck },
 ];
 
 const memberItems = [
   { title: "Home", url: "/", icon: Home },
+  { title: "Evolutionary Psychology", url: "/members/evolutionary-psychology", icon: BookOpen },
   { title: "The Neuroscience of Stress", url: "/members/neuroscience-of-stress", icon: Brain },
   { title: "Psychosocial Audit", url: "/audit", icon: ShieldCheck },
 ];

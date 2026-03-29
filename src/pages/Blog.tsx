@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Navigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -8,6 +9,7 @@ import { Separator } from "@/components/ui/separator";
 import { MessageSquare, Send, BookOpen } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
+import { useAuth } from "@/hooks/useAuth";
 
 interface Comment {
   id: string;
@@ -59,9 +61,22 @@ const ComparisonTable = ({ headers, rows }: { headers: string[]; rows: string[][
 );
 
 const Blog = () => {
+  const { user, loading } = useAuth();
   const [comments, setComments] = useState<Comment[]>([]);
   const [commentForm, setCommentForm] = useState({ name: "", content: "" });
   const [submitting, setSubmitting] = useState(false);
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center h-64">
+        <div className="h-8 w-8 animate-spin rounded-full border-4 border-primary border-t-transparent" />
+      </div>
+    );
+  }
+
+  if (!user) {
+    return <Navigate to="/members" replace />;
+  }
 
   useEffect(() => {
     fetchComments();
