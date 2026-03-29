@@ -1,27 +1,36 @@
 
 
-## Plan: Add Psychosocial Audit Page to Navigation
+## Plan: Replace Audit Page with Psychosocial Safety Maturity Diagnostic
 
 ### Overview
-Create a new "Psychosocial Audit 2026" page from the provided code and add it to the sidebar navigation for both guest and member users.
+Rewrite `src/pages/Audit.tsx` with the full diagnostic from the provided HTML. The route (`/audit`) and sidebar entry ("Psychosocial Audit") already exist — no routing or navigation changes needed.
 
-### Changes
+### What changes
 
-**1. Create `src/pages/Audit.tsx`**
-- Adapt the provided React code to fit the project's conventions (TypeScript, proper types, project styling tokens where appropriate)
-- The page is self-contained with 4 steps: welcome → survey (15 Yes/Partially/No questions) → results → contact form
-- Keep the provided UI logic and styling intact
+**Rewrite `src/pages/Audit.tsx`** to implement:
 
-**2. Update `src/App.tsx`**
-- Import the new `Audit` component
-- Add route `/audit` inside the `SidebarLayout` wrapper
+**Welcome screen** — Title "Psychosocial Safety Maturity Diagnostic", intro text about defensible maturity, and a "Start Diagnostic" CTA button.
 
-**3. Update `src/components/AppSidebar.tsx`**
-- Import `ShieldCheck` icon from lucide-react
-- Add `{ title: "Psychosocial Audit", url: "/audit", icon: ShieldCheck }` to both `guestItems` and `memberItems` arrays
+**Survey step** — Two parts with a progress bar:
+- **Part 1 (Q1–Q10):** 10 scored radio-button questions (A = 10pts, B = 5pts, C = 0pts). Topics: regulatory compliance, risk documentation, workflow integration, early hazard ID, burnout prevention, cost tracking, insurance strategy, talent retention, stakeholder assurance, proactive sustainability. Each option has full descriptive text from the provided content.
+- **Part 2 (Q11–Q14):** 4 profiling radio questions (production environment, 90-day objective, biggest obstacle, implementation approach). These are not scored.
+- **Q15:** A textarea ("Is there anything else we should know…"). Not scored.
+
+**Results step** — Replaces the current simple percentage display:
+- **Score gauge:** Display score out of 100 with color-coded verdict:
+  - 80–100 → green "Safe Architecture"
+  - 50–79 → amber "Process Friction"  
+  - 0–49 → red "Statutory Liability"
+- **Three Insights:** Dynamic text for Legal (based on Q1), Operational (based on Q4), Financial (based on Q7).
+- **Recommended Next Step:** Tailored CTA based on Q11 (environment) and Q14 (budget preference) — High-value leads get "One-to-One Meeting", mid-tier get "Group Webinar", lower-tier get "Free toolkit".
+- **Contact links:** Email and LinkedIn links.
+- **Retake button** to reset and restart.
 
 ### Files changed
-- `src/pages/Audit.tsx` (new)
-- `src/App.tsx` (add route)
-- `src/components/AppSidebar.tsx` (add nav item)
+- `src/pages/Audit.tsx` — full rewrite
+
+### Technical notes
+- No new dependencies; uses existing `Button`, `Input`, `RadioGroup` (or custom radio buttons), and `Textarea` components
+- Keeps the same TypeScript patterns and Tailwind tokens used elsewhere
+- No database integration (this audit is stateless / client-side only, matching the current implementation)
 
