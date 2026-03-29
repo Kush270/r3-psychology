@@ -55,8 +55,8 @@ const Home = () => {
       <Navbar />
 
       {/* Hero */}
-      <section className="relative min-h-[60vh] flex items-center bg-hero-gradient overflow-hidden">
-        <div className="container relative z-10 py-20 lg:py-28 max-w-3xl mx-auto px-6">
+      <section className="relative min-h-[60vh] flex items-center bg-hero-gradient overflow-hidden py-px px-0">
+        <div className="container relative z-10 lg:py-28 max-w-3xl mx-auto py-[11px] px-[24px]">
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
@@ -64,7 +64,7 @@ const Home = () => {
             className="space-y-6 text-center"
           >
             <h1 className="text-3xl md:text-4xl lg:text-5xl font-display font-bold leading-[1.15] text-primary-foreground">
-              Psychosocial Safety Maturity Diagnostic
+              Psychosocial Safety&nbsp;Maturity Diagnostic
             </h1>
             <p className="text-lg md:text-xl font-body text-primary-foreground/70 max-w-2xl mx-auto leading-relaxed">
               Identify systemic friction points and quantify your current risk profile.
@@ -74,7 +74,7 @@ const Home = () => {
       </section>
 
       {/* Hook */}
-      <section className="py-16 lg:py-20 bg-background">
+      <section className="py-16 bg-background lg:py-[20px]">
         <div className="container max-w-3xl mx-auto px-6">
           <motion.div {...fadeUp} className="text-center space-y-4">
             <h2 className="text-2xl md:text-3xl font-display font-bold text-foreground leading-tight">
@@ -88,7 +88,7 @@ const Home = () => {
       </section>
 
       {/* Value Props */}
-      <section className="py-16 lg:py-20 bg-section-alt">
+      <section className="py-16 bg-section-alt lg:py-[20px]">
         <div className="container max-w-3xl mx-auto px-6">
           <motion.div {...fadeUp} className="bg-card border border-border rounded-2xl p-8 space-y-6">
             <h3 className="text-xl font-display font-bold text-foreground border-b border-border pb-3">
@@ -112,7 +112,7 @@ const Home = () => {
       </section>
 
       {/* Credibility */}
-      <section className="py-16 lg:py-20 bg-background">
+      <section className="py-16 bg-background lg:py-[20px]">
         <div className="container max-w-3xl mx-auto px-6">
           <motion.div {...fadeUp} className="bg-card border-l-4 border-primary shadow-sm p-8 space-y-4">
             <div className="flex items-center gap-3">
@@ -137,7 +137,7 @@ const Home = () => {
       </section>
 
       {/* Lead Capture CTA */}
-      <section className="py-16 lg:py-20 bg-section-alt">
+      <section className="py-16 bg-section-alt lg:py-[20px]">
         <div className="container max-w-3xl mx-auto px-6">
           <motion.div {...fadeUp} className="bg-primary/5 border border-accent/20 rounded-2xl p-8 text-center space-y-6">
             <h3 className="text-xl font-display font-bold text-foreground">
