@@ -80,24 +80,13 @@
             <div class="contact-card">
                 <h2>Ready to refine your lens?</h2>
                 <p>Reach out today to start a dialogue. Fees are discussed during our private initial conversation.</p>
-                <form class="contact-form" action="https://formspree.io/f/mpqbzgkj" method="POST">
-                    <input type="hidden" name="_next" value="https://r3psychology.com/thanks.html">
-                    
-                    <label for="full-name">Name</label>
-                    <input type="text" name="name" id="full-name" placeholder="Your Name" required>
-                    
-                    <label for="email-address">Email</label>
-                    <input type="email" name="_replyto" id="email-address" placeholder="Your Email" required>
-                    
-                    <label for="message">Message</label>
-                    <textarea name="message" id="message" placeholder="How can I help?" rows="5" required></textarea>
-
-                    <input type="text" name="_gotcha" style="display:none">
-
-                  
-
-                    <button type="submit" class="btn-submit">Send Message</button>
+                <form id="contact-form" action="https://formspree.io/f/mpqbzgkj" method="POST" class="contact-form">
+                    <input type="text" name="name" placeholder="Your Name" required>
+                    <input type="email" name="email" placeholder="Your Email" required>
+                    <textarea name="message" placeholder="How can I help?" required></textarea>
+                    <button type="submit" id="submit-btn" class="btn-submit">Send Message</button>
                 </form>
+                <div id="form-status"></div>
             </div>
         </section>
 
@@ -105,5 +94,47 @@
             <p>&copy; 2026 R3 Psychology. All rights reserved.</p>
         </footer>
     </main>
+    
+<script>
+  const form = document.getElementById("contact-form");
+  const btn = document.getElementById("submit-btn");
+
+  form.addEventListener("submit", async function(event) {
+    event.preventDefault(); // Stop the page from refreshing
+    btn.innerText = "Sending...";
+    btn.disabled = true;
+
+    const data = new FormData(event.target);
+    
+    fetch(event.target.action, {
+      method: 'POST',
+      body: data,
+      headers: {
+        'Accept': 'application/json'
+      }
+    }).then(response => {
+      if (response.ok) {
+        // SUCCESS: Manual redirect to your thanks page
+        window.location.href = "thanks.html";
+      } else {
+        response.json().then(data => {
+          if (Object.hasOwn(data, 'errors')) {
+            alert(data["errors"].map(error => error["message"]).join(", "));
+          } else {
+            alert("Oops! There was a problem submitting your form.");
+          }
+          btn.innerText = "Send Message";
+          btn.disabled = false;
+        })
+      }
+    }).catch(error => {
+      alert("Oops! There was a problem connecting to the server.");
+      btn.innerText = "Send Message";
+      btn.disabled = false;
+    });
+  });
+</script>
+
+
 </body>
 </html>
