@@ -80,10 +80,19 @@
             <div class="contact-card">
                 <h2>Ready to refine your lens?</h2>
                 <p>Reach out today to start a dialogue. Fees are discussed during our private initial conversation.</p>
-                <form class="contact-form">
-                    <input type="text" placeholder="Your Name" required>
-                    <input type="email" placeholder="Your Email" required>
-                    <textarea placeholder="How can I help?" rows="5"></textarea>
+                <form class="contact-form" action="https://formspree.io/f/mpqbzgkj" method="POST">
+                    
+                    <label for="full-name">Name</label>
+                    <input type="text" name="name" id="full-name" placeholder="Your Name" required>
+                    
+                    <label for="email-address">Email</label>
+                    <input type="email" name="_replyto" id="email-address" placeholder="Your Email" required>
+                    
+                    <label for="message">Message</label>
+                    <textarea name="message" id="message" placeholder="How can I help?" rows="5" required></textarea>
+
+                    <input type="text" name="_gotcha" style="display:none">
+
                     <button type="submit" class="btn-submit">Send Message</button>
                 </form>
             </div>
