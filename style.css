@@ -248,3 +248,58 @@ footer { text-align: center; padding: 40px; font-size: 0.8rem; color: #888; }
     .content { margin-left: 0; width: 100%; }
     h1 { font-size: 2.5rem; }
 }
+/* Sub-page Specific Styling */
+.page-header {
+    background-color: var(--card-bg);
+    border-bottom: 1px solid #eee;
+    padding: 60px 8%;
+}
+
+.blog-list, .edu-grid {
+    padding: 60px 8%;
+}
+
+.blog-card {
+    margin-bottom: 40px;
+    padding-bottom: 40px;
+    border-bottom: 1px solid var(--accent-mauve);
+}
+
+.blog-card .date {
+    font-size: 0.8rem;
+    color: var(--accent-olive);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.blog-card h2 {
+    margin: 10px 0;
+}
+
+.read-more {
+    color: var(--text-heading);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.edu-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+.edu-category {
+    background: white;
+    padding: 30px;
+    border-radius: 8px;
+    border-left: 4px solid var(--accent-olive);
+}
+
+.tag {
+    font-size: 0.7rem;
+    background: var(--site-bg);
+    padding: 4px 10px;
+    border-radius: 20px;
+    color: var(--text-heading);
+}
