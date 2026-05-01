@@ -1,28 +1,97 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="AI-powered psychosocial risk assessment for film and creative industries. Clinically designed, WorkSafe Victoria compliant. 100% Australian data sovereignty." />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>R3 Psychology | Resolve · Renew · Recover</title>
-    <!-- TODO: Set the document title to the name of your application -->
-    <title>Lovable App</title>
-    <meta name="description" content="Lovable Generated Project" />
-    <meta name="author" content="Lovable" />
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Lora:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
+</head>
+<body>
 
-    <!-- TODO: Update og:title to match your application name -->
-    <meta property="og:title" content="Lovable App" />
-    <meta property="og:description" content="Lovable Generated Project" />
-    <meta property="og:type" content="website" />
-    <meta property="og:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
+    <nav class="sidebar">
+        <div class="logo-area">
+            <span class="logo-r3">R3</span>
+            <span class="logo-text">Psychology</span>
+            <p class="tagline">Resolve · Renew · Recover</p>
+        </div>
+        <ul class="nav-links">
+            <li><a href="#home" class="active">Home</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#">Psychoeducation</a></li>
+            <li><a href="#">Psychometrics</a></li>
+            <li><a href="#">Blog</a></li>
+        </ul>
+        <div class="nav-footer">
+            <a href="#contact" class="cta-sidebar">Get Started</a>
+        </div>
+    </nav>
 
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:site" content="@Lovable" />
-    <meta name="twitter:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
-  </head>
+    <main class="content">
+        <section id="home" class="hero">
+            <div class="hero-container">
+                <h1>Accessible Psychology Services</h1>
+                <p class="sub-headline">Specializing in <strong>AI-assisted CBT</strong> and <strong>Hypnotherapy</strong> for young professionals.</p>
+                <a href="#contact" class="btn-primary">Refine Your Lens</a>
+            </div>
+        </section>
 
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+        <section id="services" class="services">
+            <div class="section-header">
+                <h2>How We Work Together</h2>
+                <p>My approach blends clinical precision with a down-to-earth, collaborative energy. We don’t just "talk" about problems; we use a structured, multi-layered toolkit to rewire patterns at the surface and the root.</p>
+            </div>
+            <div class="service-grid">
+                <div class="service-card">
+                    <h3>CBT</h3>
+                    <p>Immediate relief and pattern recognition for the "weather" of daily life.</p>
+                </div>
+                <div class="service-card">
+                    <h3>Schema Therapy</h3>
+                    <p>Understanding your blueprint to identify and shift deep-seated origins.</p>
+                </div>
+                <div class="service-card">
+                    <h3>Hypnotherapy</h3>
+                    <p>Locking in transformation by engaging the subconscious mind directly.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="about" class="about">
+            <h2>The Authentic Collaborator</h2>
+            <p class="philosophy-intro">My philosophy is rooted in <strong>Radical Authenticity</strong>, prioritizing a grounded, human-centric partnership over rigid clinical formality.</p>
+            
+            <div class="about-grid">
+                <div class="about-text">
+                    <h3>The Helpful Peer</h3>
+                    <p>I operate on the principle of providing a safe space to validate your experiences while maintaining the integrity to challenge misinformation or stagnant patterns directly.</p>
+                </div>
+                <div class="about-text">
+                    <h3>Adaptive Integration</h3>
+                    <p>Instead of adhering to a single doctrine, I shift tone and technique to meet the moment. My goal is to help you refine your internal lens.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="contact">
+            <div class="contact-card">
+                <h2>Ready to refine your lens?</h2>
+                <p>Reach out today to start a dialogue. Fees and insurance details are discussed during our private initial conversation.</p>
+                <form class="contact-form">
+                    <input type="text" placeholder="Your Name" required>
+                    <input type="email" placeholder="Your Email" required>
+                    <textarea placeholder="How can I help?" rows="5"></textarea>
+                    <button type="submit" class="btn-submit">Send Message</button>
+                </form>
+            </div>
+        </section>
+
+        <footer>
+            <p>&copy; 2026 R3 Psychology. All rights reserved.</p>
+        </footer>
+    </main>
+</body>
 </html>
