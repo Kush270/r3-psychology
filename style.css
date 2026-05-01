@@ -303,3 +303,46 @@ footer { text-align: center; padding: 40px; font-size: 0.8rem; color: #888; }
     border-radius: 20px;
     color: var(--text-heading);
 }
+/* Sub-navigation inside Sidebar */
+.sub-nav {
+    list-style: none;
+    padding-left: 15px;
+    margin-top: 10px;
+}
+.sub-nav li { font-size: 0.85rem; margin-bottom: 10px; }
+
+/* Questionnaire Styling */
+.test-container { max-width: 800px; margin: 40px auto; }
+.q-block {
+    background: white;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    border-left: 4px solid var(--accent-mauve);
+}
+.options { margin-top: 15px; display: flex; gap: 20px; flex-wrap: wrap; }
+.options label { font-size: 0.9rem; cursor: pointer; }
+
+/* Result Display */
+.results-display { display: flex; justify-content: center; align-items: center; min-height: 70vh; }
+.result-card {
+    background: white;
+    padding: 60px;
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.05);
+    max-width: 500px;
+}
+.score-circle {
+    width: 120px;
+    height: 120px;
+    border: 5px solid var(--accent-olive);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 30px auto;
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--text-heading);
+}

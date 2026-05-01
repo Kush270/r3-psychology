@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DASS-21 Assessment | R3 Psychology</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Lora:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <nav class="sidebar">
+        <div class="logo-area">
+            <span class="logo-r3">R3</span>
+            <span class="logo-text">Psychology</span>
+        </div>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="psychometrics.html" class="active">Psychometrics</a></li>
+            <li><a href="blog.html">Blog</a></li>
+        </ul>
+    </nav>
+
+    <main class="content">
+        <section class="test-header">
+            <h1>DASS-21 Assessment</h1>
+            <p class="sub-headline">Please read each statement and select the option which indicates how much the statement applied to you <strong>over the past week</strong>.</p>
+            <div class="scale-legend">
+                <p><strong>0</strong> = Did not apply to me at all</p>
+                <p><strong>1</strong> = Applied to me to some degree / some of the time</p>
+                <p><strong>2</strong> = Applied to me to a considerable degree / good part of time</p>
+                <p><strong>3</strong> = Applied to me very much / most of the time</p>
+            </div>
+        </section>
+
+        <section class="test-container">
+            <form id="dassForm">
+                <div id="questions-wrapper">
+                    </div>
+
+                <div class="form-footer">
+                    <button type="submit" class="btn-primary">Calculate My Results</button>
+                </div>
+            </form>
+        </section>
+    </main>
+
+    <script>
+        const questions = [
+            "I found it hard to wind down",
+            "I was aware of dryness of my mouth",
+            "I couldn't seem to experience any positive feeling at all",
+            "I experienced breathing difficulty (e.g. excessively rapid breathing, breathlessness in the absence of physical exertion)",
+            "I found it difficult to work up the initiative to do things",
+            "I tended to over-react to situations",
+            "I experienced trembling (e.g. in the hands)",
+            "I felt that I was using a lot of nervous energy",
+            "I was worried about situations in which I might panic and make a fool of myself",
+            "I felt that I had nothing to look forward to",
+            "I found myself getting agitated",
+            "I found it difficult to relax",
+            "I felt down-hearted and blue",
+            "I was intolerant of anything that kept me from getting on with what I was doing",
+            "I felt I was close to panic",
+            "I was unable to become enthusiastic about anything",
+            "I felt I wasn't worth much as a person",
+            "I felt that I was rather touchy",
+            "I was aware of the action of my heart in the absence of physical exertion (e.g. sense of heart rate increase, heart skipping a beat)",
+            "I felt scared without any good reason",
+            "I felt that life was meaningless"
+        ];
+
+        const wrapper = document.getElementById('questions-wrapper');
+        
+        // Inject questions into the HTML
+        questions.forEach((q, index) => {
+            const qNum = index + 1;
+            wrapper.innerHTML += `
+                <div class="q-block">
+                    <p class="q-text"><strong>${qNum}.</strong> ${q}</p>
+                    <div class="options">
+                        <label><input type="radio" name="q${qNum}" value="0" required> 0</label>
+                        <label><input type="radio" name="q${qNum}" value="1"> 1</label>
+                        <label><input type="radio" name="q${qNum}" value="2"> 2</label>
+                        <label><input type="radio" name="q${qNum}" value="3"> 3</label>
+                    </div>
+                </div>
+            `;
+        });
+
+        document.getElementById('dassForm').onsubmit = function(e) {
+            e.preventDefault();
+            const data = new FormData(this);
+            
+            // DASS-21 Indices
+            const dIdx = [3, 5, 10, 13, 16, 17, 21];
+            const aIdx = [2, 4, 7, 9, 15, 19, 20];
+            const sIdx = [1, 6, 8, 11, 12, 14, 18];
+
+            let dSum = 0, aSum = 0, sSum = 0;
+
+            for (let [key, value] of data.entries()) {
+                const num = parseInt(key.replace('q', ''));
+                const val = parseInt(value);
+                if (dIdx.includes(num)) dSum += val;
+                if (aIdx.includes(num)) aSum += val;
+                if (sIdx.includes(num)) sSum += val;
+            }
+
+            // Multiply by 2 to match DASS-42 clinical norms
+            const D = dSum * 2;
+            const A = aSum * 2;
+            const S = sSum * 2;
+
+            // Interpretation Logic
+            const interpret = (val, type) => {
+                if (type === 'D') {
+                    if (val <= 9) return "Normal";
+                    if (val <= 13) return "Mild";
+                    if (val <= 20) return "Moderate";
+                    if (val <= 27) return "Severe";
+                    return "Extremely Severe";
+                }
+                if (type === 'A') {
+                    if (val <= 7) return "Normal";
+                    if (val <= 9) return "Mild";
+                    if (val <= 14) return "Moderate";
+                    if (val <= 19) return "Severe";
+                    return "Extremely Severe";
+                }
+                if (type === 'S') {
+                    if (val <= 14) return "Normal";
+                    if (val <= 18) return "Mild";
+                    if (val <= 25) return "Moderate";
+                    if (val <= 33) return "Severe";
+                    return "Extremely Severe";
+                }
+            };
+
+            const resultSummary = `Depression: ${D} (${interpret(D, 'D')}) | Anxiety: ${A} (${interpret(A, 'A')}) | Stress: ${S} (${interpret(S, 'S')})`;
+
+            localStorage.setItem('lastResult', JSON.stringify({
+                testName: "DASS-21",
+                score: `D:${D} A:${A} S:${S}`,
+                interpretation: resultSummary
+            }));
+
+            window.location.href = 'results.html';
+        };
+    </script>
+</body>
+</html>

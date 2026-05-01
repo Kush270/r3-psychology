@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Your Results | R3 Psychology</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav class="sidebar"> </nav>
+
+    <main class="content">
+        <section class="results-display">
+            <div class="result-card">
+                <h1 id="resTestName">Psychometric Result</h1>
+                <div class="score-circle">
+                    <span id="resScore">0</span>
+                </div>
+                <h3>Interpretation</h3>
+                <p id="resInterpretation"></p>
+                
+                <div class="action-area">
+                    <button id="copyBtn" class="btn-submit">Copy to Clipboard</button>
+                    <p id="copyStatus" style="display:none; color: var(--accent-olive); margin-top:10px;">Copied!</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        const result = JSON.parse(localStorage.getItem('lastResult'));
+        if(result) {
+            document.getElementById('resTestName').innerText = result.testName;
+            document.getElementById('resScore').innerText = result.score;
+            document.getElementById('resInterpretation').innerText = result.interpretation;
+        }
+
+        document.getElementById('copyBtn').onclick = function() {
+            const text = `R3 Psychology Result\nTest: ${result.testName}\nScore: ${result.score}\nInterpretation: ${result.interpretation}`;
+            navigator.clipboard.writeText(text).then(() => {
+                document.getElementById('copyStatus').style.display = 'block';
+            });
+        };
+    </script>
+</body>
+</html>
