@@ -1,348 +1,176 @@
+/* =========================================
+   R3 PSYCHOLOGY - COMPLETE MASTER CSS
+   Sage, Blush, & Beige Palette 2026
+   ========================================= */
+
 :root {
-    --site-bg: #f4f4f4;
-    --card-bg: #ffffff;
-    --text-heading: #5d4037;
-    --text-body: #333333;
-    --accent-mauve: #c6bfc9;
-    --accent-olive: #827717;
-    --btn-bg: #5d4037;
-    --btn-text: #eae3d9;
-    --white: #ffffff;
+    --site-bg: #EDDCCD;        /* Light Beige */
+    --card-bg: #FFFFFF;        /* Pure White */
+    --text-heading: #647B70;   /* Dark Sage */
+    --text-body: #212121;      /* Charcoal */
+    --accent-blush: #E0C9C7;   /* Dusty Pink */
+    --accent-sage: #899E90;    /* Medium Sage */
+    --btn-bg: #647B70;         /* Dark Sage */
+    --btn-text: #FFFFFF;
+    --sidebar-color: #647B70;
     --font-serif: 'Lora', serif;
     --font-sans: 'Inter', sans-serif;
 }
 
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
+/* 1. BASE RESET */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: var(--font-sans); background-color: var(--site-bg); color: var(--text-body); display: flex; }
 
-html {
-    scroll-behavior: smooth;
-}
+/* 2. TYPOGRAPHY */
+h1, h2, h3 { font-family: var(--font-serif); color: var(--text-heading); font-weight: 700; }
+p { font-family: var(--font-sans); color: var(--text-body); font-weight: 300; line-height: 1.6; }
+strong { color: var(--accent-sage); font-weight: 600; }
 
-body {
-    font-family: var(--font-sans);
-    background-color: var(--site-bg);
-    color: var(--text-body);
-    display: flex;
-}
-
-h1, h2, h3 {
-    font-family: var(--font-serif);
-    color: var(--text-heading);
-    font-weight: 700;
-}
-
-p {
-    font-family: var(--font-sans);
-    color: var(--text-body);
-    font-weight: 300;
-    line-height: 1.6;
-}
-
-strong {
-    color: var(--accent-olive);
-    font-weight: 600;
-}
-
-/* SIDEBAR - Width reduced to 210px */
+/* 3. SIDEBAR NAVIGATION */
 .sidebar {
-    width: 210px;
-    height: 100vh;
-    background-color: var(--btn-bg);
-    color: var(--btn-text);
-    position: fixed;
-    display: flex;
-    flex-direction: column;
-    padding: 40px 20px; /* Reduced horizontal padding to fit text */
-    z-index: 100;
-    box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+    width: 210px; height: 100vh; background-color: var(--sidebar-color);
+    color: var(--btn-text); position: fixed; display: flex;
+    flex-direction: column; padding: 40px 20px; z-index: 100;
 }
+.logo-area { margin-bottom: 50px; }
+.logo-r3 { font-family: var(--font-serif); font-size: 2.8rem; color: #FFF; display: block; }
+.logo-text { font-size: 1.15rem; letter-spacing: 2px; text-transform: uppercase; color: #FFF; }
+.tagline { font-size: 0.65rem; color: var(--accent-blush); margin-top: 10px; }
 
-.logo-area {
-    margin-bottom: 50px;
-}
+.nav-links { list-style: none; flex-grow: 1; }
+.nav-links li { margin-bottom: 22px; }
+.nav-links a { color: #FFF; text-decoration: none; font-size: 0.95rem; font-weight: 300; transition: 0.3s; }
+.nav-links a:hover, .nav-links a.active { padding-left: 8px; border-left: 2px solid var(--accent-blush); }
 
-.logo-r3 {
-    font-family: var(--font-serif);
-    font-size: 2.8rem;
-    display: block;
-    line-height: 1;
-    color: var(--white);
-}
+.sub-nav { list-style: none; padding-left: 15px; margin-top: 10px; }
+.sub-nav li { margin-bottom: 10px; font-size: 0.85rem; }
+.sub-nav a { color: rgba(255,255,255,0.7) !important; }
 
-.logo-text {
-    font-size: 1.15rem; /* Slightly smaller to fit 210px width comfortably */
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    font-weight: 400;
-    color: var(--white);
-    margin-top: 5px;
-    display: block;
-}
+/* 4. MAIN CONTENT LAYOUT */
+.content { margin-left: 210px; width: calc(100% - 210px); background-color: var(--site-bg); min-height: 100vh; }
+section { padding: 80px 8%; }
 
-.tagline {
-    font-size: 0.65rem;
-    margin-top: 10px;
-    color: #bfaaa3;
-}
-
-.nav-links {
-    list-style: none;
-    flex-grow: 1;
-}
-
-.nav-links li {
-    margin-bottom: 22px;
-}
-
-.nav-links a {
-    color: #ccc;
-    text-decoration: none;
-    font-size: 0.95rem; /* Adjusted for narrower sidebar */
-    transition: 0.3s;
-    font-weight: 300;
-}
-
-.nav-links a:hover, .nav-links a.active {
-    color: var(--white);
-    padding-left: 8px;
-    border-left: 2px solid var(--accent-mauve);
-}
-
-.cta-sidebar {
-    display: block;
-    padding: 10px 15px;
-    background-color: var(--white);
-    color: var(--btn-bg);
-    text-decoration: none;
-    border-radius: 50px;
-    font-weight: 600;
-    font-size: 0.9rem;
-    text-align: center;
-    border: 1px solid var(--white);
-    transition: 0.3s;
-}
-
-.cta-sidebar:hover {
-    background-color: var(--btn-bg);
-    color: var(--white);
-}
-
-/* CONTENT - Offset adjusted to 210px */
-.content {
-    margin-left: 210px;
-    width: calc(100% - 210px);
-    padding: 0;
-    background-color: var(--site-bg);
-}
-
-section {
-    padding: 100px 8%;
-}
-
-.hero {
-    height: 85vh;
-    display: flex;
-    align-items: center;
-    background: linear-gradient(rgba(244,244,244,0.7), rgba(244,244,244,0.7)), 
+/* 5. HERO & HEADERS */
+.hero { 
+    height: 85vh; display: flex; align-items: center;
+    background: linear-gradient(rgba(237,220,205,0.8), rgba(237,220,205,0.8)), 
                 url('https://images.unsplash.com/photo-1499750310107-5fef28a66643?auto=format&fit=crop&q=80&w=2070');
-    background-size: cover;
-    background-position: center;
+    background-size: cover; background-position: center;
+}
+.page-header { background-color: var(--card-bg); border-bottom: 1px solid #eee; padding: 60px 8%; }
+.sub-headline { font-size: 1.4rem; margin-top: 10px; font-weight: 300; }
+
+/* 6. UNIVERSAL CARD & GRID SYSTEMS */
+
+/* Home Page Services & Psychoedu Grid */
+.service-grid, .edu-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; margin-top: 40px; }
+
+.service-card, .edu-category { 
+    background: var(--card-bg); padding: 35px; border-radius: 12px; 
+    border-left: 5px solid var(--accent-sage); transition: 0.3s;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+}
+.service-card:hover, .edu-category:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0,0,0,0.05); }
+
+/* 7. ASSESSMENT / TEST PAGES (DASS21, K10, PCL5) */
+.test-container { max-width: 800px; margin: 40px auto; }
+.scale-legend { background: var(--card-bg); padding: 25px; border-radius: 8px; margin-bottom: 30px; border: 1px solid var(--accent-blush); }
+
+.q-block { 
+    background: var(--card-bg); padding: 25px; margin-bottom: 20px; 
+    border-radius: 8px; border-left: 4px solid var(--accent-blush); 
+}
+.options { margin-top: 15px; display: flex; gap: 20px; flex-wrap: wrap; }
+.options label { font-size: 0.9rem; cursor: pointer; display: flex; align-items: center; gap: 8px; }
+
+/* 8. BLOG SYSTEM */
+.blog-list { max-width: 900px; margin: 0 auto; padding: 60px 0; }
+.blog-card { background: var(--card-bg); padding: 40px; border-radius: 12px; margin-bottom: 30px; border-bottom: 4px solid var(--accent-blush); }
+.blog-card .date { font-size: 0.8rem; color: var(--accent-sage); text-transform: uppercase; font-weight: 600; }
+
+/* 9. RESULTS & THANKS PAGES */
+.results-container, .thanks-container { display: flex; flex-direction: column; align-items: center; padding: 80px 10%; }
+.result-card, .thanks-card { 
+    background: var(--card-bg); width: 100%; max-width: 700px; padding: 60px; 
+    border-radius: 12px; box-shadow: 0 15px 35px rgba(0,0,0,0.05); text-align: center; 
 }
 
-h1 {
-    font-size: 3.2rem;
-    margin-bottom: 25px;
+.score-circle, .icon-circle { 
+    width: 110px; height: 110px; border: 5px solid var(--accent-sage); border-radius: 50%; 
+    display: flex; justify-content: center; align-items: center; margin: 0 auto 20px;
+}
+.score-circle span { font-family: var(--font-serif); font-size: 2rem; color: var(--text-heading); font-weight: 700; }
+.interpretation-box, .expectation-box { 
+    background: var(--site-bg); padding: 30px; border-radius: 8px; 
+    margin: 30px 0; text-align: left; border-left: 4px solid var(--accent-blush); 
 }
 
-.sub-headline {
-    font-size: 1.4rem;
-    margin-bottom: 50px;
-    font-weight: 300;
+/* 10. FORMS & CONTACT */
+.contact-card { max-width: 600px; margin: 0 auto; background: var(--card-bg); padding: 50px; border-radius: 12px; }
+.contact-form { display: flex; flex-direction: column; gap: 15px; margin-top: 30px; }
+.contact-form input, .contact-form textarea { padding: 14px; border: 1px solid #ddd; border-radius: 6px; font-family: var(--font-sans); }
+
+/* 11. BUTTONS (Pill Shape) */
+.btn-primary, .btn-submit { 
+    padding: 15px 45px; background-color: var(--btn-bg); color: var(--btn-text); 
+    text-decoration: none; font-weight: 600; border-radius: 50px; border: 2px solid var(--btn-bg); 
+    display: inline-block; cursor: pointer; transition: 0.3s; text-align: center; font-size: 1rem;
+}
+.btn-primary:hover { background-color: transparent; color: var(--btn-bg); }
+
+.cta-sidebar { 
+    display: block; padding: 10px 15px; background-color: var(--site-bg); 
+    color: var(--sidebar-color); text-decoration: none; border-radius: 50px; 
+    font-weight: 600; font-size: 0.9rem; text-align: center;
 }
 
-.btn-primary {
-    padding: 14px 40px;
-    background-color: var(--btn-bg);
-    color: var(--btn-text);
-    text-decoration: none;
-    font-weight: 600;
-    border-radius: 50px;
-    border: 2px solid var(--btn-bg);
-    transition: 0.3s;
-    font-size: 1rem;
-}
+/* 12. MISC UI ELEMENTS */
+.tag { font-size: 0.7rem; background: var(--site-bg); padding: 4px 12px; border-radius: 20px; color: var(--text-heading); font-weight: 600; }
+footer { text-align: center; padding: 50px; font-size: 0.8rem; color: #888; }
 
-.btn-primary:hover {
-    background-color: transparent;
-    color: var(--btn-bg);
-}
-
-.services { background-color: var(--white); }
-
-.service-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 30px;
-    margin-top: 50px;
-}
-
-.service-card {
-    padding: 30px;
-    border: 1px solid #e0e0e0;
-    border-radius: 8px;
-    background-color: var(--card-bg);
-}
-
-.service-card h3 { color: var(--accent-olive); margin-bottom: 15px; }
-
-.about-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 50px;
-    margin-top: 40px;
-}
-
-.contact-card {
-    max-width: 600px;
-    margin: 0 auto;
-    background: var(--card-bg);
-    padding: 50px;
-    border-radius: 10px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-}
-
-.contact-form {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    margin-top: 30px;
-}
-
-.contact-form input, .contact-form textarea {
-    padding: 12px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    font-family: var(--font-sans);
-}
-
-.btn-submit {
-    padding: 15px;
-    background-color: var(--btn-bg);
-    color: var(--btn-text);
-    border: none;
-    border-radius: 50px;
-    cursor: pointer;
-    font-weight: 600;
-}
-
-footer { text-align: center; padding: 40px; font-size: 0.8rem; color: #888; }
-
+/* 13. RESPONSIVE DESIGN */
 @media (max-width: 1000px) {
     body { flex-direction: column; }
-    .sidebar { width: 100%; height: auto; position: relative; padding: 20px; }
+    .sidebar { width: 100%; height: auto; position: relative; padding: 25px; }
     .nav-links { display: none; }
     .content { margin-left: 0; width: 100%; }
+    .hero { height: 60vh; }
     h1 { font-size: 2.5rem; }
 }
-/* Sub-page Specific Styling */
-.page-header {
-    background-color: var(--card-bg);
-    border-bottom: 1px solid #eee;
-    padding: 60px 8%;
-}
-
-.blog-list, .edu-grid {
-    padding: 60px 8%;
-}
-
-.blog-card {
-    margin-bottom: 40px;
-    padding-bottom: 40px;
-    border-bottom: 1px solid var(--accent-mauve);
-}
-
-.blog-card .date {
-    font-size: 0.8rem;
-    color: var(--accent-olive);
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-
-.blog-card h2 {
-    margin: 10px 0;
-}
-
-.read-more {
-    color: var(--text-heading);
-    text-decoration: none;
-    font-weight: 600;
-    font-size: 0.9rem;
-}
-
-.edu-grid {
+/* Styling for the About Section Cards */
+.about-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 30px;
+    margin-top: 40px;
 }
 
-.edu-category {
-    background: white;
-    padding: 30px;
-    border-radius: 8px;
-    border-left: 4px solid var(--accent-olive);
+.about-card {
+    background: var(--card-bg);
+    padding: 40px;
+    border-radius: 12px;
+    border-left: 5px solid var(--accent-sage); /* Sage border to match services */
+    box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+    transition: 0.3s;
 }
 
-.tag {
-    font-size: 0.7rem;
-    background: var(--site-bg);
-    padding: 4px 10px;
-    border-radius: 20px;
-    color: var(--text-heading);
+.about-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.05);
 }
-/* Sub-navigation inside Sidebar */
-.sub-nav {
-    list-style: none;
-    padding-left: 15px;
-    margin-top: 10px;
-}
-.sub-nav li { font-size: 0.85rem; margin-bottom: 10px; }
 
-/* Questionnaire Styling */
-.test-container { max-width: 800px; margin: 40px auto; }
-.q-block {
-    background: white;
-    padding: 20px;
-    margin-bottom: 20px;
-    border-radius: 8px;
-    border-left: 4px solid var(--accent-mauve);
+.about-card h3 {
+    margin-bottom: 15px;
+    font-size: 1.5rem;
 }
-.options { margin-top: 15px; display: flex; gap: 20px; flex-wrap: wrap; }
-.options label { font-size: 0.9rem; cursor: pointer; }
 
-/* Result Display */
-.results-display { display: flex; justify-content: center; align-items: center; min-height: 70vh; }
-.result-card {
-    background: white;
-    padding: 60px;
-    border-radius: 15px;
-    text-align: center;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.05);
-    max-width: 500px;
+.section-header {
+    margin-bottom: 40px;
+    max-width: 800px;
 }
-.score-circle {
-    width: 120px;
-    height: 120px;
-    border: 5px solid var(--accent-olive);
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 30px auto;
-    font-size: 2.5rem;
-    font-weight: 700;
-    color: var(--text-heading);
+
+.philosophy-intro {
+    font-size: 1.25rem;
+    margin-top: 15px;
 }
