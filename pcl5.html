@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PCL-5 Assessment | R3 Psychology</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Lora:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <nav class="sidebar">
+        <div class="logo-area">
+            <span class="logo-r3">R3</span>
+            <span class="logo-text">Psychology</span>
+        </div>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="psychoeducation.html">Psychoeducation</a></li>
+            <li>
+                <a href="psychometrics.html" class="active">Psychometrics</a>
+                <ul class="sub-nav">
+                    <li><a href="dass21.html">DASS-21</a></li>
+                    <li><a href="k10.html">K10</a></li>
+                    <li><a href="pcl5.html">PCL-5</a></li>
+                </ul>
+            </li>
+            <li><a href="blog.html">Blog</a></li>
+        </ul>
+    </nav>
+
+    <main class="content">
+        <section class="test-header">
+            <h1>PCL-5 Assessment</h1>
+            <p class="sub-headline">Below is a list of problems that people sometimes have in response to a very stressful experience. Please read each problem carefully and select one of the numbers to indicate how much you have been <strong>bothered by that problem in the past month.</strong></p>
+            <div class="scale-legend">
+                <p><strong>0</strong> = Not at all</p>
+                <p><strong>1</strong> = A little bit</p>
+                <p><strong>2</strong> = Moderately</p>
+                <p><strong>3</strong> = Quite a bit</p>
+                <p><strong>4</strong> = Extremely</p>
+            </div>
+        </section>
+
+        <section class="test-container">
+            <form id="pclForm">
+                <div id="questions-wrapper">
+                    </div>
+
+                <div class="form-footer">
+                    <button type="submit" class="btn-primary">Calculate My Results</button>
+                </div>
+            </form>
+        </section>
+    </main>
+
+    <script>
+        const questions = [
+            "Repeated, disturbing, and unwanted memories of the stressful experience?",
+            "Repeated, disturbing dreams of the stressful experience?",
+            "Suddenly feeling or acting as if the stressful experience were actually happening again (as if you were actually back there reliving it)?",
+            "Feeling very upset when something reminded you of the stressful experience?",
+            "Having strong physical reactions when something reminded you of the stressful experience (for example, heart pounding, trouble breathing, sweating)?",
+            "Avoiding memories, thoughts, or feelings related to the stressful experience?",
+            "Avoiding external reminders of the stressful experience (for example, people, places, conversations, activities, objects, or situations)?",
+            "Trouble remembering important parts of the stressful experience?",
+            "Having strong negative beliefs about yourself, other people, or the world (for example, having thoughts such as: “I am bad,” “there is something seriously wrong with me,” “no one can be trusted,” “the world is completely dangerous”)?",
+            "Blaming yourself or someone else for the stressful experience or what happened after it?",
+            "Having strong negative feelings such as fear, horror, anger, guilt, or shame?",
+            "Loss of interest in activities that you used to enjoy?",
+            "Feeling distant or cut off from other people?",
+            "Trouble experiencing positive feelings (for example, being unable to feel happiness or have loving feelings for people close to you)?",
+            "Irritable behavior, feeling angry, or acting aggressively?",
+            "Taking too many risks or doing things that could cause you harm?",
+            "Being “superalert” or watchful or on guard?",
+            "Feeling jumpy or easily startled?",
+            "Having difficulty concentrating?",
+            "Trouble falling or staying asleep?"
+        ];
+
+        const wrapper = document.getElementById('questions-wrapper');
+        
+        // Inject questions
+        questions.forEach((q, index) => {
+            const qNum = index + 1;
+            wrapper.innerHTML += `
+                <div class="q-block">
+                    <p class="q-text"><strong>${qNum}.</strong> ${q}</p>
+                    <div class="options">
+                        <label><input type="radio" name="q${qNum}" value="0" required> 0</label>
+                        <label><input type="radio" name="q${qNum}" value="1"> 1</label>
+                        <label><input type="radio" name="q${qNum}" value="2"> 2</label>
+                        <label><input type="radio" name="q${qNum}" value="3"> 3</label>
+                        <label><input type="radio" name="q${qNum}" value="4"> 4</label>
+                    </div>
+                </div>
+            `;
+        });
+
+        document.getElementById('pclForm').onsubmit = function(e) {
+            e.preventDefault();
+            const data = new FormData(this);
+            let total = 0;
+
+            for (let value of data.values()) {
+                total += parseInt(value);
+            }
+
+            // PCL-5 Interpretation
+            // A total score of 31-33 or higher is suggestive of PTSD
+            let interpretation = "";
+            if (total < 33) {
+                interpretation = "Your score is below the typical clinical threshold for PTSD. However, if these symptoms are causing significant distress, professional consultation is still recommended.";
+            } else {
+                interpretation = "Your score is above the clinical threshold (33) which suggests a probable diagnosis of PTSD. It is highly recommended that you discuss these results with a mental health professional for a formal assessment.";
+            }
+
+            localStorage.setItem('lastResult', JSON.stringify({
+                testName: "PCL-5 Assessment",
+                score: total,
+                interpretation: interpretation
+            }));
+
+            window.location.href = 'results.html';
+        };
+    </script>
+</body>
+</html>

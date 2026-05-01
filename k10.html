@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>K10 Assessment | R3 Psychology</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Lora:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <nav class="sidebar">
+        <div class="logo-area">
+            <span class="logo-r3">R3</span>
+            <span class="logo-text">Psychology</span>
+        </div>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="psychoeducation.html">Psychoeducation</a></li>
+            <li>
+                <a href="psychometrics.html" class="active">Psychometrics</a>
+                <ul class="sub-nav">
+                    <li><a href="dass21.html">DASS-21</a></li>
+                    <li><a href="k10.html">K10</a></li>
+                    <li><a href="pcl5.html">PCL-5</a></li>
+                </ul>
+            </li>
+            <li><a href="blog.html">Blog</a></li>
+        </ul>
+    </nav>
+
+    <main class="content">
+        <section class="test-header">
+            <h1>K10 Assessment</h1>
+            <p class="sub-headline">The following questions ask about how you have been feeling <strong>during the past 30 days</strong>. For each question, please select the option that best describes you.</p>
+            <div class="scale-legend">
+                <p><strong>1</strong> = None of the time</p>
+                <p><strong>2</strong> = A little of the time</p>
+                <p><strong>3</strong> = Some of the time</p>
+                <p><strong>4</strong> = Most of the time</p>
+                <p><strong>5</strong> = All of the time</p>
+            </div>
+        </section>
+
+        <section class="test-container">
+            <form id="k10Form">
+                <div id="questions-wrapper">
+                    </div>
+
+                <div class="form-footer">
+                    <button type="submit" class="btn-primary">Calculate My Results</button>
+                </div>
+            </form>
+        </section>
+    </main>
+
+    <script>
+        const questions = [
+            "In the past 4 weeks, about how often did you feel tired out for no good reason?",
+            "In the past 4 weeks, about how often did you feel nervous?",
+            "In the past 4 weeks, about how often did you feel so nervous that nothing could calm you down?",
+            "In the past 4 weeks, about how often did you feel hopeless?",
+            "In the past 4 weeks, about how often did you feel restless or fidgety?",
+            "In the past 4 weeks, about how often did you feel so restless you could not sit still?",
+            "In the past 4 weeks, about how often did you feel depressed?",
+            "In the past 4 weeks, about how often did you feel that everything was an effort?",
+            "In the past 4 weeks, about how often did you feel so sad that nothing could cheer you down?",
+            "In the past 4 weeks, about how often did you feel worthless?"
+        ];
+
+        const wrapper = document.getElementById('questions-wrapper');
+        
+        // Inject questions
+        questions.forEach((q, index) => {
+            const qNum = index + 1;
+            wrapper.innerHTML += `
+                <div class="q-block">
+                    <p class="q-text"><strong>${qNum}.</strong> ${q}</p>
+                    <div class="options">
+                        <label><input type="radio" name="q${qNum}" value="1" required> 1</label>
+                        <label><input type="radio" name="q${qNum}" value="2"> 2</label>
+                        <label><input type="radio" name="q${qNum}" value="3"> 3</label>
+                        <label><input type="radio" name="q${qNum}" value="4"> 4</label>
+                        <label><input type="radio" name="q${qNum}" value="5"> 5</label>
+                    </div>
+                </div>
+            `;
+        });
+
+        document.getElementById('k10Form').onsubmit = function(e) {
+            e.preventDefault();
+            const data = new FormData(this);
+            let total = 0;
+
+            for (let value of data.values()) {
+                total += parseInt(value);
+            }
+
+            // K10 Interpretation Brackets
+            let interpretation = "";
+            if (total <= 19) {
+                interpretation = "Likely to be well. Most individuals in this range do not require clinical intervention.";
+            } else if (total <= 24) {
+                interpretation = "Likely to have a mild mental disorder. Monitoring and low-intensity support may be beneficial.";
+            } else if (total <= 29) {
+                interpretation = "Likely to have a moderate mental disorder. Clinical consultation is recommended.";
+            } else {
+                interpretation = "Likely to have a severe mental disorder. Professional psychological support is highly recommended.";
+            }
+
+            localStorage.setItem('lastResult', JSON.stringify({
+                testName: "K10 Distress Scale",
+                score: total,
+                interpretation: interpretation
+            }));
+
+            window.location.href = 'results.html';
+        };
+    </script>
+</body>
+</html>
