@@ -129,14 +129,88 @@ section { padding: 80px 8%; }
 .tag { font-size: 0.7rem; background: var(--site-bg); padding: 4px 12px; border-radius: 20px; color: var(--text-heading); font-weight: 600; }
 footer { text-align: center; padding: 50px; font-size: 0.8rem; color: #888; }
 
-/* 13. RESPONSIVE DESIGN */
+/* 13. IMPROVED RESPONSIVE DESIGN */
 @media (max-width: 1000px) {
     body { flex-direction: column; }
-    .sidebar { width: 100%; height: auto; position: relative; padding: 25px; }
-    .nav-links { display: none; }
-    .content { margin-left: 0; width: 100%; }
-    .hero { height: 60vh; }
-    h1 { font-size: 2.5rem; }
+
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: fixed; /* Sticks to the top of the phone screen */
+        top: 0;
+        left: 0;
+        padding: 15px 25px;
+        flex-direction: column;
+        background-color: var(--sidebar-color);
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+
+    .sidebar-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+    }
+
+    .logo-area { margin-bottom: 0; }
+    .logo-r3 { font-size: 2rem; }
+    .logo-text { font-size: 0.9rem; }
+    .tagline { display: none; } /* Hide tagline on mobile to save space */
+
+    /* The Hamburger Icon */
+    .mobile-toggle {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        cursor: pointer;
+    }
+
+    .mobile-toggle span {
+        display: block;
+        width: 25px;
+        height: 3px;
+        background-color: white;
+        border-radius: 3px;
+        transition: 0.3s;
+    }
+
+    /* Hide links by default on mobile */
+    .nav-links {
+        display: none; 
+        width: 100%;
+        flex-direction: column;
+        padding: 20px 0;
+        border-top: 1px solid rgba(255,255,255,0.1);
+        margin-top: 15px;
+    }
+
+    /* When the menu is toggled open via JS */
+    .nav-links.active {
+        display: flex;
+    }
+
+    .nav-links li { margin-bottom: 15px; }
+
+    .content {
+        margin-left: 0;
+        width: 100%;
+        padding-top: 80px; /* Prevents content from hiding behind the fixed header */
+    }
+
+    .hero { height: 70vh; }
+    h1 { font-size: 2.2rem; }
+
+    /* Hide the footer CTA in the sidebar on mobile and show as a regular link */
+    .nav-footer { display: none; }
+    .mobile-only-cta {
+        background: var(--accent-blush) !important;
+        color: var(--sidebar-color) !important;
+        padding: 10px !important;
+        text-align: center;
+        border-radius: 5px;
+        font-weight: 600;
+        border: none !important;
+    }
 }
 /* Styling for the About Section Cards */
 .about-grid {
@@ -173,4 +247,32 @@ footer { text-align: center; padding: 50px; font-size: 0.8rem; color: #888; }
 .philosophy-intro {
     font-size: 1.25rem;
     margin-top: 15px;
+}
+/* Blog Post Styling */
+.blog-post {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 60px 20px;
+}
+
+.post-header h1 {
+    font-size: 3rem;
+    margin: 20px 0;
+}
+
+.post-body p {
+    font-size: 1.15rem;
+    margin-bottom: 25px;
+    color: var(--text-body);
+}
+
+.post-body h2 {
+    margin: 40px 0 15px;
+    font-size: 1.8rem;
+}
+
+.post-footer {
+    margin-top: 60px;
+    padding-top: 30px;
+    border-top: 1px solid var(--accent-blush);
 }
