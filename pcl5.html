@@ -199,5 +199,21 @@
             box-shadow: 0 2px 8px rgba(0,0,0,0.02);
         }
     </style>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const menuBtn = document.getElementById('mobile-menu-btn');
+        const navLinks = document.getElementById('nav-links');
+
+        if (menuBtn && navLinks) {
+            menuBtn.addEventListener('click', function() {
+                navLinks.classList.toggle('active');
+                console.log("Menu toggled!"); // If you see this in the 'inspect' console, JS is working
+            });
+        } else {
+            console.error("Menu buttons not found in the DOM.");
+        }
+    });
+</script>
+
 </body>
 </html>

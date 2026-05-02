@@ -70,5 +70,20 @@
 
         </section>
     </main>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const menuBtn = document.getElementById('mobile-menu-btn');
+        const navLinks = document.getElementById('nav-links');
+
+        if (menuBtn && navLinks) {
+            menuBtn.addEventListener('click', function() {
+                navLinks.classList.toggle('active');
+                console.log("Menu toggled!"); 
+            });
+        }
+    });
+    </script>
+
 </body>
 </html>

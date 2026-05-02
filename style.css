@@ -365,3 +365,32 @@ footer { text-align: center; padding: 50px; font-size: 0.8rem; color: #888; }
     .input-row { grid-template-columns: 1fr; }
     .intake-form { padding: 25px; }
 }
+@media (max-width: 1000px) {
+    /* Hide the links by default on mobile */
+    .nav-links {
+        display: none !important; 
+        flex-direction: column;
+        width: 100%;
+        background-color: var(--sidebar-color);
+        position: absolute;
+        top: 60px; /* Adjust based on your header height */
+        left: 0;
+        padding: 20px;
+        z-index: 999;
+    }
+
+    /* THIS IS THE FIX: This class is added by JavaScript */
+    .nav-links.active {
+        display: flex !important;
+    }
+
+    /* Style the hamburger lines so we know they are there */
+    .mobile-toggle span {
+        display: block;
+        width: 25px;
+        height: 3px;
+        margin: 5px 0;
+        background-color: white;
+        transition: 0.3s;
+    }
+}
