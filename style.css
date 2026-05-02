@@ -23,7 +23,14 @@ html { scroll-behavior: smooth; }
 body { font-family: var(--font-sans); background-color: var(--site-bg); color: var(--text-body); display: flex; }
 
 /* 2. TYPOGRAPHY */
-h1, h2, h3 { font-family: var(--font-serif); color: var(--text-heading); font-weight: 700; }
+h1 {
+    font-size: 4rem; /* Change this number to go larger (e.g., 4.5rem or 5rem) */
+    line-height: 1.1; /* Keeps lines close together so it doesn't look gapped */
+    margin-bottom: 20px;
+    color: var(--accent-sage); /* Optional: Add a subtle color to the main headline */
+}
+
+h2, h3 { font-family: var(--font-serif); color: var(--text-heading); font-weight: 700; }
 p { font-family: var(--font-sans); color: var(--text-body); font-weight: 300; line-height: 1.6; }
 strong { color: var(--accent-sage); font-weight: 600; }
 
