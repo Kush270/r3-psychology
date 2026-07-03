@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="LaunchDesk is a customizable personal dashboard and browser start page."
+    />
+    <title>LaunchDesk</title>
+    <link rel="stylesheet" href="./src/styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <a class="brand" href="./" aria-label="LaunchDesk home">
+          <span class="brand-mark">L</span>
+          <span>LaunchDesk</span>
+        </a>
+
+        <form class="global-search" id="global-search">
+          <label class="sr-only" for="search-engine">Search engine</label>
+          <select id="search-engine" name="engine"></select>
+          <label class="sr-only" for="search-query">Search the web</label>
+          <input
+            id="search-query"
+            type="search"
+            name="query"
+            placeholder="Search the web"
+            autocomplete="off"
+          />
+        </form>
+
+        <div class="top-actions">
+          <span class="sync-status" id="sync-status">Saved</span>
+          <button class="button primary" id="add-widget-button" type="button">+ Widget</button>
+          <button class="icon-button" id="settings-button" type="button" aria-label="Settings">⚙</button>
+          <button class="avatar-button" type="button" aria-label="User menu">K</button>
+        </div>
+      </header>
+
+      <main class="dashboard-page">
+        <section class="dashboard-hero">
+          <div>
+            <p class="eyebrow">Personal command centre</p>
+            <h1 id="dashboard-title">My Dashboard</h1>
+          </div>
+          <div class="privacy-toggle">
+            <span id="visibility-label">Private dashboard</span>
+            <label class="switch">
+              <input id="public-toggle" type="checkbox" />
+              <span></span>
+            </label>
+          </div>
+        </section>
+
+        <nav class="tabbar" aria-label="Dashboard tabs">
+          <div id="tabs" class="tabs"></div>
+          <button id="add-tab-button" class="tab-add" type="button">+</button>
+        </nav>
+
+        <section id="dashboard-canvas" class="dashboard-canvas" aria-live="polite"></section>
+      </main>
+    </div>
+
+    <div class="modal-backdrop hidden" id="widget-modal" role="dialog" aria-modal="true">
+      <section class="modal">
+        <header class="panel-header">
+          <div>
+            <p class="eyebrow">Add widget</p>
+            <h2>Choose a widget</h2>
+          </div>
+          <button class="icon-button" id="close-widget-modal" type="button" aria-label="Close">×</button>
+        </header>
+        <div class="widget-picker" id="widget-picker"></div>
+      </section>
+    </div>
+
+    <aside class="drawer hidden" id="settings-drawer" aria-label="Widget and dashboard settings">
+      <header class="panel-header">
+        <div>
+          <p class="eyebrow" id="drawer-kicker">Settings</p>
+          <h2 id="drawer-title">Dashboard settings</h2>
+        </div>
+        <button class="icon-button" id="close-settings" type="button" aria-label="Close">×</button>
+      </header>
+      <div id="settings-content" class="settings-content"></div>
+    </aside>
+
+    <div class="toast hidden" id="toast"></div>
+
+    <script type="module" src="./src/app.js"></script>
+  </body>
+</html>

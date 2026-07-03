@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#173f3a" />
+  <title>Practice Ledger — CPD logging</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,500;6..72,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <a class="brand" href="#summary" aria-label="Practice Ledger home">
+        <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span>Practice<br><strong>Ledger</strong></span>
+      </a>
+      <nav aria-label="CPD sections">
+        <button class="nav-item active" data-page="summary"><span class="nav-icon">⌂</span>CPD summary</button>
+        <button class="nav-item" data-page="plan"><span class="nav-icon">◇</span>Learning plan</button>
+        <button class="nav-item" data-page="log"><span class="nav-icon">＋</span>Log CPD</button>
+        <button class="nav-item" data-page="activities"><span class="nav-icon">≡</span>View CPD log</button>
+        <button class="nav-item" data-page="report"><span class="nav-icon">↗</span>CPD report</button>
+        <button class="nav-item" data-page="profile"><span class="nav-icon">○</span>CPD profile</button>
+      </nav>
+      <div class="sidebar-note">
+        <span class="eyebrow">2025–26 cycle</span>
+        <strong id="sideHours">0 of 30 hours</strong>
+        <div class="mini-track"><i id="sideProgress"></i></div>
+        <small>Ends 30 November 2026</small>
+      </div>
+      <button class="user-chip" data-page="profile">
+        <span class="avatar">KM</span><span><strong id="sideName">Khooshraj Mohun</strong><small>General registration</small></span><span>•••</span>
+      </button>
+    </aside>
+
+    <main>
+      <header class="topbar">
+        <div>
+          <span class="mobile-brand">Practice Ledger</span>
+          <span class="cycle-label">CPD cycle</span>
+          <button class="cycle-select">1 Dec 2025 — 30 Nov 2026 <span>⌄</span></button>
+        </div>
+        <div class="header-actions">
+          <button class="icon-button" title="Help">?</button>
+          <button class="icon-button" title="Notifications">♢</button>
+          <button class="avatar small" data-page="profile">KM</button>
+        </div>
+      </header>
+      <div id="app" class="content"></div>
+    </main>
+  </div>
+  <div id="toast" class="toast" role="status"></div>
+  <script src="app.js"></script>
+</body>
+</html>
