@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Psychometrics | R3 Psychology</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Lora:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="app.css">
+</head>
+<body>
+
+    <nav class="sidebar">
+        <div class="sidebar-header">
+            <div class="logo-area">
+                <span class="logo-r3">R3</span>
+                <span class="logo-text">Psychology</span>
+                <p class="tagline">Resolve · Renew · Recover</p>
+            </div>
+            <div class="mobile-toggle" id="mobile-menu-btn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+
+        <ul class="nav-links" id="nav-links">
+            <li><a href="../index.html">← Home</a></li>
+            <li><a href="#" data-view="hub">Assessments</a></li>
+            <li><a href="#" data-view="history">My Results</a></li>
+            <li class="nav-subhead">Start an assessment</li>
+            <li><a href="#" data-test="dass21">DASS-21</a></li>
+            <li><a href="#" data-test="k10">K10</a></li>
+            <li><a href="#" data-test="pcl5">PCL-5</a></li>
+        </ul>
+    </nav>
+
+    <main class="content">
+        <div id="auth-slot" class="pm-auth-slot"></div>
+        <div id="app" class="pm-app"></div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+    <script src="../shared/auth.js"></script>
+    <script src="app.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const menuBtn = document.getElementById('mobile-menu-btn');
+            const navLinks = document.getElementById('nav-links');
+            if (menuBtn && navLinks) {
+                menuBtn.addEventListener('click', function () { navLinks.classList.toggle('active'); });
+            }
+        });
+    </script>
+
+</body>
+</html>

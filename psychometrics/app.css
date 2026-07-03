@@ -1,0 +1,81 @@
+/* Psychometrics app — layered on top of the shared site style.css */
+
+.nav-subhead { margin-top: 14px; font-size: 0.65rem; text-transform: uppercase; letter-spacing: 1.5px; color: var(--accent-blush); opacity: 0.85; }
+#nav-links a.active { padding-left: 8px; border-left: 2px solid var(--accent-blush); }
+
+.pm-auth-slot { display: flex; justify-content: flex-end; padding: 18px 8% 0; }
+
+.pm-app { padding: 30px 8% 80px; }
+
+.pm-header { margin-bottom: 30px; }
+.pm-header h1 { font-size: 2.6rem; }
+.pm-header p { max-width: 720px; margin-top: 8px; }
+
+/* Assessment picker cards (reuses .edu-category look) */
+.pm-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
+.pm-card {
+    background: var(--card-bg); padding: 30px; border-radius: 12px;
+    border-left: 5px solid var(--accent-sage); box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+    transition: 0.25s; display: flex; flex-direction: column;
+}
+.pm-card:hover { transform: translateY(-4px); box-shadow: 0 12px 26px rgba(0,0,0,0.06); }
+.pm-card h3 { font-size: 1.5rem; margin: 10px 0 6px; }
+.pm-card p { flex-grow: 1; }
+.pm-card .pm-last { font-size: 0.8rem; color: var(--accent-sage); font-weight: 600; margin: 12px 0 4px; }
+.pm-card .btn-text { color: var(--text-heading); font-weight: 600; text-decoration: none; margin-top: 14px; display: inline-block; }
+.pm-card .btn-text:hover { color: var(--accent-blush); }
+
+/* Question blocks */
+.pm-question { background: var(--card-bg); padding: 22px 24px; margin-bottom: 16px; border-radius: 10px; border-left: 4px solid var(--accent-blush); }
+.pm-question .q-text { font-weight: 400; }
+.pm-options { display: flex; flex-direction: column; gap: 10px; margin-top: 16px; }
+.pm-option {
+    display: flex; align-items: center; gap: 12px; cursor: pointer;
+    padding: 11px 14px; border-radius: 8px; border: 1px solid transparent; transition: 0.15s;
+}
+.pm-option:hover { background: var(--site-bg); }
+.pm-option input[type="radio"] { accent-color: var(--accent-sage); width: 18px; height: 18px; }
+.pm-option .num { font-weight: 700; color: var(--text-heading); min-width: 14px; }
+.pm-option .txt { font-size: 0.95rem; color: #4a4a4a; }
+.pm-option:has(input:checked) { background: rgba(40, 91, 84, 0.08); border-color: var(--accent-sage); }
+
+.pm-actions { display: flex; gap: 12px; justify-content: flex-end; align-items: center; margin-top: 26px; }
+.pm-error { color: var(--accent-blush); font-weight: 600; margin-right: auto; }
+
+/* Result view */
+.pm-result-card { background: var(--card-bg); max-width: 720px; padding: 44px; border-radius: 14px; box-shadow: 0 15px 35px rgba(0,0,0,0.05); }
+.pm-result-card h2 { font-size: 1.9rem; }
+.pm-date { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; color: #8a8f88; margin-top: 4px; }
+.pm-scores { display: flex; flex-wrap: wrap; gap: 26px; justify-content: center; margin: 34px 0; }
+.pm-score-item { display: flex; flex-direction: column; align-items: center; }
+.pm-circle {
+    width: 96px; height: 96px; border: 4px solid var(--accent-sage); border-radius: 50%;
+    display: flex; justify-content: center; align-items: center; background: var(--site-bg); margin-bottom: 10px;
+}
+.pm-circle span { font-family: var(--font-serif); font-size: 1.7rem; font-weight: 700; color: var(--text-heading); }
+.pm-score-label { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 1px; color: var(--accent-sage); font-weight: 600; }
+.pm-score-level { font-size: 0.85rem; color: #555; margin-top: 2px; }
+.pm-interpret { background: var(--site-bg); padding: 24px 26px; border-radius: 8px; border-left: 4px solid var(--accent-blush); text-align: left; margin-bottom: 26px; }
+.pm-interpret h3 { margin-bottom: 8px; font-size: 1.05rem; }
+
+/* History list */
+.pm-history { display: grid; gap: 14px; }
+.pm-history-item {
+    background: var(--card-bg); padding: 20px 24px; border-radius: 11px; border: 1px solid #e6e0d3;
+    display: grid; grid-template-columns: 1fr auto; gap: 8px 18px; align-items: center;
+}
+.pm-history-item h4 { font-family: var(--font-serif); color: var(--text-heading); font-size: 1.2rem; margin: 0; }
+.pm-history-item .meta { font-size: 0.8rem; color: #8a8f88; }
+.pm-history-item .score-pill { background: var(--site-bg); color: var(--text-heading); font-weight: 700; padding: 6px 14px; border-radius: 20px; font-size: 0.95rem; white-space: nowrap; }
+.pm-history-item .interp { grid-column: 1 / -1; font-size: 0.92rem; color: #4a4a4a; margin: 0; }
+.pm-history-item .row-del { border: 0; background: transparent; color: #b98; cursor: pointer; font-size: 18px; }
+
+.pm-empty { background: var(--card-bg); padding: 40px; border-radius: 12px; text-align: center; color: #777; }
+
+.pm-loading { padding: 40px; color: #777; }
+
+@media (max-width: 600px) {
+    .pm-app { padding: 24px 16px 70px; }
+    .pm-auth-slot { padding: 14px 16px 0; }
+    .pm-result-card { padding: 28px; }
+}

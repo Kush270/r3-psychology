@@ -49,6 +49,17 @@ create table if not exists public.cpd_activities (
   created_at timestamptz not null default now()
 );
 
+create table if not exists public.psychometric_results (
+  id uuid primary key default gen_random_uuid(),
+  user_id uuid not null references auth.users(id) on delete cascade,
+  test_code text not null,        -- 'dass21' | 'k10' | 'pcl5'
+  test_name text not null,
+  score text not null,            -- e.g. 'D:10 A:12 S:14' or '24'
+  interpretation text not null,
+  answers jsonb,                  -- raw per-question answers
+  created_at timestamptz not null default now()
+);
+
 -- ---------- Dashboard (LaunchDesk) ----------
 
 create table if not exists public.dashboards (
@@ -99,6 +110,7 @@ end $$;
 alter table public.cpd_profile enable row level security;
 alter table public.cpd_plans enable row level security;
 alter table public.cpd_activities enable row level security;
+alter table public.psychometric_results enable row level security;
 alter table public.dashboards enable row level security;
 alter table public.dashboard_tabs enable row level security;
 alter table public.dashboard_widgets enable row level security;
@@ -111,6 +123,9 @@ create policy "own rows" on public.cpd_plans for all using (auth.uid() = user_id
 
 drop policy if exists "own rows" on public.cpd_activities;
 create policy "own rows" on public.cpd_activities for all using (auth.uid() = user_id) with check (auth.uid() = user_id);
+
+drop policy if exists "own rows" on public.psychometric_results;
+create policy "own rows" on public.psychometric_results for all using (auth.uid() = user_id) with check (auth.uid() = user_id);
 
 drop policy if exists "own rows" on public.dashboards;
 create policy "own rows" on public.dashboards for all using (auth.uid() = user_id) with check (auth.uid() = user_id);
