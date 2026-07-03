@@ -18,8 +18,14 @@
     .auth-toggle button { background: none; border: none; color: #2563eb; cursor: pointer; font-size: 13px; padding: 0; }
     .auth-error { color: #dc2626; font-size: 13px; margin: -6px 0 14px; min-height: 16px; }
     .auth-note { color: #15803d; font-size: 13px; margin: -6px 0 14px; min-height: 16px; }
-    .auth-bar { position: fixed; top: 10px; right: 12px; z-index: 9998; display: flex; align-items: center; gap: 10px; background: #fff; border: 1px solid #e2e8f0; border-radius: 999px; padding: 6px 12px; font: 13px system-ui, sans-serif; box-shadow: 0 4px 12px rgba(0,0,0,.08); }
-    .auth-bar button { border: none; background: #f1f5f9; border-radius: 999px; padding: 4px 10px; cursor: pointer; font-size: 12px; }
+    .auth-bar { display: flex; align-items: center; gap: 10px; font: 13px system-ui, sans-serif; }
+    .auth-bar--floating { position: fixed; top: 10px; right: 12px; z-index: 9998; background: #fff; border: 1px solid #e2e8f0; border-radius: 999px; padding: 6px 12px; box-shadow: 0 4px 12px rgba(0,0,0,.08); }
+    .auth-bar .auth-home { color: #2563eb; text-decoration: none; font-weight: 600; white-space: nowrap; }
+    .auth-bar .auth-home:hover { text-decoration: underline; }
+    .auth-bar .auth-email { color: #64748b; max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .auth-bar button { border: none; background: #f1f5f9; border-radius: 999px; padding: 5px 12px; cursor: pointer; font-size: 12px; white-space: nowrap; }
+    .auth-bar button:hover { background: #e2e8f0; }
+    @media (max-width: 600px) { .auth-bar .auth-email { display: none; } }
   `;
   document.head.appendChild(style);
 
@@ -74,13 +80,14 @@
   }
 
   function renderBar(session) {
+    const slot = document.getElementById("auth-slot");
     let bar = document.querySelector(".auth-bar");
     if (!bar) {
       bar = document.createElement("div");
-      bar.className = "auth-bar";
-      document.body.appendChild(bar);
+      bar.className = slot ? "auth-bar" : "auth-bar auth-bar--floating";
+      (slot || document.body).appendChild(bar);
     }
-    bar.innerHTML = `<span>${session.user.email}</span><button type="button" id="auth-signout">Sign out</button>`;
+    bar.innerHTML = `<a class="auth-home" href="../index.html">← Home</a><span class="auth-email">${session.user.email}</span><button type="button" id="auth-signout">Sign out</button>`;
     bar.querySelector("#auth-signout").addEventListener("click", () => client.auth.signOut());
   }
 
