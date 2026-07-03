@@ -4,15 +4,15 @@
    ========================================= */
 
 :root {
-    --site-bg: #EDDCCD;        /* Light Beige */
+    --site-bg: #fbfaf6;        /* Warm Paper (CPD) */
     --card-bg: #FFFFFF;        /* Pure White */
-    --text-heading: #647B70;   /* Dark Sage */
-    --text-body: #212121;      /* Charcoal */
-    --accent-blush: #E0C9C7;   /* Dusty Pink */
-    --accent-sage: #899E90;    /* Medium Sage */
-    --btn-bg: #647B70;         /* Dark Sage */
+    --text-heading: #173f3a;   /* Deep Green Ink (CPD) */
+    --text-body: #18332f;      /* Dark Green-Charcoal (CPD) */
+    --accent-blush: #c7983c;   /* Gold (CPD) */
+    --accent-sage: #285b54;    /* Mid Green (CPD ink2) */
+    --btn-bg: #173f3a;         /* Deep Green Ink (CPD) */
     --btn-text: #FFFFFF;
-    --sidebar-color: #647B70;
+    --sidebar-color: #173f3a;  /* Deep Green Ink (CPD) */
     --font-serif: 'Lora', serif;
     --font-sans: 'Inter', sans-serif;
 }
@@ -64,7 +64,7 @@ section { padding: 80px 8%; }
 /* 5. HERO & HEADERS */
 .hero { 
     height: 85vh; display: flex; align-items: center;
-    background: linear-gradient(rgba(237,220,205,0.8), rgba(237,220,205,0.8)), 
+    background: linear-gradient(rgba(251,250,246,0.82), rgba(247,241,223,0.82)),
                 url('https://images.unsplash.com/photo-1499750310107-5fef28a66643?auto=format&fit=crop&q=80&w=2070');
     background-size: cover; background-position: center;
 }

@@ -51,6 +51,9 @@ let state;
 let autosaveTimer;
 let clockTimer;
 
+const DEFAULT_ACCENT = "#285b54";
+const LEGACY_ACCENT = "#2563eb";
+
 function defaultDashboardShape() {
   const id = crypto.randomUUID();
   return {
@@ -58,7 +61,7 @@ function defaultDashboardShape() {
     name: "My Dashboard",
     visibility: "private",
     activeTabId: id,
-    theme: { accent: "#2563eb", wallpaper: "" },
+    theme: { accent: DEFAULT_ACCENT, wallpaper: "" },
     tabs: [{ id, title: "Home", visibility: "private", columnCount: 3, widgets: [] }]
   };
 }
@@ -100,12 +103,16 @@ async function loadDashboard() {
   lastSyncedTabIds = new Set(tabs.map((t) => t.id));
   lastSyncedWidgetIds = new Set((widgetRows || []).map((w) => w.id));
 
+  const theme = dashRow.theme || { accent: DEFAULT_ACCENT, wallpaper: "" };
+  // Migrate the legacy blue default so existing dashboards adopt the CPD palette.
+  if (!theme.accent || theme.accent === LEGACY_ACCENT) theme.accent = DEFAULT_ACCENT;
+
   return {
     version: 1,
     name: dashRow.name,
     visibility: dashRow.visibility,
     activeTabId: dashRow.active_tab_id || tabs[0].id,
-    theme: dashRow.theme || { accent: "#2563eb", wallpaper: "" },
+    theme,
     tabs
   };
 }
@@ -306,7 +313,7 @@ function renderHeaderState() {
   els.dashboardTitle.textContent = state.name;
   els.publicToggle.checked = state.visibility === "public";
   els.visibilityLabel.textContent = state.visibility === "public" ? "Public dashboard" : "Private dashboard";
-  document.documentElement.style.setProperty("--accent", state.theme.accent || "#2563eb");
+  document.documentElement.style.setProperty("--accent", state.theme.accent || DEFAULT_ACCENT);
   document.body.style.backgroundImage = state.theme.wallpaper
     ? `linear-gradient(135deg, rgba(248,250,252,.9), rgba(219,234,254,.78)), url("${state.theme.wallpaper}")`
     : "";
@@ -695,7 +702,7 @@ function openDashboardSettings() {
   els.settingsContent.innerHTML = `
     <form id="dashboard-settings-form">
       <label>Dashboard name<input id="dashboard-name-input" value="${escapeAttr(state.name)}" /></label>
-      <label>Accent color<input id="accent-input" type="color" value="${escapeAttr(state.theme.accent || "#2563eb")}" /></label>
+      <label>Accent color<input id="accent-input" type="color" value="${escapeAttr(state.theme.accent || DEFAULT_ACCENT)}" /></label>
       <label>Wallpaper image URL<input id="wallpaper-input" value="${escapeAttr(state.theme.wallpaper || "")}" placeholder="https://..." /></label>
       <label>Active tab columns<input id="columns-input" type="number" min="1" max="4" value="${activeTab().columnCount}" /></label>
       <button class="button primary" type="submit">Save dashboard</button>
