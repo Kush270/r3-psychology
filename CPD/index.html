@@ -32,7 +32,7 @@
         <small>Ends 30 November 2026</small>
       </div>
       <button class="user-chip" data-page="profile">
-        <span class="avatar">KM</span><span><strong id="sideName">Khooshraj Mohun</strong><small>General registration</small></span><span>•••</span>
+        <span class="avatar"></span><span><strong id="sideName">Your name</strong><small>General registration</small></span><span>•••</span>
       </button>
     </aside>
 
@@ -46,13 +46,15 @@
         <div class="header-actions">
           <button class="icon-button" title="Help">?</button>
           <button class="icon-button" title="Notifications">♢</button>
-          <button class="avatar small" data-page="profile">KM</button>
+          <button class="avatar small" data-page="profile"></button>
         </div>
       </header>
       <div id="app" class="content"></div>
     </main>
   </div>
   <div id="toast" class="toast" role="status"></div>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+  <script src="../shared/auth.js"></script>
   <script src="app.js"></script>
 </body>
 </html>

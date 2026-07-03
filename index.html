@@ -33,6 +33,13 @@
             </li>
             <li><a href="blog.html">Blog</a></li>
             <li><a href="intake.html">New Client Intake</a></li>
+            <li>
+                <a href="#" id="login-toggle" class="login-toggle" aria-expanded="false" aria-controls="login-submenu">Login</a>
+                <ul class="sub-nav" id="login-submenu" hidden>
+                    <li><a href="dashboard/index.html">Dashboard</a></li>
+                    <li><a href="CPD/index.html">CPD</a></li>
+                </ul>
+            </li>
             <li><a href="index.html#contact" class="mobile-only-cta">Contact Us</a></li>
         </ul>
     </nav>
@@ -157,6 +164,23 @@
             });
         } else {
             console.error("Menu buttons not found in the DOM.");
+        }
+
+        const loginToggle = document.getElementById('login-toggle');
+        const loginSubmenu = document.getElementById('login-submenu');
+
+        if (loginToggle && loginSubmenu) {
+            loginToggle.addEventListener('click', function(event) {
+                event.preventDefault();
+                const isOpen = loginSubmenu.hasAttribute('hidden');
+                if (isOpen) {
+                    loginSubmenu.removeAttribute('hidden');
+                } else {
+                    loginSubmenu.setAttribute('hidden', '');
+                }
+                loginToggle.setAttribute('aria-expanded', String(isOpen));
+                loginToggle.classList.toggle('open', isOpen);
+            });
         }
     });
 </script>

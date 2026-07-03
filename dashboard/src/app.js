@@ -1,5 +1,3 @@
-const STORAGE_KEY = "launchdesk.dashboard.v1";
-
 const searchEngines = [
   { id: "google", name: "Google", queryUrl: "https://www.google.com/search?q={query}" },
   { id: "duckduckgo", name: "DuckDuckGo", queryUrl: "https://duckduckgo.com/?q={query}" },
@@ -44,79 +42,138 @@ const els = {
   toast: document.querySelector("#toast")
 };
 
-let state = loadDashboard();
+// ---- Supabase-backed persistence ----
+
+let userId = null;
+let lastSyncedTabIds = new Set();
+let lastSyncedWidgetIds = new Set();
+let state;
 let autosaveTimer;
 let clockTimer;
 
-init();
-
-function init() {
-  renderSearchEngines();
-  renderWidgetPicker();
-  bindGlobalEvents();
-  render();
-  clockTimer = window.setInterval(renderClockFaces, 1000);
-}
-
-function defaultDashboard() {
-  const now = new Date().toISOString();
+function defaultDashboardShape() {
+  const id = crypto.randomUUID();
   return {
     version: 1,
     name: "My Dashboard",
     visibility: "private",
-    activeTabId: "home",
-    theme: {
-      accent: "#2563eb",
-      wallpaper: ""
-    },
-    tabs: [
-      {
-        id: "home",
-        title: "Home",
-        visibility: "private",
-        columnCount: 3,
-        widgets: [
-          createWidget("search", "home", 0),
-          createWidget("bookmarks", "home", 0),
-          createWidget("note", "home", 1, { content: "Pin a few thoughts here. Everything saves automatically.", format: "plain" }),
-          createWidget("clock", "home", 2)
-        ]
-      },
-      {
-        id: "news",
-        title: "News",
-        visibility: "public",
-        columnCount: 3,
-        widgets: [
-          createWidget("rss", "news", 0),
-          createWidget("bookmarks", "news", 1, {
-            displayMode: "compact",
-            openInNewTab: true,
-            links: [
-              link("ABC News", "https://www.abc.net.au/news"),
-              link("BBC", "https://www.bbc.com"),
-              link("Reuters", "https://www.reuters.com")
-            ]
-          })
-        ]
-      },
-      {
-        id: "work",
-        title: "Work",
-        visibility: "private",
-        columnCount: 3,
-        widgets: [
-          createWidget("todo", "work", 0),
-          createWidget("bookmarks", "work", 1),
-          createWidget("note", "work", 2, { content: "Meeting notes, quick drafts, and reminders.", format: "plain" })
-        ]
-      }
-    ]
+    activeTabId: id,
+    theme: { accent: "#2563eb", wallpaper: "" },
+    tabs: [{ id, title: "Home", visibility: "private", columnCount: 3, widgets: [] }]
   };
 }
 
+function widgetFromRow(row) {
+  return {
+    id: row.id,
+    tabId: row.tab_id,
+    type: row.type,
+    title: row.title,
+    config: row.config,
+    layout: row.layout,
+    appearance: row.appearance,
+    createdAt: row.created_at,
+    updatedAt: row.updated_at
+  };
+}
+
+async function loadDashboard() {
+  const client = window.AppAuth.client;
+  const [{ data: dashRow }, { data: tabRows }, { data: widgetRows }] = await Promise.all([
+    client.from("dashboards").select("*").eq("user_id", userId).maybeSingle(),
+    client.from("dashboard_tabs").select("*").eq("user_id", userId).order("sort_order"),
+    client.from("dashboard_widgets").select("*").eq("user_id", userId)
+  ]);
+
+  const tabs = (tabRows || []).map((t) => ({
+    id: t.id,
+    title: t.title,
+    visibility: t.visibility,
+    columnCount: t.column_count,
+    widgets: (widgetRows || []).filter((w) => w.tab_id === t.id).map(widgetFromRow)
+  }));
+
+  if (!dashRow || tabs.length === 0) {
+    return defaultDashboardShape();
+  }
+
+  lastSyncedTabIds = new Set(tabs.map((t) => t.id));
+  lastSyncedWidgetIds = new Set((widgetRows || []).map((w) => w.id));
+
+  return {
+    version: 1,
+    name: dashRow.name,
+    visibility: dashRow.visibility,
+    activeTabId: dashRow.active_tab_id || tabs[0].id,
+    theme: dashRow.theme || { accent: "#2563eb", wallpaper: "" },
+    tabs
+  };
+}
+
+function saveDashboard() {
+  els.syncStatus.textContent = "Saving";
+  clearTimeout(autosaveTimer);
+  autosaveTimer = window.setTimeout(syncDashboard, 400);
+}
+
+async function syncDashboard() {
+  const client = window.AppAuth.client;
+
+  // Tabs first so dashboards.active_tab_id and widgets.tab_id always have a valid FK target.
+  if (state.tabs.length) {
+    await client.from("dashboard_tabs").upsert(
+      state.tabs.map((t, index) => ({
+        id: t.id,
+        user_id: userId,
+        title: t.title,
+        visibility: t.visibility,
+        column_count: t.columnCount,
+        sort_order: index
+      }))
+    );
+  }
+
+  const currentTabIds = new Set(state.tabs.map((t) => t.id));
+  const removedTabIds = [...lastSyncedTabIds].filter((id) => !currentTabIds.has(id));
+  if (removedTabIds.length) await client.from("dashboard_tabs").delete().in("id", removedTabIds);
+  lastSyncedTabIds = currentTabIds;
+
+  await client.from("dashboards").upsert({
+    user_id: userId,
+    name: state.name,
+    visibility: state.visibility,
+    active_tab_id: state.activeTabId,
+    theme: state.theme,
+    updated_at: new Date().toISOString()
+  });
+
+  const allWidgets = state.tabs.flatMap((t) => t.widgets);
+  if (allWidgets.length) {
+    await client.from("dashboard_widgets").upsert(
+      allWidgets.map((w) => ({
+        id: w.id,
+        tab_id: w.tabId,
+        user_id: userId,
+        type: w.type,
+        title: w.title,
+        config: w.config,
+        layout: w.layout,
+        appearance: w.appearance,
+        updated_at: w.updatedAt || new Date().toISOString()
+      }))
+    );
+  }
+
+  const currentWidgetIds = new Set(allWidgets.map((w) => w.id));
+  const removedWidgetIds = [...lastSyncedWidgetIds].filter((id) => !currentWidgetIds.has(id));
+  if (removedWidgetIds.length) await client.from("dashboard_widgets").delete().in("id", removedWidgetIds);
+  lastSyncedWidgetIds = currentWidgetIds;
+
+  els.syncStatus.textContent = "Saved";
+}
+
 function createWidget(type, tabId, column = 0, configOverride = {}) {
-  const id = `${type}-${crypto.randomUUID ? crypto.randomUUID() : Date.now()}`;
+  const id = crypto.randomUUID();
   const now = new Date().toISOString();
   const defaults = {
     bookmarks: {
@@ -181,24 +238,6 @@ function favicon(url) {
   } catch {
     return "";
   }
-}
-
-function loadDashboard() {
-  try {
-    const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
-    return saved?.version === 1 ? saved : defaultDashboard();
-  } catch {
-    return defaultDashboard();
-  }
-}
-
-function saveDashboard() {
-  els.syncStatus.textContent = "Saving";
-  clearTimeout(autosaveTimer);
-  autosaveTimer = window.setTimeout(() => {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-    els.syncStatus.textContent = "Saved";
-  }, 250);
 }
 
 function bindGlobalEvents() {
@@ -683,7 +722,7 @@ function openDashboardSettings() {
   document.querySelector("#export-button").addEventListener("click", exportJson);
   document.querySelector("#import-button").addEventListener("click", importJson);
   document.querySelector("#reset-button").addEventListener("click", () => {
-    state = defaultDashboard();
+    state = defaultDashboardShape();
     saveDashboard();
     closeDrawer();
     render();
@@ -706,7 +745,7 @@ function importJson() {
     const dashboard = parsed.dashboard || parsed;
     if (!dashboard.tabs || !Array.isArray(dashboard.tabs)) throw new Error("Invalid dashboard");
     state = {
-      ...defaultDashboard(),
+      ...defaultDashboardShape(),
       ...dashboard,
       activeTabId: dashboard.activeTabId || dashboard.tabs[0].id,
       tabs: dashboard.tabs.map((tab) => ({
@@ -727,7 +766,7 @@ function importJson() {
 function addTab() {
   const title = prompt("New tab name", "Projects");
   if (!title) return;
-  const id = title.toLowerCase().replace(/[^a-z0-9]+/g, "-") + "-" + crypto.randomUUID().slice(0, 4);
+  const id = crypto.randomUUID();
   state.tabs.push({ id, title, visibility: "private", columnCount: 3, widgets: [] });
   state.activeTabId = id;
   saveDashboard();
@@ -833,3 +872,16 @@ function escapeHtml(value) {
 function escapeAttr(value) {
   return escapeHtml(value);
 }
+
+function init() {
+  renderSearchEngines();
+  renderWidgetPicker();
+  bindGlobalEvents();
+  render();
+  clockTimer = window.setInterval(renderClockFaces, 1000);
+}
+
+const session = await window.AppAuth.ready;
+userId = session.user.id;
+state = await loadDashboard();
+init();

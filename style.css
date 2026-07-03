@@ -54,6 +54,9 @@ strong { color: var(--accent-sage); font-weight: 600; }
 .sub-nav li { margin-bottom: 10px; font-size: 0.85rem; }
 .sub-nav a { color: rgba(255,255,255,0.7) !important; }
 
+.login-toggle::after { content: "\25B8"; display: inline-block; margin-left: 6px; font-size: 0.75rem; transition: transform 0.3s; }
+.login-toggle.open::after { transform: rotate(90deg); }
+
 /* 4. MAIN CONTENT LAYOUT */
 .content { margin-left: 210px; width: calc(100% - 210px); background-color: var(--site-bg); min-height: 100vh; }
 section { padding: 80px 8%; }
