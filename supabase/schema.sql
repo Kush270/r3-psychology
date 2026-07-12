@@ -67,7 +67,7 @@ create table if not exists public.dashboards (
   name text not null default 'My Dashboard',
   visibility text not null default 'private',
   active_tab_id uuid,
-  theme jsonb not null default '{"accent":"#285b54","wallpaper":""}',
+  theme jsonb not null default '{"accent":"#2f6b75","wallpaper":""}',
   updated_at timestamptz not null default now()
 );
 

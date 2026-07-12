@@ -4,15 +4,17 @@
    ========================================= */
 
 :root {
-    --site-bg: #fbfaf6;        /* Warm Paper (CPD) */
+    --site-bg: #faf8f2;        /* Bone (Harbour) */
     --card-bg: #FFFFFF;        /* Pure White */
-    --text-heading: #173f3a;   /* Deep Green Ink (CPD) */
-    --text-body: #18332f;      /* Dark Green-Charcoal (CPD) */
-    --accent-blush: #c7983c;   /* Gold (CPD) */
-    --accent-sage: #285b54;    /* Mid Green (CPD ink2) */
-    --btn-bg: #173f3a;         /* Deep Green Ink (CPD) */
+    --text-heading: #123b44;   /* Harbour Ink */
+    --text-body: #12303b;      /* Deep Teal Charcoal */
+    --accent-blush: #a9803e;   /* Brass */
+    --accent-sage: #2f6b75;    /* Tide Teal */
+    --btn-bg: #123b44;         /* Harbour Ink */
     --btn-text: #FFFFFF;
-    --sidebar-color: #173f3a;  /* Deep Green Ink (CPD) */
+    --sidebar-color: #123b44;  /* Harbour Ink */
+    --accent-olive: #2f6b75;   /* legacy alias (results page) */
+    --accent-mauve: #a9803e;   /* legacy alias (results page) */
     --font-serif: 'Lora', serif;
     --font-sans: 'Inter', sans-serif;
 }
@@ -64,8 +66,8 @@ section { padding: 80px 8%; }
 /* 5. HERO & HEADERS */
 .hero { 
     height: 85vh; display: flex; align-items: center;
-    background: linear-gradient(rgba(251,250,246,0.82), rgba(247,241,223,0.82)),
-                url('https://images.unsplash.com/photo-1499750310107-5fef28a66643?auto=format&fit=crop&q=80&w=2070');
+    background: linear-gradient(rgba(250,248,242,0.80), rgba(217,231,228,0.66)),
+                url('https://images.unsplash.com/photo-1476673160081-cf065607f449?auto=format&fit=crop&q=80&w=2070');
     background-size: cover; background-position: center;
 }
 .page-header { background-color: var(--card-bg); border-bottom: 1px solid #eee; padding: 60px 8%; }

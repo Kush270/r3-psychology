@@ -51,8 +51,8 @@ let state;
 let autosaveTimer;
 let clockTimer;
 
-const DEFAULT_ACCENT = "#285b54";
-const LEGACY_ACCENT = "#2563eb";
+const DEFAULT_ACCENT = "#2f6b75";
+const LEGACY_ACCENTS = ["#2563eb", "#285b54"];
 
 function defaultDashboardShape() {
   const id = crypto.randomUUID();
@@ -104,8 +104,8 @@ async function loadDashboard() {
   lastSyncedWidgetIds = new Set((widgetRows || []).map((w) => w.id));
 
   const theme = dashRow.theme || { accent: DEFAULT_ACCENT, wallpaper: "" };
-  // Migrate the legacy blue default so existing dashboards adopt the CPD palette.
-  if (!theme.accent || theme.accent === LEGACY_ACCENT) theme.accent = DEFAULT_ACCENT;
+  // Migrate old default accents (original blue, CPD green) so existing dashboards adopt the current palette.
+  if (!theme.accent || LEGACY_ACCENTS.includes(theme.accent)) theme.accent = DEFAULT_ACCENT;
 
   return {
     version: 1,

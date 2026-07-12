@@ -37,7 +37,7 @@
 .pm-option input[type="radio"] { accent-color: var(--accent-sage); width: 18px; height: 18px; }
 .pm-option .num { font-weight: 700; color: var(--text-heading); min-width: 14px; }
 .pm-option .txt { font-size: 0.95rem; color: #4a4a4a; }
-.pm-option:has(input:checked) { background: rgba(40, 91, 84, 0.08); border-color: var(--accent-sage); }
+.pm-option:has(input:checked) { background: rgba(47, 107, 117, 0.08); border-color: var(--accent-sage); }
 
 .pm-actions { display: flex; gap: 12px; justify-content: flex-end; align-items: center; margin-top: 26px; }
 .pm-error { color: var(--accent-blush); font-weight: 600; margin-right: auto; }
