@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Why you're still not sleeping | R3 Psychology</title>
+<meta name="description" content="The 3P model of insomnia: the thing that started it and the thing keeping it going are usually not the same thing.">
+<style>
+  :root{
+    /* Harbour palette, matching the rest of the site */
+    --paper:#faf8f2;
+    --card:#ffffff;
+    --ink:#123b44;
+    --body:#12303b;
+    --teal:#2f6b75;
+    --brass:#a9803e;
+    --line:#ded8ca;
+    --muted:#5f7175;
+    /* figure layers */
+    --set-1:#5f7175;   /* predisposing — locked */
+    --set-2:#a3a79e;   /* precipitating — locked, fading */
+    --live:#a9803e;    /* perpetuating — the only editable layer */
+    --serif:Georgia,'Iowan Old Style',Cambria,'Times New Roman',serif;
+    --sans:system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;
+    --mono:ui-monospace,SFMono-Regular,'SF Mono',Menlo,Consolas,monospace;
+  }
+
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--paper);color:var(--body);font-family:var(--serif);font-size:18px;line-height:1.62}
+  h1,h2,h3,h4{font-family:var(--serif);color:var(--ink);text-wrap:balance;margin:0}
+  p{margin:0 0 1em}p:last-child{margin-bottom:0}
+  a{color:var(--teal)}
+  a:focus-visible,button:focus-visible,summary:focus-visible,input:focus-visible{
+    outline:3px solid var(--teal);outline-offset:2px;border-radius:2px}
+  .skip{position:absolute;left:-9999px;background:var(--ink);color:#fff;padding:12px 18px;z-index:100;font-family:var(--sans)}
+  .skip:focus{left:0;top:0}
+  .wrap{max-width:720px;margin:0 auto;padding:0 20px}
+  .sr{position:absolute;width:1px;height:1px;padding:0;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+
+  /* masthead */
+  .masthead{background:var(--card);border-bottom:1px solid var(--line)}
+  .masthead .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-top:14px;padding-bottom:14px}
+  .mark{font-family:var(--sans);font-weight:800;letter-spacing:-.02em;font-size:1.05rem;color:var(--ink);text-decoration:none}
+  .mark span{font-weight:500;color:var(--muted);letter-spacing:.05em}
+  .masthead nav a{font-family:var(--sans);font-size:.85rem;text-decoration:none}
+  .masthead nav a:hover{text-decoration:underline}
+
+  /* intro */
+  .intro{padding:44px 0 26px}
+  .kicker{font-family:var(--sans);font-size:.7rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--teal);margin:0 0 14px}
+  h1{font-size:clamp(1.9rem,5.2vw,2.6rem);line-height:1.12;font-weight:700}
+  .standfirst{font-size:1.14rem;margin-top:16px;max-width:34em}
+
+  /* ---------- FIGURE (signature) ---------- */
+  .figure{position:sticky;top:0;z-index:30;background:var(--paper);border-bottom:1px solid var(--line);padding-bottom:10px}
+  .figure-inner{max-width:720px;margin:0 auto;padding:12px 20px 0}
+  .fig-head{display:flex;justify-content:space-between;align-items:baseline;gap:10px;font-family:var(--sans);
+    font-size:.66rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+  svg.chart{display:block;width:100%;height:auto;background:var(--card);border:1px solid var(--line)}
+  .axis-label{font-family:var(--mono);font-size:9px;fill:var(--muted)}
+  .thresh-label{font-family:var(--mono);font-size:9px;fill:var(--ink);font-weight:700}
+
+  .scrub-row{display:flex;align-items:center;gap:12px;margin-top:10px}
+  .scrub-row input[type=range]{flex:1;accent-color:var(--teal);min-width:0;height:34px;cursor:pointer}
+  .play{font-family:var(--sans);font-size:.8rem;font-weight:700;cursor:pointer;background:var(--ink);
+    color:#fff;border:2px solid var(--ink);padding:8px 14px;white-space:nowrap}
+  .play:hover{background:transparent;color:var(--ink)}
+
+  .zones{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;margin-top:8px}
+  .zone-btn{font-family:var(--mono);font-size:.66rem;cursor:pointer;background:var(--card);border:1px solid var(--line);
+    color:var(--body);padding:7px 3px;min-height:38px;line-height:1.2}
+  .zone-btn[aria-current=true]{background:var(--ink);border-color:var(--ink);color:#fff;font-weight:700}
+  .zone-btn:hover{border-color:var(--teal)}
+
+  .readout{margin-top:10px;border-left:4px solid var(--teal);background:var(--card);padding:12px 16px}
+  .readout h2{font-family:var(--sans);font-size:.95rem;font-weight:800;margin-bottom:4px}
+  .readout p{font-size:.95rem;line-height:1.55;margin:0}
+  .state{font-family:var(--sans);font-size:.8rem;font-weight:700;margin-top:8px;padding-top:8px;border-top:1px solid var(--line)}
+  .state.above{color:var(--ink)}
+  .state.below{color:var(--teal)}
+
+  /* legend */
+  .legend{display:grid;gap:6px;margin-top:14px}
+  .legend div{display:flex;align-items:center;gap:9px;font-family:var(--sans);font-size:.78rem;color:var(--body)}
+  .legend .sw{width:26px;height:14px;border:1px solid rgba(0,0,0,.25);flex:none}
+  /* swatch textures mirror the SVG patterns — an SVG pattern cannot be
+     referenced from a CSS background, so they are rebuilt as gradients */
+  .legend .sw-1{background:repeating-linear-gradient(45deg,#4b5c60 0 3px,#5f7175 3px 6px)}
+  .legend .sw-2{background:repeating-linear-gradient(-45deg,#8d9189 0 2px,#a3a79e 2px 7px)}
+  .legend .sw-3{background:repeating-linear-gradient(180deg,#8a6730 0 1.5px,#a9803e 1.5px 6px)}
+  .legend .tag{font-family:var(--mono);font-size:.62rem;letter-spacing:.06em;color:var(--muted);margin-left:auto}
+
+  .fig-controls{background:var(--paper);border-bottom:1px solid var(--line);padding-bottom:16px}
+  .figure .state{margin:8px 0 0;padding-top:8px;border-top:1px solid var(--line)}
+
+  /* sections */
+  section[id]{padding:38px 0 6px}
+  h2.sec{font-size:clamp(1.3rem,3.4vw,1.6rem);font-weight:700}
+  .sec-lede{font-size:1.03rem;margin:10px 0 18px;max-width:34em}
+  .layer-tag{font-family:var(--mono);font-size:.7rem;color:var(--muted);display:block;margin-bottom:5px}
+
+  /* locked chips */
+  .chips{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 14px}
+  .chip{font-family:var(--sans);font-size:.88rem;cursor:not-allowed;background:#eeece4;color:var(--body);
+    border:1px dashed #b9b2a1;padding:9px 14px;display:inline-flex;align-items:center;gap:7px;text-align:left}
+  .chip::before{content:"\1F512";font-size:.8em;opacity:.75}
+  .chip:hover{border-color:var(--muted)}
+  .chip.shake{animation:shake .34s}
+  @keyframes shake{10%,90%{transform:translateX(-2px)}30%,70%{transform:translateX(3px)}50%{transform:translateX(-3px)}}
+  .chip.flash{background:#e2ded1;border-color:var(--ink)}
+  .locked-msg{font-family:var(--sans);font-size:.9rem;background:var(--card);border-left:4px solid var(--muted);
+    padding:12px 16px;margin:0;min-height:1px}
+  .locked-msg:empty{display:none}
+
+  /* editable factors */
+  .factor{border-top:1px solid var(--line);padding:16px 0}
+  .factor:last-of-type{border-bottom:1px solid var(--line)}
+  .factor-head{display:flex;align-items:flex-start;gap:12px}
+  .toggle{font-family:var(--sans);font-size:.74rem;font-weight:700;letter-spacing:.04em;cursor:pointer;
+    border:2px solid var(--ink);background:var(--ink);color:#fff;padding:7px 12px;min-width:104px;flex:none;min-height:38px}
+  .toggle[aria-pressed=false]{background:transparent;color:var(--muted);border-color:var(--line);
+    border-style:dashed;text-decoration:line-through}
+  .toggle:hover{border-color:var(--teal)}
+  .factor-name{font-family:var(--sans);font-weight:700;font-size:1rem;color:var(--ink);margin:6px 0 0}
+  .factor[data-off=true] .factor-name{color:var(--muted);text-decoration:line-through}
+  .mech{font-size:.95rem;line-height:1.6;color:var(--body);margin:8px 0 0 116px}
+  .core{font-family:var(--mono);font-size:.62rem;letter-spacing:.06em;color:var(--brass);
+    border:1px solid var(--brass);padding:2px 6px;margin-left:8px;vertical-align:2px}
+
+  /* summary */
+  .summary{background:var(--card);border:2px solid var(--ink);padding:24px 22px;margin-top:8px}
+  .summary h2{font-size:1.2rem}
+  .summary ul{margin:14px 0 0;padding-left:20px}
+  .summary li{margin-bottom:7px;font-size:.98rem}
+  .privacy{font-family:var(--sans);font-size:.85rem;color:var(--muted);background:var(--paper);
+    border-left:3px solid var(--ink);padding:12px 14px;margin:18px 0 0}
+  .privacy b{color:var(--ink)}
+  .actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px;align-items:center}
+  .btn{font-family:var(--sans);font-size:.9rem;font-weight:700;cursor:pointer;background:var(--ink);
+    color:#fff;border:2px solid var(--ink);padding:11px 20px}
+  .btn:hover{background:transparent;color:var(--ink)}
+  .btn.alt{background:transparent;color:var(--ink)}
+  .btn.alt:hover{background:var(--ink);color:#fff}
+  .said{font-family:var(--sans);font-size:.85rem;color:var(--teal);font-weight:700}
+
+  /* disclosures + safety */
+  details{border-top:1px solid var(--line)}
+  details:last-of-type{border-bottom:1px solid var(--line)}
+  summary{cursor:pointer;padding:15px 30px 15px 0;position:relative;list-style:none;
+    font-family:var(--sans);font-weight:700;font-size:.97rem;color:var(--ink)}
+  summary::-webkit-details-marker{display:none}
+  summary::after{content:"+";position:absolute;right:2px;top:50%;transform:translateY(-50%);font-size:1.4rem;color:var(--teal);font-weight:400}
+  details[open] summary::after{content:"\2013"}
+  .details-body{padding:0 0 18px}
+
+  .safety{background:var(--card);border:1px solid var(--line);border-left:5px solid var(--ink);padding:22px 24px;margin-bottom:16px}
+  .safety h3{font-family:var(--sans);font-size:1.02rem;margin-bottom:8px}
+  .safety ul{margin:10px 0 0;padding-left:20px}
+  .safety li{margin-bottom:6px;font-size:.96rem}
+
+  .closing{border-top:2px solid var(--ink);margin-top:40px;padding-top:24px}
+  .closing p{font-size:1.05rem}
+
+  footer{border-top:1px solid var(--line);background:var(--card);margin-top:40px;padding:28px 0 40px}
+  .crisis{border:2px solid var(--ink);padding:16px 18px;margin-bottom:20px}
+  .crisis h2{font-family:var(--sans);font-size:.98rem;margin-bottom:9px}
+  .crisis ul{list-style:none;padding:0;margin:0;font-family:var(--sans);font-size:.94rem}
+  .crisis li{padding:5px 0;display:flex;justify-content:space-between;gap:14px;border-bottom:1px solid var(--line)}
+  .crisis li:last-child{border-bottom:0}
+  .crisis b{font-variant-numeric:tabular-nums}
+  .fine{font-family:var(--sans);font-size:.82rem;color:var(--muted);line-height:1.55}
+  .fine p{margin-bottom:.7em}
+  .print-only{display:none}
+
+  @media (prefers-reduced-motion:reduce){
+    *{transition:none!important;animation:none!important;scroll-behavior:auto!important}
+  }
+  @media (max-width:560px){
+    body{font-size:17px}
+    .mech{margin-left:0}
+    .factor-head{flex-wrap:wrap}
+    .zones{grid-template-columns:repeat(2,1fr)}
+    .figure-inner{padding:10px 14px 0}
+    .wrap{padding:0 14px}
+  }
+  @media print{
+    .masthead,.figure,.intro,section:not(#summary),.closing,footer .crisis,.actions,.privacy,.skip{display:none!important}
+    body{background:#fff;font-size:12pt}
+    .summary{border:0;padding:0}
+    .print-only{display:block}
+    footer{border:0;margin-top:18pt;padding:0}
+  }
+</style>
+</head>
+<body>
+
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="masthead">
+  <div class="wrap">
+    <a class="mark" href="index.html">R3 <span>PSYCHOLOGY</span></a>
+    <nav aria-label="Section"><a href="psychoeducation.html">← Psychoeducation</a></nav>
+  </div>
+</header>
+
+<div class="wrap intro">
+  <p class="kicker">Sleep</p>
+  <h1>Why you're still not sleeping</h1>
+  <p class="standfirst">The thing that started your insomnia and the thing keeping it going are usually
+     not the same thing. This is the model that separates them.</p>
+</div>
+
+<!-- ================= FIGURE ================= -->
+<div class="figure">
+  <div class="figure-inner">
+    <svg class="chart" id="chart" viewBox="0 0 600 250" role="img"
+         aria-label="Stacked area chart of three contributing layers across time, with an insomnia threshold line.">
+      <defs>
+        <pattern id="hatchA" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+          <rect width="6" height="6" fill="#5f7175"></rect>
+          <line x1="0" y1="0" x2="0" y2="6" stroke="#4b5c60" stroke-width="3"></line>
+        </pattern>
+        <pattern id="hatchB" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(-45)">
+          <rect width="7" height="7" fill="#a3a79e"></rect>
+          <line x1="0" y1="0" x2="0" y2="7" stroke="#8d9189" stroke-width="2"></line>
+        </pattern>
+        <pattern id="barsC" width="6" height="6" patternUnits="userSpaceOnUse">
+          <rect width="6" height="6" fill="#a9803e"></rect>
+          <line x1="0" y1="5.5" x2="6" y2="5.5" stroke="#8a6730" stroke-width="1.4"></line>
+        </pattern>
+      </defs>
+
+      <rect x="0" y="0" width="600" height="250" fill="#ffffff"></rect>
+      <rect id="zoneShade" x="0" y="8" width="0" height="214" fill="#123b44" opacity="0.05"></rect>
+
+      <path id="areaP1" fill="url(#hatchA)"></path>
+      <path id="areaP2" fill="url(#hatchB)"></path>
+      <path id="areaP3" fill="url(#barsC)"></path>
+
+      <line id="threshold" x1="34" y1="0" x2="590" y2="0" stroke="#123b44" stroke-width="2" stroke-dasharray="7 4"></line>
+      <text id="threshLabel" class="thresh-label" x="36" y="0">INSOMNIA THRESHOLD</text>
+
+      <line x1="34" y1="222" x2="590" y2="222" stroke="#ded8ca" stroke-width="1"></line>
+      <line id="playhead" x1="0" y1="8" x2="0" y2="222" stroke="#123b44" stroke-width="2"></line>
+
+      <text class="axis-label" x="36" y="236">before</text>
+      <text class="axis-label" x="180" y="236">trigger</text>
+      <text class="axis-label" x="330" y="236">handover</text>
+      <text class="axis-label" x="520" y="236">chronic</text>
+    </svg>
+
+    <p class="state above" id="state-line">Below the line — you sleep.</p>
+    <p class="sr" id="sr-state" aria-live="polite"></p>
+  </div>
+</div>
+
+<!-- controls scroll away; only the chart and its state stay pinned -->
+<div class="fig-controls">
+  <div class="figure-inner">
+    <div class="scrub-row">
+      <button class="play" id="play" type="button">▶ Play the handover</button>
+      <label class="sr" for="scrub">Scrub through time</label>
+      <input type="range" id="scrub" min="0" max="100" value="4" step="1">
+    </div>
+
+    <div class="zones" role="group" aria-label="Jump to a point in time">
+      <button class="zone-btn" type="button" data-x="4"  aria-current="true">1 · before</button>
+      <button class="zone-btn" type="button" data-x="27">2 · trigger</button>
+      <button class="zone-btn" type="button" data-x="55">3 · handover</button>
+      <button class="zone-btn" type="button" data-x="95">4 · chronic</button>
+    </div>
+
+    <div class="readout">
+      <h2 id="zone-title">Before</h2>
+      <p id="zone-text">A vulnerability, not a problem.</p>
+    </div>
+
+    <div class="legend">
+      <div><span class="sw sw-1"></span> Predisposing — what you brought with you <span class="tag">LOCKED</span></div>
+      <div><span class="sw sw-2"></span> Precipitating — the trigger, fading <span class="tag">LOCKED</span></div>
+      <div><span class="sw sw-3"></span> Perpetuating — what you do now <span class="tag">EDITABLE</span></div>
+    </div>
+  </div>
+</div>
+
+<main id="main">
+<div class="wrap">
+
+  <!-- LAYER 1 -->
+  <section id="predisposing">
+    <span class="layer-tag">LAYER 1 · LOCKED</span>
+    <h2 class="sec">What you brought with you</h2>
+    <p class="sec-lede">Stable traits that were true before you ever slept badly. They set how easily
+       the problem could start. On their own they sit below the line — plenty of people have all of
+       these and sleep fine.</p>
+    <div class="chips" id="chips-1">
+      <button class="chip" type="button" aria-disabled="true">A nervous system that runs hot</button>
+      <button class="chip" type="button" aria-disabled="true">A tendency to worry</button>
+      <button class="chip" type="button" aria-disabled="true">Family history of poor sleep</button>
+      <button class="chip" type="button" aria-disabled="true">Being a light sleeper</button>
+      <button class="chip" type="button" aria-disabled="true">Older age</button>
+      <button class="chip" type="button" aria-disabled="true">Female sex</button>
+      <button class="chip" type="button" aria-disabled="true">Shift work</button>
+    </div>
+    <p class="locked-msg" id="msg-1"></p>
+  </section>
+
+  <!-- LAYER 2 -->
+  <section id="precipitating">
+    <span class="layer-tag">LAYER 2 · LOCKED, FADING</span>
+    <h2 class="sec">What started it</h2>
+    <p class="sec-lede">The trigger. It pushes the total above the line and your sleep breaks — which
+       is a normal response to a hard event. Then it fades. Watch it fade on the figure while the
+       sleep problem doesn't.</p>
+    <div class="chips" id="chips-2">
+      <button class="chip" type="button" aria-disabled="true">Bereavement</button>
+      <button class="chip" type="button" aria-disabled="true">A new baby</button>
+      <button class="chip" type="button" aria-disabled="true">Illness or injury</button>
+      <button class="chip" type="button" aria-disabled="true">Job loss</button>
+      <button class="chip" type="button" aria-disabled="true">A relationship ending</button>
+      <button class="chip" type="button" aria-disabled="true">Pain</button>
+      <button class="chip" type="button" aria-disabled="true">A stretch of acute stress</button>
+    </div>
+    <p class="locked-msg" id="msg-2"></p>
+  </section>
+
+  <!-- LAYER 3 -->
+  <section id="perpetuating">
+    <span class="layer-tag">LAYER 3 · THE ONLY EDITABLE LAYER</span>
+    <h2 class="sec">What's keeping it going</h2>
+    <p class="sec-lede">Every one of these was a reasonable response to a bad night. Together they are
+       now the mechanism. They start switched on — turn off any that aren't you, or that you'd be
+       willing to change, and watch the figure.</p>
+
+    <div id="factors"></div>
+  </section>
+
+  <!-- SUMMARY -->
+  <section id="summary">
+    <div class="summary">
+      <p class="print-only" style="font-family:var(--sans);font-weight:800;font-size:15pt;margin:0 0 4pt">
+         Perpetuating factors I recognise</p>
+      <h2>What's still in play for you</h2>
+      <p style="font-size:.98rem">Built from what you left switched on above. Copy or print it and take
+         it to an appointment.</p>
+      <ul id="summary-list"></ul>
+      <p class="print-only" style="font-family:var(--sans);font-size:9pt;margin-top:12pt">
+         Self-described perpetuating factors, from the 3P model of insomnia (Spielman, Caruso &amp;
+         Glovinsky, 1987). A self-description, not a diagnosis.</p>
+      <p class="privacy"><b>This stays on your device.</b> Nothing you select is sent anywhere or
+         saved. Closing this tab erases it.</p>
+      <div class="actions">
+        <button class="btn" id="btn-print" type="button">Print this</button>
+        <button class="btn alt" id="btn-copy" type="button">Copy to clipboard</button>
+        <span class="said" id="said" role="status"></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- COUNTER-MESSAGE -->
+  <section id="hygiene">
+    <h2 class="sec">Before you tell me you've tried everything</h2>
+    <details>
+      <summary>"I tried sleep hygiene and it didn't work."</summary>
+      <div class="details-body">
+        <p>That's the expected result, and it isn't your failure. Sleep hygiene — dark room, no
+           screens, cool temperature, regular times — is a set of conditions that make sleep easier to
+           have. It isn't the treatment for insomnia that has become self-sustaining.</p>
+        <p>In CBT for insomnia, the components that target these maintaining mechanisms directly are
+           behavioural: <b>stimulus control</b> (what the bed is allowed to be used for) and
+           <b>reducing time in bed</b> to match your actual sleep ability. Both are counterintuitive —
+           they involve spending <em>less</em> time in bed when you're already exhausted — and both are
+           difficult to apply correctly alone, which is why they're usually done with a practitioner.</p>
+      </div>
+    </details>
+  </section>
+
+  <!-- SAFETY -->
+  <section id="safety">
+    <h2 class="sec">Where this model stops</h2>
+
+    <div class="safety">
+      <h3>When a medical review comes first</h3>
+      <p>This page describes one pattern. Some sleep problems have a physical cause that behavioural
+         work won't touch. Talk to your GP before anything else if you have:</p>
+      <ul>
+        <li>Loud snoring, or someone has seen you stop breathing in your sleep</li>
+        <li>Sleep that doesn't refresh you even when you get enough hours</li>
+        <li>Creeping, crawling or restless sensations in your legs at night</li>
+        <li>Acting out dreams — shouting, punching, getting out of bed</li>
+        <li>Falling asleep suddenly during the day, without warning</li>
+        <li>Significant pain</li>
+        <li>New or worsening physical symptoms</li>
+      </ul>
+    </div>
+
+    <div class="safety">
+      <h3>Reducing time in bed is not a do-it-yourself exercise</h3>
+      <p>This page deliberately doesn't tell you how many hours to spend in bed. Time in bed is here
+         as a mechanism to understand, not a number to set yourself.</p>
+      <p>Reducing it increases daytime sleepiness <em>before</em> it improves sleep. That's how it
+         works, and it's why it needs supervision. It isn't suitable, or needs specialist oversight,
+         if you:</p>
+      <ul>
+        <li>have bipolar disorder — sleep loss can trigger episodes</li>
+        <li>have a seizure disorder — sleep loss lowers the seizure threshold</li>
+        <li>have untreated sleep apnoea</li>
+        <li>have a parasomnia, such as sleepwalking or night terrors</li>
+        <li>drive or operate machinery for work</li>
+      </ul>
+    </div>
+
+    <div class="safety">
+      <h3>Medication</h3>
+      <p>Don't change or stop any sleep or sedative medication based on this page. That conversation
+         belongs with whoever prescribed it. Stopping some sleep medications abruptly is unsafe.</p>
+    </div>
+
+    <div class="safety">
+      <h3>Insomnia, depression and anxiety</h3>
+      <p>Persistent insomnia often occurs alongside depression and anxiety. It's often assumed the
+         sleep will sort itself out once the mood lifts, so it gets left until last. Insomnia is worth
+         addressing in its own right, and can be worked on at the same time.</p>
+    </div>
+  </section>
+
+  <div class="closing">
+    <p>If the third layer looks like yours, that's the layer a first appointment would work on. You
+       can read <a href="first-session.html">what actually happens in a first session</a>, or
+       <a href="index.html#contact">send a message</a> to arrange one.</p>
+  </div>
+
+</div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="crisis">
+      <h2>If you need help now</h2>
+      <ul>
+        <li><span>Emergency</span> <b>000</b></li>
+        <li><span>Lifeline</span> <b>13 11 14</b></li>
+        <li><span>Beyond Blue</span> <b>1300 22 4636</b></li>
+      </ul>
+    </div>
+    <div class="fine">
+      <p>This page is general information, not psychological advice or treatment. Reading it doesn't
+         create a therapeutic relationship.</p>
+      <p>Model: Spielman AJ, Caruso LS, Glovinsky PB (1987), a behavioural perspective on insomnia.</p>
+      <p><a href="psychoeducation.html">← Back to Psychoeducation</a></p>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  'use strict';
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---------- model ---------- */
+  var THRESH = 58, BASE = 28;
+
+  var FACTORS = [
+    {id:'tib', w:9, core:true, name:'Spending longer in bed to catch up',
+     mech:"You give yourself more hours in bed than you can fill with sleep. The same sleep spreads thinner across more time, so it breaks into lighter pieces with more waking in between. The broken night makes tomorrow's extra hours feel more necessary."},
+    {id:'awake', w:7, core:true, name:'Using the bed while awake — scrolling, reading, working, lying there',
+     mech:"Your brain links places to states. Every hour awake in bed teaches it that bed is a place for being alert. After enough repetitions, getting into bed triggers alertness automatically, before you've had a single thought about sleep."},
+    {id:'nap', w:6, name:'Sleeping in, or napping to compensate',
+     mech:"Sleep pressure builds the longer you're awake. Every hour you sleep in or nap spends that pressure early, so by bedtime there's less left to push you under. The next night is harder, which makes the next nap more tempting."},
+    {id:'early', w:5, name:'Going to bed early in case tonight is bad',
+     mech:"Going to bed before you're sleepy means lying there waiting. You're not tired enough yet, so you add a longer stretch of wakefulness in bed — and teach your brain that bed is where waiting happens."},
+    {id:'trying', w:5, name:'Trying hard to sleep',
+     mech:"Sleep is one of the few things effort makes worse. Trying is an active, goal-directed state, and it recruits exactly the arousal that prevents sleep. The harder the trying, the further away sleep goes — which produces more trying."},
+    {id:'clock', w:3, name:'Watching the clock and doing the arithmetic',
+     mech:"Checking the time turns a neutral night into a running scoreboard: four hours left, now three. Each check produces a small jolt of alarm, and alarm is the opposite of the state sleep needs. You can't calculate your way into sleep."},
+    {id:'cancel', w:2, name:'Cancelling the next day after a bad night',
+     mech:"Pulling out of the day cuts daylight, movement and contact with people — the things that set your body clock and build sleep pressure. It also confirms that a bad night ruins the day, which makes the next bad night more threatening."},
+    {id:'alcohol', w:2, name:'Alcohol to get off to sleep',
+     mech:"Alcohol shortens the time it takes to fall asleep, then fragments the second half of the night as it clears. A faster start and a worse night — and the worse night makes the next drink feel more reasonable."},
+    {id:'caffeine', w:1, name:'More caffeine to cover the fatigue',
+     mech:"Caffeine blocks the signal that tells you you're tired. It doesn't remove the tiredness, it hides it. Taken late enough, it's still working at bedtime, suppressing the sleep pressure you spent all day building."}
+  ];
+  var on = {};
+  FACTORS.forEach(function(f){ on[f.id] = true; });
+  function activeW(){ return FACTORS.reduce(function(s,f){ return s + (on[f.id] ? f.w : 0); }, 0); }
+
+  function precip(x){
+    if (x < 18) return 0;
+    if (x < 26) return 52 * (x - 18) / 8;
+    return 52 * Math.exp(-(x - 26) / 18);
+  }
+  function perpet(x, W){
+    if (x < 22) return 0;
+    return W / (1 + Math.exp(-(x - 48) / 7));
+  }
+
+  /* ---------- chart ---------- */
+  var X0 = 34, X1 = 590, YB = 222, YT = 12, VMAX = 92;
+  function px(x){ return X0 + (x / 100) * (X1 - X0); }
+  function py(v){ return YB - (v / VMAX) * (YB - YT); }
+
+  var elP1 = document.getElementById('areaP1'),
+      elP2 = document.getElementById('areaP2'),
+      elP3 = document.getElementById('areaP3'),
+      elThresh = document.getElementById('threshold'),
+      elThreshLbl = document.getElementById('threshLabel'),
+      elHead = document.getElementById('playhead'),
+      elShade = document.getElementById('zoneShade');
+
+  function band(lower, upper){
+    var d = [], i;
+    for (i = 0; i <= 100; i += 2) d.push((i === 0 ? 'M' : 'L') + px(i).toFixed(1) + ',' + py(upper(i)).toFixed(1));
+    for (i = 100; i >= 0; i -= 2) d.push('L' + px(i).toFixed(1) + ',' + py(lower(i)).toFixed(1));
+    return d.join(' ') + ' Z';
+  }
+
+  function drawChart(){
+    var W = activeW();
+    elP1.setAttribute('d', band(function(){ return 0; }, function(){ return BASE; }));
+    elP2.setAttribute('d', band(function(){ return BASE; }, function(x){ return BASE + precip(x); }));
+    elP3.setAttribute('d', band(function(x){ return BASE + precip(x); },
+                                function(x){ return BASE + precip(x) + perpet(x, W); }));
+    var ty = py(THRESH);
+    elThresh.setAttribute('y1', ty); elThresh.setAttribute('y2', ty);
+    elThreshLbl.setAttribute('y', ty - 5);
+  }
+
+  /* ---------- zones ---------- */
+  var ZONES = [
+    {max:17,  title:'Before', code:'Zone 1 of 4', from:0, to:18,
+     text:"A vulnerability, not a problem. Some nervous systems run hot, worry easily, or wake at nothing. On its own that sits below the line. You sleep."},
+    {max:39,  title:'The trigger', code:'Zone 2 of 4', from:18, to:40,
+     text:"Something happens. The bar jumps above the line and your sleep breaks. This part is normal — almost everyone sleeps badly during a crisis. It's meant to be temporary."},
+    {max:74,  title:'The handover', code:'Zone 3 of 4', from:40, to:75,
+     text:"The trigger starts to fade. Meanwhile you start compensating: earlier nights, longer lie-ins, a drink, watching the clock. Every one was a sensible response to a bad night. Watch the amber layer grow into the space the trigger is leaving."},
+    {max:100, title:'Chronic', code:'Zone 4 of 4', from:75, to:100,
+     text:"The trigger has gone. The bar is still above the line. What's holding it there is almost entirely the compensations — the one layer you can still change."}
+  ];
+  function zoneAt(x){ for (var i=0;i<ZONES.length;i++) if (x <= ZONES[i].max) return ZONES[i]; return ZONES[3]; }
+
+  var scrub = document.getElementById('scrub'),
+      zTitle = document.getElementById('zone-title'),
+      zText = document.getElementById('zone-text'),
+      stateLine = document.getElementById('state-line'),
+      srState = document.getElementById('sr-state'),
+      zoneBtns = Array.prototype.slice.call(document.querySelectorAll('.zone-btn'));
+
+  function render(){
+    var x = +scrub.value, z = zoneAt(x), W = activeW();
+    var total = BASE + precip(x) + perpet(x, W);
+    var above = total > THRESH;
+
+    drawChart();
+    elHead.setAttribute('x1', px(x)); elHead.setAttribute('x2', px(x));
+    elShade.setAttribute('x', px(z.from)); elShade.setAttribute('width', px(z.to) - px(z.from));
+
+    zTitle.textContent = z.title;
+    zText.textContent = z.text;
+
+    zoneBtns.forEach(function(b){ b.setAttribute('aria-current', zoneAt(+b.dataset.x) === z ? 'true' : 'false'); });
+
+    if (above) {
+      stateLine.className = 'state above';
+      stateLine.textContent = x < 18 ? 'Below the line — you sleep.' : 'Above the line — sleep is broken.';
+      if (x < 18) stateLine.className = 'state below';
+    } else {
+      stateLine.className = 'state below';
+      stateLine.textContent = x < 18
+        ? 'Below the line — you sleep.'
+        : 'The stack now sits below the line. Your temperament didn’t change and the trigger didn’t come back. The only layer that was ever available is the one that moved.';
+    }
+
+    // text equivalent of the figure for screen readers
+    var driver = perpet(x, W) > precip(x) ? 'mostly by the perpetuating layer — what you do now'
+                                          : 'mostly by the trigger';
+    srState.textContent = z.title + '. ' + (total > THRESH
+      ? 'Total above the insomnia threshold, held up ' + driver + '.'
+      : 'Total below the insomnia threshold.');
+  }
+
+  scrub.addEventListener('input', render);
+  zoneBtns.forEach(function(b){
+    b.addEventListener('click', function(){ scrub.value = b.dataset.x; render(); });
+  });
+
+  /* one orchestrated handover */
+  document.getElementById('play').addEventListener('click', function(){
+    var btn = this;
+    btn.disabled = true;
+    if (reduce) {
+      var i = 0;
+      var step = function(){
+        scrub.value = ZONES[i].from + 4; render();
+        i++;
+        if (i < ZONES.length) setTimeout(step, 1500); else btn.disabled = false;
+      };
+      step();
+    } else {
+      scrub.value = 0; render();
+      var t0 = null;
+      var frame = function(ts){
+        if (t0 === null) t0 = ts;
+        var p = Math.min(1, (ts - t0) / 5200);
+        scrub.value = Math.round(p * 100); render();
+        if (p < 1) window.requestAnimationFrame(frame); else btn.disabled = false;
+      };
+      window.requestAnimationFrame(frame);
+    }
+  });
+
+  /* ---------- locked controls answer back ---------- */
+  function wireLocked(sel, msgId, message){
+    var msg = document.getElementById(msgId);
+    document.querySelectorAll(sel + ' .chip').forEach(function(chip){
+      chip.addEventListener('click', function(){
+        msg.textContent = message;
+        chip.classList.remove('shake','flash');
+        void chip.offsetWidth;
+        chip.classList.add(reduce ? 'flash' : 'shake');
+        setTimeout(function(){ chip.classList.remove('shake','flash'); }, reduce ? 700 : 400);
+      });
+    });
+  }
+  wireLocked('#chips-1', 'msg-1',
+    'This was already true before you slept badly. It set how easily the problem could start — not what keeps it going. It isn’t adjustable, and it isn’t the target.');
+  wireLocked('#chips-2', 'msg-2',
+    'This already happened. It started the problem. It isn’t what’s keeping it going — and notice it’s already fading on the figure while your sleep hasn’t.');
+
+  /* ---------- editable factors ---------- */
+  var wrapF = document.getElementById('factors');
+  FACTORS.forEach(function(f){
+    var row = document.createElement('div');
+    row.className = 'factor';
+    row.dataset.off = 'false';
+    row.innerHTML =
+      '<div class="factor-head">' +
+        '<button class="toggle" type="button" aria-pressed="true" data-id="' + f.id + '">Doing this</button>' +
+        '<p class="factor-name">' + f.name + (f.core ? '<span class="core">CORE</span>' : '') + '</p>' +
+      '</div>' +
+      '<p class="mech">' + f.mech + '</p>';
+    wrapF.appendChild(row);
+  });
+
+  wrapF.querySelectorAll('.toggle').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var id = btn.dataset.id;
+      on[id] = !on[id];
+      btn.setAttribute('aria-pressed', on[id] ? 'true' : 'false');
+      btn.textContent = on[id] ? 'Doing this' : 'Changed';
+      btn.closest('.factor').dataset.off = on[id] ? 'false' : 'true';
+      render();
+      buildSummary();
+    });
+  });
+
+  /* ---------- summary ---------- */
+  var list = document.getElementById('summary-list');
+  function buildSummary(){
+    var picked = FACTORS.filter(function(f){ return on[f.id]; });
+    list.innerHTML = picked.length
+      ? picked.map(function(f){ return '<li>' + f.name + '</li>'; }).join('')
+      : '<li>Nothing selected — turn factors back on above if any of them apply to you.</li>';
+  }
+  buildSummary();
+
+  document.getElementById('btn-print').addEventListener('click', function(){ window.print(); });
+  document.getElementById('btn-copy').addEventListener('click', function(){
+    var picked = FACTORS.filter(function(f){ return on[f.id]; });
+    var text = ['Perpetuating factors I recognise', ''].concat(
+      picked.length ? picked.map(function(f){ return '- ' + f.name; }) : ['- none selected']
+    ).concat(['', 'From the 3P model of insomnia (Spielman, Caruso & Glovinsky, 1987).',
+              'A self-description, not a diagnosis.']).join('\n');
+    var said = document.getElementById('said');
+    function done(){ said.textContent = 'Copied.'; setTimeout(function(){ said.textContent = ''; }, 2400); }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(done, fb);
+    } else { fb(); }
+    function fb(){
+      var ta = document.createElement('textarea');
+      ta.value = text; ta.style.position='fixed'; ta.style.top='-1000px';
+      document.body.appendChild(ta); ta.select();
+      try { document.execCommand('copy'); done(); } catch(e){ said.textContent = 'Press Ctrl/Cmd+C to copy.'; }
+      document.body.removeChild(ta);
+    }
+  });
+
+  /* native <details> carries expanded state itself; mirror it to aria-expanded
+     for assistive tech that doesn't map the open attribute */
+  document.querySelectorAll('details').forEach(function(d){
+    var s = d.querySelector('summary');
+    if (!s) return;
+    s.setAttribute('aria-expanded', d.open ? 'true' : 'false');
+    d.addEventListener('toggle', function(){
+      s.setAttribute('aria-expanded', d.open ? 'true' : 'false');
+    });
+  });
+
+  render();
+})();
+</script>
+
+</body>
+</html>
