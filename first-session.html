@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>What actually happens in a first session | R3 Psychology</title>
+<meta name="description" content="A step-by-step account of the first 50 minutes with a registered psychologist, including what you'll be asked, what stays private, and what doesn't.">
+<style>
+  :root{
+    --ink:#0F1619;
+    --paper:#F5F5F1;
+    --card:#FFFFFF;
+    --line:#D6D8D3;
+    --signal:#0E6E78;
+    --muted:#5C6663;
+    --sans:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+    --serif:ui-serif,Georgia,Cambria,"Times New Roman",serif;
+    --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
+  }
+
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0;background:var(--paper);color:var(--ink);
+    font-family:var(--serif);font-size:18px;line-height:1.62;
+  }
+  h1,h2,h3,h4,.u-sans{font-family:var(--sans)}
+  h1,h2,h3,h4{text-wrap:balance;margin:0}
+  p{margin:0 0 1em}
+  p:last-child{margin-bottom:0}
+  a{color:var(--signal)}
+  a:focus-visible,button:focus-visible,summary:focus-visible,textarea:focus-visible{
+    outline:3px solid var(--signal);outline-offset:2px;border-radius:2px;
+  }
+  .skip{
+    position:absolute;left:-9999px;top:0;background:var(--ink);color:#fff;
+    padding:12px 18px;z-index:100;font-family:var(--sans);
+  }
+  .skip:focus{left:0}
+
+  .wrap{max-width:640px;margin:0 auto;padding:0 20px}
+
+  /* ---------- masthead ---------- */
+  .masthead{border-bottom:1px solid var(--line);background:var(--card)}
+  .masthead .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-top:14px;padding-bottom:14px}
+  .mark{
+    font-family:var(--sans);font-weight:800;letter-spacing:-.02em;font-size:1.05rem;
+    color:var(--ink);text-decoration:none;
+  }
+  .mark span{font-weight:500;color:var(--muted);letter-spacing:.04em}
+  .masthead nav a{font-family:var(--sans);font-size:.85rem;text-decoration:none}
+  .masthead nav a:hover{text-decoration:underline}
+
+  /* ---------- intro ---------- */
+  .intro{padding:44px 0 30px}
+  .kicker{
+    font-family:var(--sans);font-size:.7rem;font-weight:700;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--signal);margin:0 0 14px;
+  }
+  h1{font-size:clamp(1.9rem,5.4vw,2.7rem);font-weight:800;letter-spacing:-.025em;line-height:1.1}
+  .standfirst{font-size:1.15rem;color:var(--ink);margin-top:16px;max-width:34em}
+  .byline{
+    font-family:var(--sans);font-size:.83rem;color:var(--muted);margin-top:20px;
+    padding-top:16px;border-top:1px solid var(--line);
+  }
+
+  /* ---------- timeline (signature) ---------- */
+  .tl{position:sticky;top:0;z-index:30;background:var(--paper);border-bottom:1px solid var(--line)}
+  .tl-inner{max-width:640px;margin:0 auto;padding:12px 20px 10px}
+  .tl-head{
+    display:flex;justify-content:space-between;align-items:baseline;gap:12px;
+    font-family:var(--sans);font-size:.68rem;font-weight:700;letter-spacing:.12em;
+    text-transform:uppercase;color:var(--muted);margin-bottom:8px;
+  }
+  /* Grid fr (not flex-grow) so widths are exactly proportional to minutes:
+     with flex-basis:0 each item's padding is added on top of its share,
+     which quietly compresses a 20:5 ratio to about 3:1. */
+  .tl-track{
+    display:grid;align-items:stretch;gap:3px;width:100%;
+    grid-template-columns:auto minmax(0,5fr) minmax(0,5fr) minmax(0,20fr)
+                          minmax(0,10fr) minmax(0,5fr) minmax(0,5fr);
+  }
+  .tl-seg{
+    appearance:none;border:1px solid var(--line);background:var(--card);color:var(--ink);
+    padding:7px 4px;min-height:44px;min-width:0;cursor:pointer;text-align:left;overflow:hidden;
+    display:flex;flex-direction:column;justify-content:center;gap:2px;
+    font-family:var(--sans);transition:background .18s,border-color .18s,color .18s;
+  }
+  .tl-seg .t{font-family:var(--mono);font-size:.62rem;color:var(--muted);white-space:nowrap;letter-spacing:-.02em}
+  .tl-seg .l{font-size:.74rem;font-weight:600;line-height:1.2;display:none}
+  .tl-seg:hover{border-color:var(--signal)}
+  .tl-seg[aria-current="true"]{background:var(--ink);border-color:var(--ink);color:#fff}
+  .tl-seg[aria-current="true"] .t{color:#fff}
+  .tl-seg[aria-current="true"] .l{font-weight:800}
+  .tl-seg[aria-current="true"]::after{content:"";display:block;height:2px;background:#fff;margin-top:3px}
+  .tl-seg:focus-visible{outline:3px solid var(--signal);outline-offset:-3px}
+  .tl-before{flex:0 0 auto;border-style:dashed;margin-right:5px}
+  .tl-caption{
+    font-family:var(--sans);font-size:.8rem;margin-top:8px;color:var(--ink);
+    display:flex;align-items:baseline;gap:8px;min-height:1.3em;
+  }
+  .tl-caption b{font-weight:700}
+  .tl-caption span{color:var(--muted);font-family:var(--mono);font-size:.72rem}
+  .tl-note{font-family:var(--sans);font-size:.74rem;color:var(--muted);margin-top:2px}
+
+  /* Below 560px the horizontal axis can't hold a usable 5-minute target,
+     so it becomes a vertical rail: heights are proportional to real minutes
+     (8.8px per minute puts the shortest segment at exactly 44px). */
+  @media (max-width:559px){
+    .tl{position:static}
+    .tl-inner{padding-bottom:14px}
+    .tl-head{margin-bottom:10px}
+    .tl-track{grid-template-columns:1fr;gap:4px}
+    .tl-seg{height:calc(var(--min) * 8.8px);padding:8px 12px}
+    .tl-seg .l{display:block;font-size:.85rem}
+    .tl-seg .t{font-size:.68rem}
+    .tl-before{height:auto;min-height:44px;margin:0 0 8px 0}
+    .tl-caption{display:none}
+  }
+  @media (min-width:560px){ .tl-seg .t{font-size:.68rem} }
+  @media (min-width:780px){
+    .tl-inner{max-width:860px}
+    .tl-seg{padding:9px 10px;min-height:58px}
+    .tl-seg .l{display:block}
+  }
+
+  /* ---------- sections ---------- */
+  main{padding-bottom:10px}
+  section[id]{padding:42px 0 8px;scroll-margin-top:150px}
+  .sec-time{
+    font-family:var(--mono);font-size:.76rem;color:var(--signal);font-weight:600;
+    letter-spacing:.02em;display:block;margin-bottom:6px;
+  }
+  h2{font-size:clamp(1.35rem,3.6vw,1.75rem);font-weight:800;letter-spacing:-.02em;line-height:1.2}
+  .sec-lede{font-size:1.06rem;color:var(--ink);margin:12px 0 20px;max-width:33em}
+  h3{font-size:1.02rem;font-weight:700;margin:26px 0 8px}
+  .why{font-family:var(--sans);font-size:.86rem;color:var(--muted);margin:2px 0 0}
+
+  ul.plain{list-style:none;padding:0;margin:0 0 1em}
+  ul.plain li{padding-left:20px;position:relative;margin-bottom:9px}
+  ul.plain li::before{
+    content:"";position:absolute;left:0;top:.62em;width:8px;height:2px;background:var(--signal);
+  }
+
+  .qa{border-top:1px solid var(--line);padding:16px 0}
+  .qa:last-of-type{border-bottom:1px solid var(--line)}
+  .qa q{font-family:var(--sans);font-weight:700;font-size:1rem;quotes:'"' '"'}
+
+  .panel{background:var(--card);border:1px solid var(--line);padding:20px 22px;margin:18px 0}
+  .panel h3:first-child{margin-top:0}
+
+  .fee{width:100%;border-collapse:collapse;font-family:var(--sans);font-size:.92rem;margin:6px 0 0}
+  .fee th,.fee td{text-align:left;padding:9px 0;border-bottom:1px solid var(--line)}
+  .fee td:last-child{text-align:right;font-variant-numeric:tabular-nums;font-weight:700}
+  .fee tr:last-child th,.fee tr:last-child td{border-bottom:0}
+
+  /* limits of confidentiality — weight + numbering, not colour */
+  .limits{list-style:none;counter-reset:lim;padding:0;margin:0}
+  .limits li{
+    counter-increment:lim;position:relative;padding:16px 0 16px 46px;border-top:1px solid var(--line);
+  }
+  .limits li::before{
+    content:counter(lim);position:absolute;left:0;top:16px;width:30px;height:30px;
+    background:var(--ink);color:#fff;font-family:var(--sans);font-weight:700;font-size:.85rem;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .limits b{font-family:var(--sans);display:block;margin-bottom:3px;font-size:.98rem}
+
+  /* two-state "what gets shared" */
+  .switch{display:flex;gap:0;margin:18px 0 0;border:1px solid var(--ink);width:fit-content;max-width:100%}
+  .switch button{
+    appearance:none;background:var(--card);border:0;color:var(--ink);cursor:pointer;
+    font-family:var(--sans);font-size:.86rem;font-weight:700;padding:10px 16px;
+  }
+  .switch button+button{border-left:1px solid var(--ink)}
+  .switch button[aria-selected="true"]{background:var(--ink);color:#fff}
+  .switch button:focus-visible{outline:3px solid var(--signal);outline-offset:-3px}
+  .shared-panel{border:1px solid var(--line);border-top:0;background:var(--card);padding:20px 22px}
+  .shared-panel h3{margin-top:0}
+
+  /* what-if reveals */
+  details{border-top:1px solid var(--line);}
+  details:last-of-type{border-bottom:1px solid var(--line)}
+  summary{
+    cursor:pointer;padding:15px 30px 15px 0;position:relative;list-style:none;
+    font-family:var(--sans);font-weight:700;font-size:.97rem;
+  }
+  summary::-webkit-details-marker{display:none}
+  summary::after{
+    content:"+";position:absolute;right:2px;top:50%;transform:translateY(-50%);
+    font-weight:400;font-size:1.4rem;color:var(--signal);line-height:1;
+  }
+  details[open] summary::after{content:"–"}
+  details[open] summary{padding-bottom:4px}
+  .details-body{padding:0 0 17px}
+  .whatif summary{font-weight:600;font-size:.93rem;color:var(--signal)}
+
+  /* note builder */
+  .builder{background:var(--card);border:2px solid var(--ink);padding:26px 24px;margin:8px 0 0}
+  .builder h2{font-size:1.3rem}
+  .prompt{margin-top:22px}
+  .prompt label{display:block;font-family:var(--sans);font-weight:700;font-size:.95rem;margin-bottom:7px}
+  .prompt textarea{
+    width:100%;min-height:78px;padding:12px 14px;border:1px solid var(--line);background:var(--paper);
+    font-family:var(--serif);font-size:1rem;line-height:1.5;color:var(--ink);resize:vertical;
+  }
+  .prompt textarea:focus{border-color:var(--signal)}
+  .privacy{
+    font-family:var(--sans);font-size:.86rem;color:var(--muted);background:var(--paper);
+    border-left:3px solid var(--ink);padding:12px 14px;margin:20px 0 0;
+  }
+  .privacy b{color:var(--ink)}
+  .actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px;align-items:center}
+  .btn{
+    font-family:var(--sans);font-size:.92rem;font-weight:700;cursor:pointer;
+    background:var(--ink);color:#fff;border:2px solid var(--ink);padding:12px 22px;
+  }
+  .btn:hover{background:transparent;color:var(--ink)}
+  .btn.alt{background:transparent;color:var(--ink)}
+  .btn.alt:hover{background:var(--ink);color:#fff}
+  .said{font-family:var(--sans);font-size:.86rem;color:var(--signal);font-weight:700}
+
+  .cta{background:var(--ink);color:#fff;padding:30px 26px;margin:40px 0 0}
+  .cta h2{color:#fff;font-size:1.25rem}
+  .cta p{margin:10px 0 18px;font-size:1rem;opacity:.92}
+  .cta a{
+    display:inline-block;background:#fff;color:var(--ink);text-decoration:none;
+    font-family:var(--sans);font-weight:700;font-size:.95rem;padding:13px 24px;
+  }
+  .cta a:hover{background:var(--paper)}
+  .cta a:focus-visible{outline:3px solid #fff;outline-offset:3px}
+
+  /* footer */
+  footer{border-top:1px solid var(--line);background:var(--card);margin-top:44px;padding:30px 0 40px}
+  .crisis{border:2px solid var(--ink);padding:18px 20px;margin-bottom:22px}
+  .crisis h2{font-size:1rem;margin-bottom:10px}
+  .crisis ul{list-style:none;padding:0;margin:0;font-family:var(--sans);font-size:.95rem}
+  .crisis li{padding:5px 0;display:flex;justify-content:space-between;gap:14px;border-bottom:1px solid var(--line)}
+  .crisis li:last-child{border-bottom:0}
+  .crisis b{font-variant-numeric:tabular-nums}
+  .fine{font-family:var(--sans);font-size:.82rem;color:var(--muted);line-height:1.55}
+  .fine p{margin-bottom:.7em}
+
+  .print-only{display:none}
+
+  @media (prefers-reduced-motion:reduce){
+    *{transition:none!important;animation:none!important;scroll-behavior:auto!important}
+  }
+  @media (min-width:780px){
+    .wrap{max-width:860px}
+    body{font-size:19px}
+    section[id]{scroll-margin-top:170px}
+  }
+
+  /* ---------- print: a clean pre-session note ---------- */
+  @media print{
+    .masthead,.tl,.intro,main > section:not(#note),.cta,.crisis,.skip,.actions,.privacy,
+    #note textarea{display:none!important}
+    body{background:#fff;font-size:12pt}
+    .builder{border:0;padding:0;margin:0}
+    footer{border:0;margin-top:24pt;padding:0}
+    .print-only{display:block}
+    .print-head{border-bottom:2px solid #000;padding-bottom:8pt;margin-bottom:16pt}
+    .print-title{font-family:var(--sans);font-weight:800;font-size:17pt;margin:0}
+    .print-head p:not(.print-title){font-family:var(--sans);font-size:9pt;margin:6pt 0 0}
+    .prompt{margin-top:0;page-break-inside:avoid;border-bottom:1px solid #999;padding-bottom:12pt;margin-bottom:14pt}
+    .prompt label{font-size:11pt}
+    .answer{white-space:pre-wrap;min-height:40pt;font-size:12pt}
+    .answer:empty::before{content:" ";display:block;min-height:40pt}
+    .fine{font-size:8.5pt}
+  }
+</style>
+</head>
+<body>
+
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="masthead">
+  <div class="wrap">
+    <a class="mark" href="index.html">R3 <span>PSYCHOLOGY</span></a>
+    <nav aria-label="Section"><a href="psychoeducation.html">← Psychoeducation</a></nav>
+  </div>
+</header>
+
+<div class="wrap intro">
+  <p class="kicker">Getting started</p>
+  <h1>What actually happens in a first session</h1>
+  <p class="standfirst">A step-by-step account of the first 50 minutes, so you know what you're
+     walking into. Written for people who haven't done this before.</p>
+  <p class="byline">Khooshraj Mohun, registered psychologist. AHPRA registration PSY0002273569.
+     Based in Macleod, Melbourne. Sessions by telehealth.</p>
+</div>
+
+<!-- ============ SIGNATURE: the 50-minute axis ============ -->
+<nav class="tl" aria-label="Session timeline">
+  <div class="tl-inner">
+    <div class="tl-head"><span>The 50 minutes</span><span>Select a part to jump to it</span></div>
+    <div class="tl-track" id="tl-track">
+      <button class="tl-seg tl-before" data-target="before" data-label="Before you arrive" data-time="Before" type="button">
+        <span class="t">Before</span><span class="l">Before you arrive</span>
+      </button>
+      <button class="tl-seg" data-target="start" data-label="Getting started" data-time="0–5 min" style="flex:5;--min:5" type="button">
+        <span class="t">0–5</span><span class="l">Getting started</span>
+      </button>
+      <button class="tl-seg" data-target="private" data-label="How this works, and what's private" data-time="5–10 min" style="flex:5;--min:5" type="button">
+        <span class="t">5–10</span><span class="l">What's private</span>
+      </button>
+      <button class="tl-seg" data-target="why-now" data-label="What brings you here now" data-time="10–30 min" style="flex:20;--min:20" type="button">
+        <span class="t">10–30</span><span class="l">What brings you here now</span>
+      </button>
+      <button class="tl-seg" data-target="background" data-label="Background, and how things are day to day" data-time="30–40 min" style="flex:10;--min:10" type="button">
+        <span class="t">30–40</span><span class="l">Background</span>
+      </button>
+      <button class="tl-seg" data-target="routine" data-label="The routine questions" data-time="40–45 min" style="flex:5;--min:5" type="button">
+        <span class="t">40–45</span><span class="l">Routine questions</span>
+      </button>
+      <button class="tl-seg" data-target="ending" data-label="What we make of it, and what's next" data-time="45–50 min" style="flex:5;--min:5" type="button">
+        <span class="t">45–50</span><span class="l">What's next</span>
+      </button>
+    </div>
+    <p class="tl-caption" id="tl-caption" aria-live="polite"><b>Before you arrive</b> <span>Before the clock starts</span></p>
+    <p class="tl-note">Widths match real minutes. Sessions vary — this is the usual shape, not a script.</p>
+  </div>
+</nav>
+
+<main id="main">
+<div class="wrap">
+
+  <!-- 1 -->
+  <section id="before">
+    <span class="sec-time">Before the clock starts</span>
+    <h2>Before you arrive</h2>
+    <p class="sec-lede">Two things arrive before you do: a form, and — if you have one — a referral.</p>
+
+    <h3>The intake form</h3>
+    <p>You'll get a short form by email. Contact details, your GP, an emergency contact, and a few
+       lines on what's bringing you in. It exists so the first session is spent talking, not filling
+       in boxes. You don't have to write much. "Not sure yet" is a valid answer.</p>
+
+    <h3>What to have ready</h3>
+    <ul class="plain">
+      <li>Your referral and Mental Health Treatment Plan, if you have one</li>
+      <li>Your Medicare card number</li>
+      <li>Any previous reports you want to share — optional</li>
+    </ul>
+
+    <h3>Sessions are by video, so also</h3>
+    <ul class="plain">
+      <li>A private space where you won't be overheard</li>
+      <li>About an hour without interruptions</li>
+      <li>Headphones, if you have them</li>
+      <li>A device with a camera — phone, tablet or laptop</li>
+      <li>A glass of water</li>
+    </ul>
+
+    <div class="panel">
+      <h3>The referral and Mental Health Treatment Plan, in plain words</h3>
+      <p>A Mental Health Treatment Plan is a document your GP writes with you. It isn't a diagnosis
+         and it isn't a judgement — it's the paperwork that unlocks a Medicare rebate for psychology
+         sessions.</p>
+      <p>It usually means booking a longer GP appointment, where they ask how you've been, then write
+         the plan and a referral. The plan covers an initial <b>6 sessions</b>. If you need more after
+         that, your GP reviews it and can refer you again.</p>
+      <p>You don't need to understand the document. Just send it through.</p>
+    </div>
+
+    <details class="whatif">
+      <summary>What if I don't have a referral?</summary>
+      <div class="details-body">
+        <p>You can book without one. You pay the full fee and there's no Medicare rebate. Nothing else
+           changes.</p>
+        <p>If you'd like a plan, ask your GP for a longer appointment and say you want to discuss a
+           Mental Health Treatment Plan.</p>
+        <p>Some private health funds cover psychology under extras — check with your fund. You can't
+           claim Medicare and private health for the same session.</p>
+      </div>
+    </details>
+
+    <h3>What it costs</h3>
+    <table class="fee">
+      <tbody>
+        <tr><th scope="row">Session fee — 50 minutes</th><td>$250</td></tr>
+        <tr><th scope="row">Medicare rebate, with a valid referral and plan</th><td>−$88</td></tr>
+        <tr><th scope="row">You pay</th><td>$162</td></tr>
+        <tr><th scope="row">Without a referral</th><td>$250</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- 2 -->
+  <section id="start">
+    <span class="sec-time">0–5 min</span>
+    <h2>Getting started</h2>
+    <p class="sec-lede">You won't be left in silence, and you won't be asked to perform.</p>
+
+    <p>There's no waiting room to sit in. You'll get a link — click it a few minutes early. If it
+       doesn't connect, I'll phone the number you gave. A technical problem is not a reason to
+       abandon the session.</p>
+    <p>You'll see me. Whether I see you is your call: if you'd rather keep your camera off, say so.</p>
+    <p>I open the conversation. You will not be met with silence and an expectant look — that's a
+       film thing. The first few minutes are ordinary: whether the link worked, whether you can hear
+       me, whether you're somewhere you can speak freely. Then I explain how the session runs and
+       what I'll ask, before I ask it.</p>
+    <p>You don't need an opening line. "I don't really know where to start" is a common start, and a
+       perfectly good one.</p>
+
+    <details class="whatif">
+      <summary>What if someone at home might overhear?</summary>
+      <div class="details-body">
+        <p>Headphones, a parked car, or a walk all work. Tell me at the start and we'll plan around
+           it — including keeping my questions closed enough that you can answer briefly.</p>
+      </div>
+    </details>
+    <details class="whatif">
+      <summary>What if the connection drops mid-sentence?</summary>
+      <div class="details-body">
+        <p>I call you. It happens regularly and it isn't a problem. We pick up where we left off.</p>
+      </div>
+    </details>
+  </section>
+
+  <!-- 3 -->
+  <section id="private">
+    <span class="sec-time">5–10 min</span>
+    <h2>How this works, and what's private</h2>
+    <p class="sec-lede">Most of what you say stays between us. Not all of it. Here is the exact line.</p>
+
+    <div class="switch" role="tablist" aria-label="What gets shared">
+      <button type="button" role="tab" id="tab-stays" aria-selected="true" aria-controls="p-stays">Stays here</button>
+      <button type="button" role="tab" id="tab-leaves" aria-selected="false" aria-controls="p-leaves">Can leave here</button>
+    </div>
+
+    <div class="shared-panel" id="p-stays" role="tabpanel" aria-labelledby="tab-stays">
+      <h3>What stays between us</h3>
+      <ul class="plain">
+        <li>What you tell me, in detail</li>
+        <li>My notes</li>
+        <li>The fact that you attended at all</li>
+      </ul>
+      <p>I don't discuss you with family, employers or anyone else without your written consent.
+         Records are stored securely, kept for the period the law requires, and you can request
+         access to your file.</p>
+    </div>
+
+    <div class="shared-panel" id="p-leaves" role="tabpanel" aria-labelledby="tab-leaves">
+      <h3>What can leave, and to whom</h3>
+      <ol class="limits">
+        <li>
+          <b>Serious risk to life — yours or someone else's</b>
+          If I believe someone is in danger, I may contact emergency services, your GP, or your
+          emergency contact. Wherever possible, I'll tell you I'm doing it.
+        </li>
+        <li>
+          <b>A subpoena</b>
+          A court can compel me to release your file. I can't refuse on your behalf.
+        </li>
+        <li>
+          <b>A reasonable belief that a child is being abused or neglected</b>
+          I'm legally required to report it.
+        </li>
+        <li>
+          <b>A letter to your referring GP</b>
+          If you came on a Mental Health Treatment Plan, Medicare requires me to write back.
+        </li>
+      </ol>
+    </div>
+
+    <details class="whatif">
+      <summary>What exactly goes in the letter to my GP?</summary>
+      <div class="details-body">
+        <p><b>In it:</b> that you attended and how many times; a brief summary of what you're working
+           on; the approach and plan; any recommendations.</p>
+        <p><b>Not in it:</b> a transcript, or the detail of what you told me. It's a paragraph or
+           two, not a record of the conversation. You can ask to see it.</p>
+      </div>
+    </details>
+
+    <p style="margin-top:20px">If any of this is a problem, raise it in the first session. It's a
+       reasonable thing to ask about.</p>
+  </section>
+
+  <!-- 4 -->
+  <section id="why-now">
+    <span class="sec-time">10–30 min</span>
+    <h2>What brings you here now</h2>
+    <p class="sec-lede">The longest stretch, and the most ordinary: you talking, me asking. Here are
+       the questions in advance, and why each one gets asked.</p>
+
+    <div class="qa"><q>What made you look for help now?</q>
+      <p class="why">Something usually tips a background problem into a phone call. The timing tells
+         me a lot.</p></div>
+    <div class="qa"><q>How long has this been going on?</q>
+      <p class="why">Six weeks and six years point in different directions.</p></div>
+    <div class="qa"><q>What does an average day look like at the moment?</q>
+      <p class="why">How you're actually functioning matters more than a label.</p></div>
+
+    <details class="whatif">
+      <summary>What if I have nothing to say?</summary>
+      <div class="details-body">
+        <p>Then I ask questions. A first session is structured — filling the hour isn't your
+           responsibility.</p>
+      </div>
+    </details>
+  </section>
+
+  <!-- 5 -->
+  <section id="background">
+    <span class="sec-time">30–40 min</span>
+    <h2>Background, and how things are day to day</h2>
+    <p class="sec-lede">Enough history to make sense of the present. Not your whole life story.</p>
+
+    <div class="qa"><q>Have you seen anyone about this before?</q>
+      <p class="why">What's already been tried saves us repeating it.</p></div>
+    <div class="qa"><q>How are you sleeping?</q>
+      <p class="why">Sleep is both a cause and a symptom.</p></div>
+    <div class="qa"><q>Who's around you?</q>
+      <p class="why">Who you can call at 11pm is clinically relevant.</p></div>
+    <div class="qa"><q>What would you like to be different?</q>
+      <p class="why">It sets the direction. "I don't know" is an acceptable answer — we work it out.</p></div>
+
+    <details class="whatif">
+      <summary>What if I don't want to talk about my childhood?</summary>
+      <div class="details-body">
+        <p>Then we don't. Not in the first session, and not at all if it isn't relevant to what
+           you're here for.</p>
+      </div>
+    </details>
+  </section>
+
+  <!-- 6 -->
+  <section id="routine">
+    <span class="sec-time">40–45 min</span>
+    <h2>The routine questions</h2>
+    <p class="sec-lede">Two questions I ask everyone, every time, in the same flat tone as the sleep
+       question. They are not about you specifically.</p>
+
+    <div class="qa"><q>How much are you drinking, and are you using anything else?</q>
+      <p class="why">Not an accusation. Alcohol and other substances change what will and won't work,
+         so I need an accurate picture rather than a polite one.</p></div>
+    <div class="qa"><q>Have you had thoughts of harming yourself, or of not wanting to be here?</q>
+      <p class="why">Asked of everyone. It's routine. Saying yes doesn't automatically trigger
+         anything — it starts a conversation about safety.</p></div>
+
+    <details class="whatif">
+      <summary>What happens if I say yes to the second one?</summary>
+      <div class="details-body">
+        <p>We talk about it: how often, how strong, whether you've made any plans, and what keeps you
+           safe. Most of the time that conversation stays in the room and becomes part of the plan.</p>
+        <p>Only if I believe you're in immediate danger does anything leave the room — and I'd tell
+           you I was doing it.</p>
+      </div>
+    </details>
+  </section>
+
+  <!-- 7 -->
+  <section id="ending">
+    <span class="sec-time">45–50 min</span>
+    <h2>What we make of it, and what's next</h2>
+    <p class="sec-lede">The last five minutes are for making sense of it and deciding what happens next.</p>
+
+    <h3>1. I say back what I've understood</h3>
+    <p>In plain language, not jargon: a short account of what seems to be going on and why it makes
+       sense given your circumstances. I'll get things wrong. Correcting me is useful, not rude.</p>
+
+    <h3>2. A plan</h3>
+    <p>What we'd work on, roughly how, and roughly for how long.</p>
+
+    <h3>3. Whether to book again</h3>
+    <p>No need to decide on the spot. "I'll think about it" is fine.</p>
+
+    <div class="panel">
+      <h3>If I'm not the right fit</h3>
+      <p>This happens, and it isn't a failure. Fit matters.</p>
+      <p>You can say: <b>"I don't think this is the right fit for me."</b> Nothing more is required
+         and no explanation is owed. Or email afterwards. Or simply not book again.</p>
+      <p>If you'd like, I can suggest other practitioners, or write to your GP asking for a different
+         referral. You're not stuck with the first psychologist you try.</p>
+    </div>
+  </section>
+
+  <!-- cross-cutting -->
+  <section id="dont">
+    <h2>What you don't have to do</h2>
+    <p class="sec-lede">Things people brace for that aren't required.</p>
+    <ul class="plain">
+      <li><b>Cry.</b> Some people do, some don't. Neither means it's working.</li>
+      <li><b>Tell me everything on day one.</b> You set the order and the pace.</li>
+      <li><b>Arrive with a diagnosis</b>, or know what's wrong.</li>
+      <li><b>Know what you want</b> out of it.</li>
+      <li><b>Be articulate.</b> Rambling is fine. So are pauses.</li>
+      <li><b>Justify being here</b>, or compare yourself to people who "have it worse".</li>
+    </ul>
+    <div class="panel">
+      <p style="font-family:var(--sans);font-weight:700;font-size:1.05rem;margin-bottom:6px">
+         "I'd rather not go into that today."</p>
+      <p>That's a complete sentence. It'll be respected, without follow-up.</p>
+    </div>
+  </section>
+
+  <section id="faq">
+    <h2>Frequently avoided questions</h2>
+    <p class="sec-lede">Open only the ones you're actually wondering about.</p>
+
+    <details><summary>Will I be judged?</summary>
+      <div class="details-body"><p>No. My job is to understand what's happening, not to grade it.</p></div></details>
+
+    <details><summary>Will I be put on medication?</summary>
+      <div class="details-body">
+        <p>No. Psychologists don't prescribe. Only a doctor can — your GP or a psychiatrist.</p>
+        <p>If medication seems worth considering, I'd raise it and suggest you speak to your GP. That
+           decision stays between you and them.</p>
+      </div></details>
+
+    <details><summary>What if I cry?</summary>
+      <div class="details-body"><p>Nothing happens. Take a moment; we can pause. It doesn't end the
+         session.</p></div></details>
+
+    <details><summary>How many sessions will I need?</summary>
+      <div class="details-body">
+        <p>It depends what's going on. We'd discuss it at the end of the first session and review as
+           we go. Booking once doesn't commit you to a course of treatment.</p>
+      </div></details>
+
+    <details><summary>What if I want to stop?</summary>
+      <div class="details-body"><p>You stop. No permission needed and no reason owed. Telling me is
+         useful, not required.</p></div></details>
+
+    <details><summary>Do I have to have my camera on?</summary>
+      <div class="details-body"><p>No.</p></div></details>
+  </section>
+
+  <!-- note builder -->
+  <section id="note">
+    <div class="builder">
+      <div class="print-only print-head">
+        <p class="print-title">Notes for my first session</p>
+        <p>Khooshraj Mohun, registered psychologist · AHPRA PSY0002273569 · Telehealth</p>
+      </div>
+
+      <h2>Take something with you</h2>
+      <p class="sec-lede">Three questions you'll probably be asked anyway. Answer as much or as little
+         as you like, then print it or copy it. Arriving with something written down means you don't
+         have to think on the spot.</p>
+
+      <div class="prompt">
+        <label for="q1">What made you look for help now?</label>
+        <textarea id="q1" rows="3"></textarea>
+        <div class="print-only answer" data-for="q1"></div>
+      </div>
+      <div class="prompt">
+        <label for="q2">What would be different if this worked?</label>
+        <textarea id="q2" rows="3"></textarea>
+        <div class="print-only answer" data-for="q2"></div>
+      </div>
+      <div class="prompt">
+        <label for="q3">What you'd rather not talk about yet</label>
+        <textarea id="q3" rows="3"></textarea>
+        <div class="print-only answer" data-for="q3"></div>
+      </div>
+
+      <p class="privacy"><b>This stays on your device.</b> What you type here is not sent anywhere and
+         is not saved. Closing this tab erases it.</p>
+
+      <div class="actions">
+        <button class="btn" id="btn-print" type="button">Print my notes</button>
+        <button class="btn alt" id="btn-copy" type="button">Copy to clipboard</button>
+        <span class="said" id="said" role="status"></span>
+      </div>
+
+      <p class="fine print-only" style="margin-top:16pt">If you need help before your appointment —
+         Emergency 000 · Lifeline 13 11 14 · Beyond Blue 1300 22 4636</p>
+    </div>
+
+    <div class="cta">
+      <h2>Ready, or nearly ready?</h2>
+      <p>Send a message and we'll find a time. You don't need to explain much — a sentence is enough.</p>
+      <a href="index.html#contact">Send a message to book</a>
+    </div>
+  </section>
+
+</div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="crisis">
+      <h2>If you need help now</h2>
+      <ul>
+        <li><span>Emergency</span> <b>000</b></li>
+        <li><span>Lifeline</span> <b>13 11 14</b></li>
+        <li><span>Beyond Blue</span> <b>1300 22 4636</b></li>
+      </ul>
+    </div>
+    <div class="fine">
+      <p>This page is general information, not psychological advice or treatment. Reading it doesn't
+         create a therapeutic relationship.</p>
+      <p>Khooshraj Mohun, registered psychologist. AHPRA registration PSY0002273569. Based in Macleod,
+         Melbourne. Sessions by telehealth.</p>
+      <p><a href="psychoeducation.html">← Back to Psychoeducation</a></p>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function () {
+  'use strict';
+
+  /* ---------- timeline ---------- */
+  var segs = Array.prototype.slice.call(document.querySelectorAll('.tl-seg'));
+  var caption = document.getElementById('tl-caption');
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function setActive(target, moveFocus) {
+    segs.forEach(function (s) {
+      var on = s.dataset.target === target;
+      s.setAttribute('aria-current', on ? 'true' : 'false');
+      if (on) {
+        caption.innerHTML = '<b>' + s.dataset.label + '</b> <span>' + s.dataset.time + '</span>';
+        if (moveFocus) s.focus();
+      }
+    });
+  }
+
+  segs.forEach(function (seg, i) {
+    seg.addEventListener('click', function () {
+      var el = document.getElementById(seg.dataset.target);
+      if (el) el.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+      setActive(seg.dataset.target, false);
+    });
+    seg.addEventListener('keydown', function (e) {
+      var next = null;
+      if (e.key === 'ArrowRight' || e.key === 'ArrowDown') next = segs[i + 1];
+      if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') next = segs[i - 1];
+      if (e.key === 'Home') next = segs[0];
+      if (e.key === 'End') next = segs[segs.length - 1];
+      if (next) { e.preventDefault(); next.focus(); }
+    });
+  });
+
+  setActive('before', false); // something is always current
+
+  /* scroll-spy: pick the last section that has passed the reference line.
+     A deterministic calculation rather than an IntersectionObserver band —
+     a narrow band leaves gaps where nothing is intersecting and the
+     highlight goes stale, which is worse than no highlight at all. */
+  var watched = segs.map(function (s) { return document.getElementById(s.dataset.target); })
+                    .filter(Boolean);
+
+  function updateSpy() {
+    if (!watched.length) return;
+    var line = window.scrollY + Math.min(190, window.innerHeight * 0.32);
+    var currentId = watched[0].id;
+    watched.forEach(function (el) {
+      var top = el.getBoundingClientRect().top + window.scrollY;
+      if (top <= line) currentId = el.id;
+    });
+    setActive(currentId, false);
+  }
+  // Called directly rather than through a requestAnimationFrame gate: rAF is
+  // throttled in background tabs, and a stuck "already scheduled" flag would
+  // freeze the highlight permanently. Seven rect reads per scroll is cheap.
+  window.addEventListener('scroll', updateSpy, { passive: true });
+  window.addEventListener('resize', updateSpy);
+  updateSpy();
+
+  /* one orchestrated reveal, once */
+  if (!reduce) {
+    segs.forEach(function (s, i) {
+      s.style.opacity = '0';
+      s.style.transform = 'translateY(6px)';
+      setTimeout(function () {
+        s.style.transition = 'opacity .34s ease, transform .34s ease';
+        s.style.opacity = '1';
+        s.style.transform = 'none';
+      }, 90 + i * 70);
+    });
+  }
+
+  /* ---------- what gets shared ---------- */
+  var tabStays = document.getElementById('tab-stays');
+  var tabLeaves = document.getElementById('tab-leaves');
+  var pStays = document.getElementById('p-stays');
+  var pLeaves = document.getElementById('p-leaves');
+
+  function showShared(which) {
+    var stays = which === 'stays';
+    tabStays.setAttribute('aria-selected', stays ? 'true' : 'false');
+    tabLeaves.setAttribute('aria-selected', stays ? 'false' : 'true');
+    pStays.hidden = !stays;
+    pLeaves.hidden = stays;
+  }
+  // progressive enhancement: both panels are visible until JS runs
+  showShared('stays');
+  tabStays.addEventListener('click', function () { showShared('stays'); });
+  tabLeaves.addEventListener('click', function () { showShared('leaves'); });
+  [tabStays, tabLeaves].forEach(function (t) {
+    t.addEventListener('keydown', function (e) {
+      if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
+        e.preventDefault();
+        var other = t === tabStays ? tabLeaves : tabStays;
+        other.focus();
+        showShared(other === tabStays ? 'stays' : 'leaves');
+      }
+    });
+  });
+
+  /* ---------- note builder (memory only) ---------- */
+  var ids = ['q1', 'q2', 'q3'];
+  var said = document.getElementById('said');
+
+  function mirrorForPrint() {
+    document.querySelectorAll('.answer').forEach(function (el) {
+      var src = document.getElementById(el.dataset.for);
+      el.textContent = src ? src.value : '';
+    });
+  }
+  window.addEventListener('beforeprint', mirrorForPrint);
+
+  document.getElementById('btn-print').addEventListener('click', function () {
+    mirrorForPrint();
+    window.print();
+  });
+
+  document.getElementById('btn-copy').addEventListener('click', function () {
+    var lines = ['Notes for my first session', ''];
+    ids.forEach(function (id) {
+      var label = document.querySelector('label[for="' + id + '"]').textContent.trim();
+      var val = document.getElementById(id).value.trim();
+      lines.push(label, val || '—', '');
+    });
+    var text = lines.join('\n');
+
+    function done() {
+      said.textContent = 'Copied.';
+      setTimeout(function () { said.textContent = ''; }, 2600);
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(done, fallback);
+    } else { fallback(); }
+
+    function fallback() {
+      var ta = document.createElement('textarea');
+      ta.value = text;
+      ta.setAttribute('readonly', '');
+      ta.style.position = 'fixed';
+      ta.style.top = '-1000px';
+      document.body.appendChild(ta);
+      ta.select();
+      try { document.execCommand('copy'); done(); }
+      catch (err) { said.textContent = 'Press Ctrl/Cmd+C to copy.'; }
+      document.body.removeChild(ta);
+    }
+  });
+})();
+</script>
+
+</body>
+</html>
