@@ -52,7 +52,7 @@
             </p>
 
             <figure class="loop-figure">
-                <svg viewBox="0 0 440 460" role="img" aria-label="A cycle diagram: thoughts lead to emotions, emotions to physical sensations, physical sensations to behaviours, and behaviours back to thoughts.">
+                <svg viewBox="0 0 440 460" aria-label="A cycle diagram: thoughts lead to emotions, emotions to physical sensations, physical sensations to behaviours, and behaviours back to thoughts.">
                     <title>The vicious cycle of unhelpful thinking</title>
                     <defs>
                         <marker id="ah" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto" markerUnits="strokeWidth">
@@ -61,11 +61,11 @@
                     </defs>
 
                     <!-- clockwise arrows between nodes -->
-                    <g fill="none" stroke="#a9803e" stroke-width="3" marker-end="url(#ah)">
-                        <path d="M276.2,80.9 A150,150 0 0 1 359.1,163.8"></path>
-                        <path d="M359.1,276.2 A150,150 0 0 1 276.2,359.1"></path>
-                        <path d="M163.8,359.1 A150,150 0 0 1 80.9,276.2"></path>
-                        <path d="M80.9,163.8 A150,150 0 0 1 163.8,80.9"></path>
+                    <g fill="none" stroke-width="3" marker-end="url(#ah)">
+                        <path class="loop-arrow" id="arrow-thoughts"   d="M276.2,80.9 A150,150 0 0 1 359.1,163.8"></path>
+                        <path class="loop-arrow" id="arrow-emotions"   d="M359.1,276.2 A150,150 0 0 1 276.2,359.1"></path>
+                        <path class="loop-arrow" id="arrow-physical"   d="M163.8,359.1 A150,150 0 0 1 80.9,276.2"></path>
+                        <path class="loop-arrow" id="arrow-behaviours" d="M80.9,163.8 A150,150 0 0 1 163.8,80.9"></path>
                     </g>
 
                     <!-- centre note -->
@@ -74,20 +74,36 @@
 
                     <!-- nodes -->
                     <g font-family="Inter, sans-serif" font-size="15" font-weight="600" fill="#ffffff" text-anchor="middle">
-                        <circle cx="220" cy="70" r="62" fill="#123b44"></circle>
-                        <text x="220" y="75">Thoughts</text>
-
-                        <circle cx="370" cy="220" r="62" fill="#2f6b75"></circle>
-                        <text x="370" y="225">Emotions</text>
-
-                        <circle cx="220" cy="370" r="62" fill="#2f6b75"></circle>
-                        <text x="220" y="365">Physical</text>
-                        <text x="220" y="384">Sensations</text>
-
-                        <circle cx="70" cy="220" r="62" fill="#2f6b75"></circle>
-                        <text x="70" y="225">Behaviours</text>
+                        <g class="loop-node" id="node-thoughts" data-key="thoughts" role="button" tabindex="0" aria-label="Thoughts — explore this part of the loop">
+                            <circle class="node-circle" cx="220" cy="70" r="62"></circle>
+                            <text x="220" y="75">Thoughts</text>
+                        </g>
+                        <g class="loop-node" id="node-emotions" data-key="emotions" role="button" tabindex="0" aria-label="Emotions — explore this part of the loop">
+                            <circle class="node-circle" cx="370" cy="220" r="62"></circle>
+                            <text x="370" y="225">Emotions</text>
+                        </g>
+                        <g class="loop-node" id="node-physical" data-key="physical" role="button" tabindex="0" aria-label="Physical sensations — explore this part of the loop">
+                            <circle class="node-circle" cx="220" cy="370" r="62"></circle>
+                            <text x="220" y="365">Physical</text>
+                            <text x="220" y="384">Sensations</text>
+                        </g>
+                        <g class="loop-node" id="node-behaviours" data-key="behaviours" role="button" tabindex="0" aria-label="Behaviours — explore this part of the loop">
+                            <circle class="node-circle" cx="70" cy="220" r="62"></circle>
+                            <text x="70" y="225">Behaviours</text>
+                        </g>
                     </g>
                 </svg>
+
+                <div class="loop-controls">
+                    <button type="button" class="loop-btn" id="loop-play">▶ Play the spiral</button>
+                    <span class="loop-hint">or select any part of the loop</span>
+                </div>
+
+                <div class="loop-panel" id="loop-panel" aria-live="polite">
+                    <h3 id="loop-title">Explore the loop</h3>
+                    <p id="loop-desc">Select any of the four parts above — or press <b>Play the spiral</b> — to see how each one feeds the next, using the job-interview example.</p>
+                    <p class="loop-example" id="loop-example" hidden></p>
+                </div>
                 <figcaption>The four elements of the loop — each one directly influences the next.</figcaption>
             </figure>
 
@@ -173,6 +189,122 @@
                    When you replace an unhelpful thought with a fairer one, the domino effect shifts in
                    your favour: the unpleasant emotions begin to ease, the physical distress quietens,
                    and your behaviour naturally becomes more adaptive and supportive of your recovery.</p>
+            </article>
+
+            <article class="s-section" id="trial">
+                <span class="s-num">04</span>
+                <h2>Try it: put a thought on trial</h2>
+                <p>Reading about cognitive restructuring is one thing — doing it is another. Work
+                   through a thought of your own below, or press <b>Use the example</b> to practise
+                   with the interview scenario first.</p>
+                <p class="privacy-note">
+                    <b>Private by design.</b> Everything you type stays in your browser. Nothing is
+                    saved, stored, or sent anywhere — closing or refreshing this page clears it.
+                </p>
+
+                <div class="tr-card">
+                    <ol class="tr-steps" id="tr-steps" aria-label="Progress">
+                        <li class="is-current">Situation</li>
+                        <li>Feeling</li>
+                        <li>Evidence</li>
+                        <li>Rethink</li>
+                        <li>Record</li>
+                    </ol>
+
+                    <!-- Step 1 -->
+                    <section class="tr-step is-active" data-step="1" aria-labelledby="tr-h1">
+                        <h3 id="tr-h1">1. The situation &amp; the hot thought</h3>
+                        <label for="tr-situation">What happened? (the trigger)</label>
+                        <input type="text" id="tr-situation" placeholder="e.g. I have a job interview on Friday">
+
+                        <label for="tr-thought">What did your mind say? (the "hot thought")</label>
+                        <input type="text" id="tr-thought" placeholder="e.g. I'm useless in interviews and I'll never get a job">
+
+                        <label for="tr-belief">How much do you believe that thought right now?</label>
+                        <div class="tr-slider">
+                            <input type="range" id="tr-belief" min="0" max="100" value="80" step="5">
+                            <output for="tr-belief" id="tr-belief-out">80%</output>
+                        </div>
+                        <p class="tr-hint" id="tr-hint-1" hidden>Add a hot thought to continue.</p>
+                    </section>
+
+                    <!-- Step 2 -->
+                    <section class="tr-step" data-step="2" aria-labelledby="tr-h2" hidden>
+                        <h3 id="tr-h2">2. How does that feel?</h3>
+                        <p class="tr-lede">The thought comes first — the feeling follows it. Name what it stirs up.</p>
+                        <label for="tr-emotion">The strongest emotion</label>
+                        <div class="tr-chips" id="tr-chips">
+                            <button type="button" data-emotion="Anxious">Anxious</button>
+                            <button type="button" data-emotion="Low">Low</button>
+                            <button type="button" data-emotion="Sad">Sad</button>
+                            <button type="button" data-emotion="Angry">Angry</button>
+                            <button type="button" data-emotion="Ashamed">Ashamed</button>
+                            <button type="button" data-emotion="Overwhelmed">Overwhelmed</button>
+                        </div>
+                        <input type="text" id="tr-emotion" placeholder="…or type your own">
+
+                        <label for="tr-intensity">How intense is it?</label>
+                        <div class="tr-slider">
+                            <input type="range" id="tr-intensity" min="0" max="100" value="75" step="5">
+                            <output for="tr-intensity" id="tr-intensity-out">75%</output>
+                        </div>
+                    </section>
+
+                    <!-- Step 3 -->
+                    <section class="tr-step" data-step="3" aria-labelledby="tr-h3" hidden>
+                        <h3 id="tr-h3">3. Put it on trial</h3>
+                        <p class="tr-lede">Be a fair judge. Facts only — what would stand up as evidence,
+                           not what it <em>feels</em> like.</p>
+                        <div class="tr-evidence">
+                            <div>
+                                <label for="tr-for">Evidence <b>for</b> the thought</label>
+                                <textarea id="tr-for" rows="5" placeholder="Facts that genuinely support it…"></textarea>
+                            </div>
+                            <div>
+                                <label for="tr-against">Evidence <b>against</b> the thought</label>
+                                <textarea id="tr-against" rows="5" placeholder="Facts that don't fit it — times it wasn't true…"></textarea>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Step 4 -->
+                    <section class="tr-step" data-step="4" aria-labelledby="tr-h4" hidden>
+                        <h3 id="tr-h4">4. A more balanced thought</h3>
+                        <p class="tr-lede">Not forced positivity — something fairer that accounts for
+                           <em>all</em> the evidence.</p>
+                        <label for="tr-balanced">Your balanced alternative</label>
+                        <textarea id="tr-balanced" rows="3" placeholder="e.g. Interviews make me nervous, and I've also been offered jobs before. I can prepare and do my best."></textarea>
+
+                        <label for="tr-belief2">Now, how much do you believe the <em>original</em> thought?</label>
+                        <div class="tr-slider">
+                            <input type="range" id="tr-belief2" min="0" max="100" value="80" step="5">
+                            <output for="tr-belief2" id="tr-belief2-out">80%</output>
+                        </div>
+
+                        <label for="tr-intensity2">And how intense is the feeling now?</label>
+                        <div class="tr-slider">
+                            <input type="range" id="tr-intensity2" min="0" max="100" value="75" step="5">
+                            <output for="tr-intensity2" id="tr-intensity2-out">75%</output>
+                        </div>
+                    </section>
+
+                    <!-- Step 5 -->
+                    <section class="tr-step" data-step="5" aria-labelledby="tr-h5" hidden>
+                        <h3 id="tr-h5">5. Your thought record</h3>
+                        <div id="tr-summary" aria-live="polite"></div>
+                        <div class="tr-final-actions">
+                            <button type="button" class="loop-btn" id="tr-copy">Copy my record</button>
+                            <button type="button" class="loop-btn ghost" id="tr-reset">Start over</button>
+                        </div>
+                    </section>
+
+                    <div class="tr-nav">
+                        <button type="button" class="loop-btn ghost" id="tr-example">Use the example</button>
+                        <span class="tr-spacer"></span>
+                        <button type="button" class="loop-btn ghost" id="tr-back" hidden>← Back</button>
+                        <button type="button" class="loop-btn" id="tr-next">Next →</button>
+                    </div>
+                </div>
             </article>
 
             <div class="edu-cta">
@@ -272,6 +404,135 @@
         }
         .back-link:hover { opacity: 0.7; }
 
+        /* ---- interactive loop diagram ---- */
+        .loop-arrow { stroke: #a9803e; opacity: 0.55; transition: stroke 0.3s, opacity 0.3s, stroke-width 0.3s; }
+        .loop-arrow.is-active { stroke: #123b44; opacity: 1; stroke-width: 4.5; }
+
+        .loop-node { cursor: pointer; }
+        .node-circle { fill: #2f6b75; transition: fill 0.25s, r 0.25s; }
+        .loop-node:hover .node-circle { fill: #1e5560; }
+        .loop-node.is-active .node-circle { fill: #123b44; r: 66; }
+        .loop-node:focus { outline: none; }
+        .loop-node:focus-visible .node-circle { stroke: #a9803e; stroke-width: 4; }
+
+        .loop-controls { display: flex; align-items: center; justify-content: center; gap: 14px; flex-wrap: wrap; margin-top: 6px; }
+        .loop-hint { font-size: 0.85rem; color: var(--accent-sage); }
+
+        .loop-btn {
+            font-family: var(--font-sans); font-size: 0.9rem; font-weight: 600; cursor: pointer;
+            background: var(--btn-bg); color: #fff; border: 2px solid var(--btn-bg);
+            padding: 10px 22px; border-radius: 50px; transition: 0.2s;
+        }
+        .loop-btn:hover { background: transparent; color: var(--btn-bg); }
+        .loop-btn.ghost { background: transparent; color: var(--accent-sage); border-color: #cfd9d6; }
+        .loop-btn.ghost:hover { border-color: var(--accent-sage); background: var(--site-bg); }
+        .loop-btn:focus-visible { outline: 2px solid var(--accent-blush); outline-offset: 3px; }
+        .loop-btn[disabled] { opacity: 0.45; cursor: default; }
+
+        .loop-panel {
+            background: var(--card-bg); border: 1px solid #e8e2d6; border-left: 4px solid var(--accent-blush);
+            border-radius: 0 10px 10px 0; padding: 20px 24px; margin-top: 18px; text-align: left;
+            min-height: 118px;
+        }
+        .loop-panel h3 { font-family: var(--font-serif); font-size: 1.2rem; color: var(--text-heading); margin: 0 0 6px; }
+        .loop-panel p { font-size: 0.96rem; line-height: 1.62; color: var(--text-body); margin: 0; }
+        .loop-example {
+            margin-top: 10px !important; padding-top: 10px; border-top: 1px dashed #ddd6c6;
+            font-style: italic; color: var(--accent-sage) !important;
+        }
+
+        /* ---- thought record ---- */
+        .privacy-note {
+            background: var(--site-bg); border-radius: 8px; padding: 14px 18px;
+            font-size: 0.9rem !important; line-height: 1.55 !important; color: var(--text-body);
+        }
+        .privacy-note b { color: var(--text-heading); }
+
+        .tr-card { background: var(--site-bg); border-radius: 12px; padding: 24px 26px 22px; margin-top: 6px; }
+
+        .tr-steps {
+            list-style: none; counter-reset: trs; display: flex; flex-wrap: wrap; gap: 8px;
+            padding: 0; margin: 0 0 22px;
+        }
+        .tr-steps li {
+            counter-increment: trs; font-size: 0.75rem; font-weight: 600; color: #8a938f;
+            display: flex; align-items: center; gap: 6px;
+        }
+        .tr-steps li::before {
+            content: counter(trs); width: 22px; height: 22px; border-radius: 50%;
+            background: #dfe6e3; color: #6d7a77; display: flex; align-items: center;
+            justify-content: center; font-size: 0.72rem;
+        }
+        .tr-steps li:not(:last-child)::after { content: ""; width: 16px; height: 2px; background: #dfe6e3; }
+        .tr-steps li.is-current { color: var(--text-heading); }
+        .tr-steps li.is-current::before { background: var(--accent-sage); color: #fff; }
+        .tr-steps li.is-done::before { background: var(--accent-blush); color: #fff; content: "✓"; }
+
+        .tr-step h3 { font-family: var(--font-serif); font-size: 1.25rem; color: var(--text-heading); margin: 0 0 8px; }
+        .tr-lede { font-size: 0.95rem; color: var(--text-body); margin: 0 0 16px; line-height: 1.6; }
+        .tr-step label {
+            display: block; font-size: 0.82rem; font-weight: 600; color: var(--text-heading);
+            margin: 16px 0 6px;
+        }
+        .tr-step input[type="text"], .tr-step textarea {
+            width: 100%; box-sizing: border-box; padding: 11px 14px; border: 1px solid #cfd9d6;
+            border-radius: 8px; font-family: var(--font-sans); font-size: 0.95rem; color: var(--text-body);
+            background: #fff; resize: vertical;
+        }
+        .tr-step input[type="text"]:focus, .tr-step textarea:focus {
+            outline: none; border-color: var(--accent-sage); box-shadow: 0 0 0 3px rgba(47,107,117,.12);
+        }
+
+        .tr-slider { display: flex; align-items: center; gap: 14px; }
+        .tr-slider input[type="range"] { flex: 1; accent-color: var(--accent-sage); }
+        .tr-slider output {
+            min-width: 52px; text-align: right; font-weight: 700; color: var(--text-heading);
+            font-variant-numeric: tabular-nums;
+        }
+
+        .tr-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 10px; }
+        .tr-chips button {
+            font-family: var(--font-sans); font-size: 0.85rem; cursor: pointer;
+            background: #fff; color: var(--text-body); border: 1px solid #cfd9d6;
+            padding: 7px 14px; border-radius: 50px; transition: 0.15s;
+        }
+        .tr-chips button:hover { border-color: var(--accent-sage); }
+        .tr-chips button.is-selected { background: var(--accent-sage); color: #fff; border-color: var(--accent-sage); }
+
+        .tr-evidence { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+        .tr-evidence label b { color: var(--accent-sage); }
+
+        .tr-hint { color: #b0603f; font-size: 0.85rem; margin: 10px 0 0; font-weight: 600; }
+
+        .tr-nav { display: flex; align-items: center; gap: 10px; margin-top: 24px; flex-wrap: wrap; }
+        .tr-spacer { flex: 1; }
+        .tr-final-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 20px; }
+
+        /* summary */
+        .tr-sum-row { background: #fff; border-radius: 10px; padding: 16px 18px; margin-bottom: 10px; }
+        .tr-sum-row h4 {
+            font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase;
+            color: var(--accent-blush); margin: 0 0 5px; font-weight: 700;
+        }
+        .tr-sum-row p { font-size: 0.97rem; line-height: 1.6; color: var(--text-body); margin: 0; }
+        .tr-shift { display: grid; gap: 14px; background: #fff; border-radius: 10px; padding: 18px; margin-bottom: 10px; }
+        .tr-metric b { display: block; font-size: 0.8rem; color: var(--text-heading); margin-bottom: 7px; }
+        .tr-bar { display: flex; align-items: center; gap: 10px; margin-bottom: 5px; font-size: 0.78rem; color: #6d7a77; }
+        .tr-bar .track { flex: 1; height: 13px; background: #e9eeec; border-radius: 7px; overflow: hidden; }
+        .tr-bar .track i { display: block; height: 100%; border-radius: 7px; transition: width 0.6s; }
+        .tr-bar .track i.before { background: #c2a06a; }
+        .tr-bar .track i.after { background: var(--accent-sage); }
+        .tr-bar .val { min-width: 40px; text-align: right; font-weight: 700; color: var(--text-heading); font-variant-numeric: tabular-nums; }
+        .tr-verdict {
+            background: var(--accent-sage); color: #fff; border-radius: 10px; padding: 16px 20px;
+            font-size: 0.97rem; line-height: 1.6;
+        }
+        .tr-copied { color: var(--accent-sage); font-weight: 600; font-size: 0.88rem; align-self: center; }
+
+        @media (prefers-reduced-motion: reduce) {
+            .loop-arrow, .node-circle, .tr-bar .track i { transition: none; }
+        }
+
         @media (max-width: 640px) {
             .lead { padding: 20px 22px; font-size: 1.05rem; }
             .s-section { padding: 24px 22px; }
@@ -279,17 +540,259 @@
             .anatomy-grid { grid-template-columns: 1fr; }
             .stop-grid { grid-template-columns: 1fr 1fr; }
             .edu-cta { padding: 30px 24px; }
+            .tr-card { padding: 20px 18px; }
+            .tr-evidence { grid-template-columns: 1fr; }
+            .tr-steps li span { display: none; }
+            .tr-nav { gap: 8px; }
+            .tr-nav .loop-btn { flex: 1 1 auto; }
         }
     </style>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const menuBtn = document.getElementById('mobile-menu-btn');
-            const navLinks = document.getElementById('nav-links');
-            if (menuBtn && navLinks) {
-                menuBtn.addEventListener('click', function () { navLinks.classList.toggle('active'); });
+    document.addEventListener('DOMContentLoaded', function () {
+
+        /* ---------- mobile menu ---------- */
+        const menuBtn = document.getElementById('mobile-menu-btn');
+        const navLinks = document.getElementById('nav-links');
+        if (menuBtn && navLinks) {
+            menuBtn.addEventListener('click', function () { navLinks.classList.toggle('active'); });
+        }
+
+        /* ---------- interactive loop diagram ---------- */
+        const LOOP = {
+            thoughts: {
+                title: 'Thoughts — the interpreters',
+                desc: "The internal statements and predictions you tell yourself. When you're low or anxious, thoughts take on a negative bias, pulling your attention onto the threat and making it hard to see things fairly.",
+                example: 'Example: “I’m useless in interviews and I’ll never get a job.”'
+            },
+            emotions: {
+                title: 'Emotions — the feelings',
+                desc: 'Thoughts have a direct, immediate effect on how you feel. It can seem like the situation caused the distress, but it is the thought that produces the emotion.',
+                example: 'Example: the thought immediately makes you feel low, sad and anxious.'
+            },
+            physical: {
+                title: 'Physical sensations — the body’s response',
+                desc: 'Your body reacts in tandem with your mind. When unhelpful thoughts dominate, you may feel tired or restless, lose your appetite, or notice tension.',
+                example: 'Example: a restless night’s sleep, and you wake with no appetite.'
+            },
+            behaviours: {
+                title: 'Behaviours — the actions',
+                desc: 'In response to everything above, you change what you do — withdrawing, avoiding, or seeking reassurance. Those actions then become “evidence” that feeds the next thought, closing the loop.',
+                example: 'Example: you struggle to prepare, skip breakfast, and ask family for reassurance — which convinces you that you can’t cope.'
             }
+        };
+        const ORDER = ['thoughts', 'emotions', 'physical', 'behaviours'];
+
+        const panelTitle = document.getElementById('loop-title');
+        const panelDesc = document.getElementById('loop-desc');
+        const panelEx = document.getElementById('loop-example');
+        const playBtn = document.getElementById('loop-play');
+        const nodes = Array.from(document.querySelectorAll('.loop-node'));
+        let playTimer = null;
+
+        function setActive(key) {
+            nodes.forEach(n => n.classList.toggle('is-active', n.dataset.key === key));
+            document.querySelectorAll('.loop-arrow').forEach(a => {
+                a.classList.toggle('is-active', a.id === 'arrow-' + key);
+            });
+            const d = LOOP[key];
+            panelTitle.textContent = d.title;
+            panelDesc.textContent = d.desc;
+            panelEx.textContent = d.example;
+            panelEx.hidden = false;
+        }
+
+        function stopPlaying() {
+            if (playTimer) { clearInterval(playTimer); playTimer = null; }
+            playBtn.textContent = '▶ Play the spiral';
+        }
+
+        nodes.forEach(node => {
+            node.addEventListener('click', () => { stopPlaying(); setActive(node.dataset.key); });
+            node.addEventListener('keydown', e => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    stopPlaying();
+                    setActive(node.dataset.key);
+                }
+            });
         });
+
+        playBtn.addEventListener('click', () => {
+            if (playTimer) { stopPlaying(); return; }
+            let i = 0;
+            setActive(ORDER[i]);
+            playBtn.textContent = '❚❚ Pause';
+            playTimer = setInterval(() => {
+                i = (i + 1) % ORDER.length;
+                setActive(ORDER[i]);
+            }, 2600);
+        });
+
+        /* ---------- thought record ---------- */
+        const trCard = document.querySelector('.tr-card');
+        if (!trCard) return;
+
+        const steps = Array.from(trCard.querySelectorAll('.tr-step'));
+        const crumbs = Array.from(document.querySelectorAll('#tr-steps li'));
+        const backBtn = document.getElementById('tr-back');
+        const nextBtn = document.getElementById('tr-next');
+        const exampleBtn = document.getElementById('tr-example');
+        const hint1 = document.getElementById('tr-hint-1');
+        let current = 1;
+
+        const $ = id => document.getElementById(id);
+        const F = {
+            situation: $('tr-situation'), thought: $('tr-thought'),
+            belief: $('tr-belief'), emotion: $('tr-emotion'), intensity: $('tr-intensity'),
+            evFor: $('tr-for'), evAgainst: $('tr-against'), balanced: $('tr-balanced'),
+            belief2: $('tr-belief2'), intensity2: $('tr-intensity2')
+        };
+
+        // live slider read-outs
+        [['tr-belief','tr-belief-out'], ['tr-intensity','tr-intensity-out'],
+         ['tr-belief2','tr-belief2-out'], ['tr-intensity2','tr-intensity2-out']].forEach(([i, o]) => {
+            const input = $(i), out = $(o);
+            input.addEventListener('input', () => { out.textContent = input.value + '%'; });
+        });
+
+        // carry step-1/2 ratings into step 4 as the starting point
+        F.belief.addEventListener('input', () => {
+            F.belief2.value = F.belief.value; $('tr-belief2-out').textContent = F.belief.value + '%';
+        });
+        F.intensity.addEventListener('input', () => {
+            F.intensity2.value = F.intensity.value; $('tr-intensity2-out').textContent = F.intensity.value + '%';
+        });
+
+        // emotion chips
+        document.querySelectorAll('#tr-chips button').forEach(chip => {
+            chip.addEventListener('click', () => {
+                document.querySelectorAll('#tr-chips button').forEach(c => c.classList.remove('is-selected'));
+                chip.classList.add('is-selected');
+                F.emotion.value = chip.dataset.emotion;
+            });
+        });
+
+        function showStep(n) {
+            current = n;
+            steps.forEach(s => { s.hidden = (+s.dataset.step !== n); s.classList.toggle('is-active', +s.dataset.step === n); });
+            crumbs.forEach((c, i) => {
+                c.classList.toggle('is-current', i + 1 === n);
+                c.classList.toggle('is-done', i + 1 < n);
+            });
+            backBtn.hidden = n === 1;
+            nextBtn.hidden = n === 5;
+            exampleBtn.hidden = n !== 1;
+            if (n === 5) buildSummary();
+            const h = steps[n - 1].querySelector('h3');
+            if (h) h.setAttribute('tabindex', '-1'), h.focus({ preventScroll: true });
+        }
+
+        nextBtn.addEventListener('click', () => {
+            if (current === 1 && !F.thought.value.trim()) {
+                hint1.hidden = false;
+                F.thought.focus();
+                return;
+            }
+            hint1.hidden = true;
+            if (current < 5) showStep(current + 1);
+        });
+        backBtn.addEventListener('click', () => { if (current > 1) showStep(current - 1); });
+
+        exampleBtn.addEventListener('click', () => {
+            F.situation.value = 'I have a job interview on Friday.';
+            F.thought.value = "I'm useless in interviews and I'll never get a job.";
+            F.belief.value = 85; $('tr-belief-out').textContent = '85%';
+            F.emotion.value = 'Anxious';
+            document.querySelectorAll('#tr-chips button').forEach(c => {
+                c.classList.toggle('is-selected', c.dataset.emotion === 'Anxious');
+            });
+            F.intensity.value = 80; $('tr-intensity-out').textContent = '80%';
+            F.evFor.value = 'I felt flustered in my last interview.\nI didn\'t get the job I applied for in March.';
+            F.evAgainst.value = 'I have been offered jobs before.\nI was invited to this interview on merit.\nI prepared well for the interview that went well last year.\n"Never" is a prediction, not a fact.';
+            F.balanced.value = 'Interviews make me nervous, and I have also been offered jobs before. I can prepare and do my best — one difficult interview does not define the outcome.';
+            F.belief2.value = 40; $('tr-belief2-out').textContent = '40%';
+            F.intensity2.value = 45; $('tr-intensity2-out').textContent = '45%';
+            hint1.hidden = true;
+            showStep(5);
+        });
+
+        function esc(s) {
+            return String(s || '').replace(/[&<>"']/g, c =>
+                ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+        }
+        function nl2br(s) { return esc(s).replace(/\n/g, '<br>'); }
+
+        function buildSummary() {
+            const b1 = +F.belief.value, b2 = +F.belief2.value;
+            const i1 = +F.intensity.value, i2 = +F.intensity2.value;
+            const bDrop = b1 - b2, iDrop = i1 - i2;
+            const emotion = F.emotion.value.trim() || 'the feeling';
+
+            let verdict;
+            if (bDrop > 0 || iDrop > 0) {
+                verdict = `Notice the domino effect: your belief in the original thought fell by <b>${bDrop}</b> points and ${esc(emotion.toLowerCase())} eased by <b>${iDrop}</b>. You didn't change the situation — you changed the thought, and the rest followed.`;
+            } else if (bDrop === 0 && iDrop === 0) {
+                verdict = 'No shift yet — and that\'s useful information too. Hot thoughts often need more evidence, or a balanced thought that feels genuinely believable. It\'s a skill that builds with practice.';
+            } else {
+                verdict = 'Your ratings went up. That can happen when a thought touches something deeper — a good thing to bring to a session rather than work through alone.';
+            }
+
+            $('tr-summary').innerHTML = `
+                ${F.situation.value.trim() ? `<div class="tr-sum-row"><h4>The situation</h4><p>${esc(F.situation.value)}</p></div>` : ''}
+                <div class="tr-sum-row"><h4>The hot thought</h4><p>“${esc(F.thought.value) || '—'}”</p></div>
+                ${F.evFor.value.trim() ? `<div class="tr-sum-row"><h4>Evidence for</h4><p>${nl2br(F.evFor.value)}</p></div>` : ''}
+                ${F.evAgainst.value.trim() ? `<div class="tr-sum-row"><h4>Evidence against</h4><p>${nl2br(F.evAgainst.value)}</p></div>` : ''}
+                ${F.balanced.value.trim() ? `<div class="tr-sum-row"><h4>Balanced thought</h4><p>“${esc(F.balanced.value)}”</p></div>` : ''}
+                <div class="tr-shift">
+                    <div class="tr-metric">
+                        <b>Belief in the original thought</b>
+                        <div class="tr-bar"><span>before</span><span class="track"><i class="before" style="width:${b1}%"></i></span><span class="val">${b1}%</span></div>
+                        <div class="tr-bar"><span>after&nbsp;&nbsp;</span><span class="track"><i class="after" style="width:${b2}%"></i></span><span class="val">${b2}%</span></div>
+                    </div>
+                    <div class="tr-metric">
+                        <b>Intensity of ${esc(emotion.toLowerCase())}</b>
+                        <div class="tr-bar"><span>before</span><span class="track"><i class="before" style="width:${i1}%"></i></span><span class="val">${i1}%</span></div>
+                        <div class="tr-bar"><span>after&nbsp;&nbsp;</span><span class="track"><i class="after" style="width:${i2}%"></i></span><span class="val">${i2}%</span></div>
+                    </div>
+                </div>
+                <div class="tr-verdict">${verdict}</div>`;
+        }
+
+        $('tr-copy').addEventListener('click', () => {
+            const txt = [
+                'CBT THOUGHT RECORD',
+                '------------------',
+                'Situation: ' + (F.situation.value || '—'),
+                'Hot thought: ' + (F.thought.value || '—'),
+                'Believed: ' + F.belief.value + '% → ' + F.belief2.value + '%',
+                'Feeling: ' + (F.emotion.value || '—') + ' ' + F.intensity.value + '% → ' + F.intensity2.value + '%',
+                '',
+                'Evidence for:', F.evFor.value || '—',
+                '', 'Evidence against:', F.evAgainst.value || '—',
+                '', 'Balanced thought:', F.balanced.value || '—'
+            ].join('\n');
+            navigator.clipboard.writeText(txt).then(() => {
+                const done = document.createElement('span');
+                done.className = 'tr-copied';
+                done.textContent = 'Copied to your clipboard';
+                const holder = document.querySelector('.tr-final-actions');
+                if (!holder.querySelector('.tr-copied')) holder.appendChild(done);
+                setTimeout(() => done.remove(), 2600);
+            });
+        });
+
+        $('tr-reset').addEventListener('click', () => {
+            F.situation.value = ''; F.thought.value = '';
+            F.emotion.value = ''; F.evFor.value = ''; F.evAgainst.value = ''; F.balanced.value = '';
+            F.belief.value = 80; $('tr-belief-out').textContent = '80%';
+            F.belief2.value = 80; $('tr-belief2-out').textContent = '80%';
+            F.intensity.value = 75; $('tr-intensity-out').textContent = '75%';
+            F.intensity2.value = 75; $('tr-intensity2-out').textContent = '75%';
+            document.querySelectorAll('#tr-chips button').forEach(c => c.classList.remove('is-selected'));
+            showStep(1);
+        });
+    });
     </script>
 
 </body>
