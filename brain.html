@@ -74,7 +74,7 @@
   .site-header__end{justify-self:end;text-align:right;line-height:1.7}
 
   /* ---------- sequence stage ---------- */
-  .sequence{position:relative;height:850vh}
+  .sequence{position:relative;height:700vh}
   .stage{position:sticky;top:0;height:100svh;overflow:hidden;background:var(--void)}
   #film-canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
   .stage__scrim{position:absolute;inset:0;pointer-events:none;
@@ -99,9 +99,6 @@
   .chapter--left::before,
   .chapter--lowleft::before{background:linear-gradient(270deg,
         transparent 26%,rgba(7,8,12,.55) 52%,rgba(7,8,12,.88) 78%,rgba(7,8,12,.92) 100%)}
-  .chapter--split::before{background:linear-gradient(90deg,
-        rgba(7,8,12,.93) 0%,rgba(7,8,12,.74) 28%,transparent 44%,
-        transparent 58%,rgba(7,8,12,.74) 72%,rgba(7,8,12,.93) 100%)}
   /* the closing frame is the brightest in the film (cortical surface fills it),
      so this one needs both a floor wash and a left wash */
   .chapter--final::before{background:
@@ -117,13 +114,6 @@
   .chapter--left .chapter__copy{justify-self:start}
   .chapter--lowleft{align-content:end;padding-bottom:132px}
   .chapter--lowleft .chapter__copy{justify-self:start}
-  /* the subject is centred in this frame, so both blocks stay in the outer
-     thirds — where the film is genuinely dark — rather than reaching the middle */
-  .chapter--split .chapter__copy{max-width:none;width:100%;display:grid;
-        grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:center;gap:24px}
-  .chapter--split .split-start{max-width:min(340px,26vw)}
-  .chapter--split .split-end{justify-self:end;text-align:right;max-width:min(340px,26vw)}
-  .chapter--split .split-end .chapter__deck{max-width:none}
   .chapter--final{align-content:end;padding-bottom:132px}
 
   .eyebrow{display:flex;align-items:center;gap:12px;margin-bottom:18px}
@@ -214,7 +204,7 @@
 
   /* ---------- mobile art direction ---------- */
   @media (max-width:780px){
-    .sequence{height:720vh}
+    .sequence{height:600vh}
     .site-header{grid-template-columns:1fr auto}
     .site-header__center{display:none}
     .chapter{align-content:end;padding-bottom:150px}
@@ -222,8 +212,6 @@
     .chapter--hero .chapter__copy,
     .chapter--right .chapter__copy,
     .chapter--left .chapter__copy{max-width:none;justify-self:start;text-align:left}
-    .chapter--split .chapter__copy{grid-template-columns:1fr;gap:6px}
-    .chapter--split .split-end{justify-self:start;text-align:left}
     .chapter__title{font-size:clamp(34px,10vw,54px)}
     .chapter__deck{font-size:15px;max-width:34ch}
     .parts{margin-top:18px;gap:6px 14px}
@@ -255,7 +243,7 @@
 <div class="loader" id="loader" aria-label="Loading the image sequence">
   <div class="loader__mark">
     <p class="loader__number" aria-hidden="true">01</p>
-    <div class="loader__meta">Plate 01–06<br>Human brain · whole to synapse<br>17.04 seconds</div>
+    <div class="loader__meta">Plate 01–05<br>Human brain · organ to synapse<br>One continuous descent</div>
   </div>
   <div class="loader__foot">
     <span class="micro" id="loader-label">Preparing plates</span>
@@ -266,7 +254,7 @@
 
 <header class="site-header" aria-label="Site">
   <a class="brandmark" href="index.html">R3 <span>Psychology</span></a>
-  <div class="site-header__center micro" aria-hidden="true">Whole organ → synapse</div>
+  <div class="site-header__center micro" aria-hidden="true">One descent · organ to synapse</div>
   <div class="site-header__end micro"><a href="psychoeducation.html">Psychoeducation ↗</a></div>
 </header>
 
@@ -285,7 +273,7 @@
       </div>
 
       <div class="chapters">
-        <article class="chapter chapter--hero" data-center="0.05" data-window="0.085"
+        <article class="chapter chapter--hero" data-center="0.055" data-window="0.085"
                  data-label="Whole organ" data-scale="≈ 140 mm" data-plane="Sagittal · whole organ">
           <div class="chapter__copy">
             <p class="eyebrow micro">Plate 01 · Whole organ</p>
@@ -300,39 +288,10 @@
           </div>
         </article>
 
-        <article class="chapter chapter--lowleft" data-center="0.20" data-window="0.062"
-                 data-label="Cortical tissue" data-scale="≈ 50 µm" data-plane="Field · cortical tissue">
+        <article class="chapter chapter--right" data-center="0.32" data-window="0.072"
+                 data-label="Approaching" data-scale="≈ 90 mm" data-plane="Coronal · cerebral cortex">
           <div class="chapter__copy">
-            <p class="eyebrow micro">Plate 02 · Cortical tissue</p>
-            <h2 class="chapter__title reveal"><span>Everything you have learned is in here</span></h2>
-            <p class="chapter__deck reveal d1"><span>Neurons do not work alone. They work in networks —
-               and networks are shaped by <b>repetition</b>.</span></p>
-            <div class="parts">
-              <span class="part">Dendrite</span>
-              <span class="part m">Axon</span>
-              <span class="part b">Synaptic terminal</span>
-            </div>
-          </div>
-        </article>
-
-        <article class="chapter chapter--right" data-center="0.40" data-window="0.060"
-                 data-label="The synapse" data-scale="≈ 20 µm" data-plane="Detail · single neuron">
-          <div class="chapter__copy">
-            <p class="eyebrow micro">Plate 03 · The synapse</p>
-            <h2 class="chapter__title reveal"><span>The gap where change happens</span></h2>
-            <p class="chapter__deck reveal d1"><span>Two neurons never touch. Signals cross a gap around
-               20 nanometres wide. Connections used together grow stronger; connections left unused fade.</span></p>
-            <div class="parts">
-              <span class="part">Soma</span>
-              <span class="part m">Synaptic cleft</span>
-            </div>
-          </div>
-        </article>
-
-        <article class="chapter chapter--right" data-center="0.60" data-window="0.060"
-                 data-label="Patterns" data-scale="≈ 140 mm" data-plane="Sagittal · whole organ">
-          <div class="chapter__copy">
-            <p class="eyebrow micro">Plate 04 · Whole organ</p>
+            <p class="eyebrow micro">Plate 02 · Approaching the cortex</p>
             <h2 class="chapter__title reveal"><span>Patterns, not flaws</span></h2>
             <p class="chapter__deck reveal d1"><span>Anxiety, low mood and old habits run on the same
                machinery as everything else you have ever learned. That is what psychological therapy
@@ -340,28 +299,43 @@
           </div>
         </article>
 
-        <article class="chapter chapter--split" data-center="0.79" data-window="0.058"
-                 data-label="Approach" data-scale="≈ 140 mm" data-plane="Coronal · whole organ">
+        <article class="chapter chapter--lowleft" data-center="0.54" data-window="0.070"
+                 data-label="Cortical surface" data-scale="≈ 8 mm" data-plane="Surface · gyri and sulci">
           <div class="chapter__copy">
-            <div class="split-start">
-              <p class="eyebrow micro">Plate 05 · Approach</p>
-              <h2 class="chapter__title reveal"><span>Talking is not</span></h2>
-            </div>
-            <div class="split-end">
-              <h2 class="chapter__title reveal d1"><span>the opposite of biology</span></h2>
-              <p class="chapter__deck reveal d2"><span>CBT, schema therapy and hypnotherapy are all ways
-                 of changing what the network practises.</span></p>
+            <p class="eyebrow micro">Plate 03 · Cortical surface</p>
+            <h2 class="chapter__title reveal"><span>Keep going in</span></h2>
+            <p class="chapter__deck reveal d1"><span>The folded surface is only two to four millimetres
+               thick. Beneath it sits the tissue that holds every habit you have.</span></p>
+            <div class="parts">
+              <span class="part">Gyrus</span>
+              <span class="part m">Sulcus</span>
             </div>
           </div>
         </article>
 
-        <article class="chapter chapter--final" data-center="0.94" data-window="0.070"
-                 data-label="Begin" data-scale="≈ 8 mm" data-plane="Surface · gyri and sulci">
+        <article class="chapter chapter--right" data-center="0.74" data-window="0.068"
+                 data-label="Cortical tissue" data-scale="≈ 50 µm" data-plane="Field · cortical tissue">
           <div class="chapter__copy">
-            <p class="eyebrow micro">Plate 06 · Cortical surface</p>
-            <h2 class="chapter__title reveal"><span>Start with one conversation</span></h2>
-            <p class="chapter__deck reveal d1"><span>A first session is mostly questions. You can read
-               exactly what happens in one before you decide anything.</span></p>
+            <p class="eyebrow micro">Plate 04 · Cortical tissue</p>
+            <h2 class="chapter__title reveal"><span>Networks, not wires</span></h2>
+            <p class="chapter__deck reveal d1"><span>Neurons do not work alone. They work in networks —
+               and networks are shaped by <b>repetition</b>.</span></p>
+            <div class="parts">
+              <span class="part">Dendrite</span>
+              <span class="part m">Axon</span>
+              <span class="part b">Soma</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="chapter chapter--final" data-center="0.95" data-window="0.075"
+                 data-label="The synapse" data-scale="≈ 20 µm" data-plane="Detail · synaptic cleft">
+          <div class="chapter__copy">
+            <p class="eyebrow micro">Plate 05 · The synapse</p>
+            <h2 class="chapter__title reveal"><span>The gap where change happens</span></h2>
+            <p class="chapter__deck reveal d1"><span>Two neurons never touch. Signals cross a gap around
+               20 nanometres wide. Connections used together grow stronger; connections left unused
+               fade. That is the machinery therapy works with.</span></p>
             <div class="cta-row">
               <a class="cta" href="first-session.html">What happens in a first session →</a>
               <a class="cta cta--ghost" href="index.html#contact">Send a message</a>
@@ -373,7 +347,7 @@
       <div class="telemetry" aria-hidden="true">
         <span class="micro" id="telemetry-chapter">Whole organ</span>
         <div class="telemetry__track"><span class="telemetry__fill"></span></div>
-        <span class="micro" id="telemetry-frame">F 0001 / 0150</span>
+        <span class="micro" id="telemetry-frame">F 0001 / 0092</span>
         <span class="micro scroll-cue">Scroll to descend</span>
       </div>
     </div>
@@ -381,31 +355,31 @@
 
   <section class="editorial" aria-labelledby="plates-title">
     <div class="editorial__head">
-      <h2 class="editorial__title" id="plates-title">Six plates, one continuous descent.</h2>
-      <p class="editorial__aside">Seventeen seconds resolved into 150 frames — from the whole organ,
-         down through cortical tissue to a single synapse, and back to the surface.</p>
+      <h2 class="editorial__title" id="plates-title">Five plates, one continuous descent.</h2>
+      <p class="editorial__aside">Ninety-two frames, re-cut from the source film into a single unbroken
+         descent — whole organ, through the cortical surface, into the tissue, to one synapse.</p>
     </div>
 
     <div class="plates">
       <figure class="plate plate--lead">
-        <img src="brain-frames/desktop/frame-0004.webp" alt="The whole human brain in lateral view" loading="lazy" width="1280" height="720">
-        <figcaption><span>Plate 01 · Whole organ</span><span>F 0004</span></figcaption>
+        <img src="brain-frames/desktop/frame-0006.webp" alt="The whole human brain in lateral view" loading="lazy" width="1280" height="720">
+        <figcaption><span>Plate 01 · Whole organ</span><span>F 0006</span></figcaption>
       </figure>
       <figure class="plate plate--a">
-        <img src="brain-frames/desktop/frame-0031.webp" alt="A network of neurons with glowing synaptic points" loading="lazy" width="1280" height="720">
-        <figcaption><span>Plate 02 · Tissue</span><span>F 0031</span></figcaption>
+        <img src="brain-frames/desktop/frame-0030.webp" alt="The brain seen closer, filling more of the frame" loading="lazy" width="1280" height="720">
+        <figcaption><span>Plate 02 · Approach</span><span>F 0030</span></figcaption>
       </figure>
       <figure class="plate plate--b">
-        <img src="brain-frames/desktop/frame-0060.webp" alt="A single neuron cell body with dendrites" loading="lazy" width="1280" height="720">
-        <figcaption><span>Plate 03 · Synapse</span><span>F 0060</span></figcaption>
+        <img src="brain-frames/desktop/frame-0050.webp" alt="The folded cortical surface" loading="lazy" width="1280" height="720">
+        <figcaption><span>Plate 03 · Surface</span><span>F 0050</span></figcaption>
       </figure>
       <figure class="plate plate--c">
-        <img src="brain-frames/desktop/frame-0090.webp" alt="The whole brain returning into view" loading="lazy" width="1280" height="720">
-        <figcaption><span>Plate 04 · Whole organ</span><span>F 0090</span></figcaption>
+        <img src="brain-frames/desktop/frame-0068.webp" alt="A network of neurons and axons" loading="lazy" width="1280" height="720">
+        <figcaption><span>Plate 04 · Tissue</span><span>F 0068</span></figcaption>
       </figure>
       <figure class="plate plate--d">
-        <img src="brain-frames/desktop/frame-0147.webp" alt="Close view of the folded cortical surface" loading="lazy" width="1280" height="720">
-        <figcaption><span>Plate 06 · Surface</span><span>F 0147</span></figcaption>
+        <img src="brain-frames/desktop/frame-0088.webp" alt="Two synaptic terminals with vesicles crossing the gap" loading="lazy" width="1280" height="720">
+        <figcaption><span>Plate 05 · Synapse</span><span>F 0088</span></figcaption>
       </figure>
     </div>
 
@@ -435,7 +409,7 @@
 (() => {
   "use strict";
 
-  const FRAME_COUNT = 150;
+  const FRAME_COUNT = 92;
   const FRAME_PAD = 4;
   const LERP_FACTOR = 0.115;
   const DWELL_WIDTH = 0.038;
@@ -443,7 +417,7 @@
   const LUT_SIZE = 2400;
   const MOBILE_QUERY = "(max-width: 780px)";
   const REDUCED_QUERY = "(prefers-reduced-motion: reduce)";
-  const DWELL_CENTERS = [0.05, 0.20, 0.40, 0.60, 0.79, 0.94];
+  const DWELL_CENTERS = [0.055, 0.32, 0.54, 0.74, 0.95];
 
   const sequence = document.getElementById("sequence");
   const stage = document.getElementById("stage");
