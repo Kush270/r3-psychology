@@ -90,13 +90,12 @@
           rgba(10,24,29,.95) 0%,rgba(10,24,29,.9) 38%,rgba(10,24,29,.5) 66%,transparent 90%)}
         .hero-rail{left:25px;right:25px}
       }
+      /* Reduce Motion: the scrub itself is user-initiated (frame position is
+         locked to the reader's own scroll), so it stays. What goes is every
+         animation the reader didn't cause: glide, reveals, eased rules. */
       @media (prefers-reduced-motion:reduce){
-        .hero-seq{height:100svh}
-        .hero-chapter{display:none}
-        .hero-chapter.hc-first{display:grid;visibility:visible}
-        .hc-reveal>span{transform:none}
-        .hc-first .hc-kicker::before{transform:scaleX(1)}
-        .hero-rail{display:none}
+        html{scroll-behavior:auto}
+        .hc-reveal>span,.hc-kicker::before,.hero-chapter::before,.hc-btn{transition:none}
       }
     </style>
 </head>
@@ -370,35 +369,26 @@
       }
     }
   }
-  function tick() {
-    if (!pageVisible || reducedMotion) return;
+  function renderNow() {
     const raw = rawProgress();
-    const e = remap(raw);
+    const e = reducedMotion ? raw : remap(raw);
     targetFrame = Math.round(e * (FRAME_COUNT - 1));
-    currentFrame += (targetFrame - currentFrame) * LERP_FACTOR;
+    currentFrame = reducedMotion ? targetFrame
+                 : currentFrame + (targetFrame - currentFrame) * LERP_FACTOR;
     drawFrame(Math.round(currentFrame));
     updateChapters(e);
     document.documentElement.style.setProperty("--hero-progress", raw.toFixed(4));
-    rafId = requestAnimationFrame(tick);
+  }
+  function tick() {
+    if (!pageVisible) return;
+    renderNow();
+    if (!reducedMotion) rafId = requestAnimationFrame(tick);
   }
 
   async function init() {
     buildLut();
     resizeCanvas();
     metrics();
-
-    if (reducedMotion) {
-      const poster = await loadFrame(2);
-      if (poster) drawFrame(2);
-      chapters.forEach((ch, i) => {
-        const on = i === 0;
-        ch.classList.toggle("is-on", on);
-        ch.setAttribute("aria-hidden", String(!on));
-      });
-      loader.classList.add("is-done");
-      setTimeout(() => loader.remove(), 800);
-      return;
-    }
 
     const critical = Array.from(new Set([
       0, ...DWELL_CENTERS.map((c) => Math.round(c * (FRAME_COUNT - 1))), FRAME_COUNT - 1
@@ -410,6 +400,7 @@
     drawFrame(nearestLoaded(0));
     loader.classList.add("is-done");
     setTimeout(() => loader.remove(), 800);
+    renderNow();
     tick();
     loadBatches(Array.from({ length: FRAME_COUNT }, (_, i) => i).filter((i) => !critical.includes(i)));
   }
@@ -427,10 +418,12 @@
   }
 
   window.addEventListener("resize", () => { resizeCanvas(); metrics(); }, { passive: true });
+  // reduce mode renders on the scroll event itself — synchronous, no glide
+  window.addEventListener("scroll", () => { if (reducedMotion) renderNow(); }, { passive: true });
   mobileMedia.addEventListener("change", swapStore);
   document.addEventListener("visibilitychange", () => {
     pageVisible = !document.hidden;
-    if (pageVisible && !reducedMotion) { cancelAnimationFrame(rafId); tick(); }
+    if (pageVisible) { cancelAnimationFrame(rafId); tick(); }
   });
 
   init();
