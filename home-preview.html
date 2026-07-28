@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>R3 Psychology | Resolve · Renew · Recover</title>
+    <meta name="description" content="Psychology services specialising in AI-assisted CBT and Hypnotherapy. Scroll to travel from the whole brain to a single synapse.">
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Lora:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
+    <style>
+      /* ---------- scroll-driven hero (replaces the static seashore image) ----------
+         Colour bridge: deep space tinted with Harbour ink, type in the site's bone,
+         brass for accents — the dark hero and the light page share one family. */
+      .hero-seq{position:relative;height:520vh;background:#0A1216}
+      .hero-stage{position:sticky;top:0;height:100svh;overflow:hidden;background:#0A1216}
+      #hero-canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+      .hero-scrim{position:absolute;inset:0;pointer-events:none;
+        background:radial-gradient(120% 90% at 50% 45%,transparent 30%,rgba(10,24,29,.78) 100%)}
+
+      .hero-chapter{position:absolute;inset:0;padding:0 8%;display:grid;align-content:center;
+        visibility:hidden;pointer-events:none}
+      .hero-chapter.is-on{visibility:visible}
+      .hero-chapter.is-on a{pointer-events:auto}
+      .hero-chapter::before{content:"";position:absolute;inset:0;pointer-events:none;
+        opacity:0;transition:opacity .5s ease}
+      .hero-chapter.is-on::before{opacity:1}
+      .hc-right::before{background:linear-gradient(90deg,transparent 16%,
+        rgba(10,24,29,.82) 46%,rgba(10,24,29,.96) 74%,rgba(10,24,29,.97) 100%)}
+      .hc-left::before{background:linear-gradient(270deg,transparent 16%,
+        rgba(10,24,29,.82) 46%,rgba(10,24,29,.96) 74%,rgba(10,24,29,.97) 100%)}
+      .hc-end::before{background:
+        linear-gradient(0deg,rgba(10,24,29,.95) 0%,rgba(10,24,29,.9) 40%,rgba(10,24,29,.55) 66%,transparent 90%),
+        linear-gradient(270deg,transparent 40%,rgba(10,24,29,.5) 75%,rgba(10,24,29,.72) 100%)}
+
+      .hc-copy{position:relative;z-index:1;max-width:min(520px,42vw)}
+      .hc-right .hc-copy{justify-self:end}
+      .hc-left .hc-copy{justify-self:start}
+      .hc-end{align-content:end;padding-bottom:14vh}
+      .hc-end .hc-copy{justify-self:start}
+
+      .hc-kicker{font-family:var(--font-sans);font-size:.72rem;font-weight:600;
+        letter-spacing:.16em;text-transform:uppercase;color:#FAF8F2;
+        display:flex;align-items:center;gap:12px;margin:0 0 18px}
+      .hc-kicker::before{content:"";width:44px;height:1px;background:#D9B36A;
+        transform:scaleX(0);transform-origin:0 50%;transition:transform .7s ease .1s}
+      .is-on .hc-kicker::before{transform:scaleX(1)}
+      .hero-seq h1,.hero-seq h2{font-family:var(--font-serif);color:#FAF8F2;
+        font-size:clamp(2.2rem,5.4vw,4rem);line-height:1.08;margin:0;
+        text-shadow:0 2px 28px rgba(7,14,17,.9)}
+      .hc-sub{font-family:var(--font-sans);font-weight:300;color:#E7EFEA;
+        font-size:clamp(1rem,1.5vw,1.3rem);line-height:1.6;margin:20px 0 0;max-width:44ch;
+        text-shadow:0 1px 16px rgba(7,14,17,.9)}
+      .hc-sub strong{color:#D9E7E4;font-weight:600}
+
+      .hc-reveal{display:block;overflow:hidden}
+      .hc-reveal>span{display:block;transform:translateY(112%);transition:transform .7s cubic-bezier(.22,1,.36,1)}
+      .is-on .hc-reveal>span{transform:translateY(0)}
+
+      .hc-ctas{display:flex;flex-wrap:wrap;gap:14px;margin-top:30px}
+      .hc-btn{font-family:var(--font-sans);font-weight:600;font-size:.95rem;text-decoration:none;
+        padding:15px 32px;border-radius:50px;border:2px solid #FAF8F2;min-height:44px;
+        display:inline-flex;align-items:center;transition:.25s}
+      .hc-btn.solid{background:#FAF8F2;color:#123b44}
+      .hc-btn.solid:hover{background:transparent;color:#FAF8F2}
+      .hc-btn.ghost{color:#FAF8F2;border-color:rgba(250,248,242,.55)}
+      .hc-btn.ghost:hover{border-color:#FAF8F2}
+      .hc-btn:focus-visible{outline:3px solid var(--accent-blush);outline-offset:3px}
+
+      .hero-rail{position:absolute;left:8%;right:8%;bottom:26px;z-index:2;display:flex;
+        align-items:center;gap:14px;pointer-events:none}
+      .hero-rail .track{flex:1;height:2px;background:rgba(250,248,242,.18);overflow:hidden;border-radius:2px}
+      .hero-rail .fill{display:block;height:100%;background:var(--accent-blush);
+        transform-origin:0 50%;transform:scaleX(var(--hero-progress,0))}
+      .hero-cue{font-family:var(--font-sans);font-size:.72rem;letter-spacing:.14em;
+        text-transform:uppercase;color:#D9E7E4;opacity:calc(1 - (var(--hero-progress,0)*6))}
+
+      .hero-loader{position:absolute;inset:0;z-index:5;background:#0A1216;display:flex;
+        align-items:center;justify-content:center;transition:opacity .6s ease}
+      .hero-loader.is-done{opacity:0;pointer-events:none}
+      .hero-loader span{font-family:var(--font-sans);font-size:.75rem;letter-spacing:.18em;
+        text-transform:uppercase;color:#D9E7E4}
+
+      @media (max-width:1000px){
+        .hero-seq{height:460vh}
+        .hero-chapter{padding:0 25px;align-content:end;padding-bottom:16vh}
+        .hc-copy,.hc-right .hc-copy,.hc-left .hc-copy{max-width:none;justify-self:start}
+        .hc-right::before,.hc-left::before{background:linear-gradient(0deg,
+          rgba(10,24,29,.95) 0%,rgba(10,24,29,.9) 38%,rgba(10,24,29,.5) 66%,transparent 90%)}
+        .hero-rail{left:25px;right:25px}
+      }
+      @media (prefers-reduced-motion:reduce){
+        .hero-seq{height:100svh}
+        .hero-chapter{display:none}
+        .hero-chapter.hc-first{display:grid;visibility:visible}
+        .hc-reveal>span{transform:none}
+        .hc-first .hc-kicker::before{transform:scaleX(1)}
+        .hero-rail{display:none}
+      }
+    </style>
+</head>
+<body>
+
+    <nav class="sidebar">
+        <div class="sidebar-header">
+            <a href="index.html" class="logo-area" aria-label="R3 Psychology — home">
+                <span class="logo-r3">R3</span>
+                <span class="logo-text">Psychology</span>
+                <span class="tagline">Resolve · Renew · Recover</span>
+            </a>
+            <div class="mobile-toggle" id="mobile-menu-btn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+
+        <ul class="nav-links" id="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="psychoeducation.html">Psychoeducation</a></li>
+            <li><a href="psychometrics.html">Psychometrics</a></li>
+            <li><a href="blog.html">Blog</a></li>
+            <li><a href="intake.html">New Client Intake</a></li>
+            <li>
+                <a href="#" id="login-toggle" class="login-toggle" aria-expanded="false" aria-controls="login-submenu">Login</a>
+                <ul class="sub-nav" id="login-submenu" hidden>
+                    <li><a href="dashboard/index.html">Dashboard</a></li>
+                    <li><a href="CPD/index.html">CPD</a></li>
+                    <li><a href="psychometrics/index.html">Psychometrics</a></li>
+                </ul>
+            </li>
+            <li><a href="#contact" class="mobile-only-cta">Contact Us</a></li>
+        </ul>
+    </nav>
+
+    <main class="content">
+
+        <!-- ============ scroll-driven hero ============ -->
+        <section class="hero-seq" id="hero-seq" aria-label="Scroll to travel from the whole brain down to a single synapse">
+          <div class="hero-stage" id="hero-stage">
+            <canvas id="hero-canvas" role="img"
+              aria-label="A translucent human brain; scrolling dives through its surface into neurons and a synapse"></canvas>
+            <div class="hero-scrim" aria-hidden="true"></div>
+
+            <div class="hero-chapter hc-right hc-first" data-center="0.06" data-window="0.11">
+              <div class="hc-copy">
+                <p class="hc-kicker">R3 Psychology · Melbourne · Telehealth</p>
+                <h1 class="hc-reveal"><span>Explore Psychology Services</span></h1>
+                <p class="hc-sub hc-reveal"><span>Specializing in <strong>AI-assisted CBT</strong> and
+                   <strong>Hypnotherapy</strong> for young professionals.</span></p>
+              </div>
+            </div>
+
+            <div class="hero-chapter hc-left" data-center="0.56" data-window="0.10">
+              <div class="hc-copy">
+                <p class="hc-kicker">Inside the tissue</p>
+                <h2 class="hc-reveal"><span>Change what the network practises</span></h2>
+                <p class="hc-sub hc-reveal"><span>Every habit, worry and pattern lives in connections
+                   like these — and connections respond to <strong>repetition</strong>.</span></p>
+              </div>
+            </div>
+
+            <div class="hero-chapter hc-end" data-center="0.93" data-window="0.12">
+              <div class="hc-copy">
+                <p class="hc-kicker">The synapse — where change happens</p>
+                <h2 class="hc-reveal"><span>Ready to refine your lens?</span></h2>
+                <div class="hc-ctas">
+                  <a class="hc-btn solid" href="#contact">Start a dialogue</a>
+                  <a class="hc-btn ghost" href="first-session.html">How a first session works</a>
+                </div>
+              </div>
+            </div>
+
+            <div class="hero-rail" aria-hidden="true">
+              <span class="track"><span class="fill"></span></span>
+              <span class="hero-cue">Scroll to go deeper</span>
+            </div>
+
+            <div class="hero-loader" id="hero-loader"><span>Loading</span></div>
+          </div>
+        </section>
+
+        <!-- ============ unchanged landing sections ============ -->
+        <section id="services" class="services">
+            <div class="section-header">
+                <h2>How We Work Together</h2>
+                <p>My approach blends clinical precision with a down-to-earth, collaborative energy. We don’t just "talk" about problems; we use a structured, multi-layered toolkit to rewire patterns at the surface and the root.</p>
+            </div>
+            <div class="service-grid">
+                <div class="service-card">
+                    <h3>CBT</h3>
+                    <p>Immediate relief and pattern recognition for the "weather" of daily life.</p>
+                </div>
+                <div class="service-card">
+                    <h3>Schema Therapy</h3>
+                    <p>Understanding your blueprint to identify and shift deep-seated origins.</p>
+                </div>
+                <div class="service-card">
+                    <h3>Hypnotherapy</h3>
+                    <p>Locking in transformation by engaging the subconscious mind directly.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="about" class="about">
+            <div class="section-header">
+                <h2>The Authentic Collaborator</h2>
+                <p class="philosophy-intro">My philosophy is rooted in <strong>Radical Authenticity</strong>, prioritizing a grounded, human-centric partnership over rigid clinical formality.</p>
+            </div>
+
+            <div class="about-grid">
+                <div class="about-card">
+                    <h3>The Helpful Peer</h3>
+                    <p>I operate on the principle of providing a safe space to validate your experiences while maintaining the integrity to challenge misinformation or stagnant patterns directly. Insight is only as valuable as its clarity.</p>
+                </div>
+
+                <div class="about-card">
+                    <h3>Adaptive Integration</h3>
+                    <p>Instead of adhering to a single doctrine, I shift tone and technique to meet the "weather" of the moment. My goal is to help you refine your internal lens—balancing witty awareness with practical tools.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="contact">
+            <div class="contact-card">
+                <h2>Ready to refine your lens?</h2>
+                <p>Reach out today to start a dialogue.</p>
+                <form id="contact-form" action="https://formspree.io/f/mpqbzgkj" method="POST" class="contact-form">
+                    <input type="text" name="name" placeholder="Your Name" required>
+                    <input type="email" name="email" placeholder="Your Email" required>
+                    <textarea name="message" placeholder="How can I help?" rows="5" required></textarea>
+                    <button type="submit" id="submit-btn" class="btn-submit">Send Message</button>
+                </form>
+                <p id="form-status" style="margin-top: 20px; font-weight: 600; color: var(--accent-olive);"></p>
+            </div>
+        </section>
+
+        <footer>
+            <p>&copy; 2026 R3 Psychology. All rights reserved.</p>
+        </footer>
+    </main>
+
+<script>
+(() => {
+  "use strict";
+
+  const FRAME_COUNT = 110;
+  const FRAME_PAD = 4;
+  const LERP_FACTOR = 0.12;
+  const DWELL_WIDTH = 0.045;
+  const DWELL_PEAK = 2.2;
+  const LUT_SIZE = 2400;
+  const DWELL_CENTERS = [0.06, 0.56, 0.93];
+  const MOBILE_QUERY = "(max-width: 1000px)";
+  const REDUCED_QUERY = "(prefers-reduced-motion: reduce)";
+
+  const sequence = document.getElementById("hero-seq");
+  const stage = document.getElementById("hero-stage");
+  const canvas = document.getElementById("hero-canvas");
+  const ctx = canvas.getContext("2d", { alpha: false, desynchronized: true });
+  const loader = document.getElementById("hero-loader");
+  const chapters = Array.from(document.querySelectorAll(".hero-chapter"));
+  const reducedMotion = window.matchMedia(REDUCED_QUERY).matches;
+  const mobileMedia = window.matchMedia(MOBILE_QUERY);
+  const frameStores = {
+    desktop: createStore("home-frames/desktop"),
+    mobile: createStore("home-frames/mobile")
+  };
+  const chapterState = new WeakMap();
+  let useMobile = mobileMedia.matches;
+  let activeStore = useMobile ? frameStores.mobile : frameStores.desktop;
+  let currentFrame = 0, targetFrame = 0, lastDrawn = -1;
+  let pageVisible = true, rafId = 0, seqTop = 0, seqDist = 1;
+
+  function createStore(directory) {
+    return { directory, images: new Array(FRAME_COUNT),
+             loaded: new Uint8Array(FRAME_COUNT), promises: new Array(FRAME_COUNT) };
+  }
+  function frameUrl(i, store = activeStore) {
+    return `${store.directory}/frame-${String(i + 1).padStart(FRAME_PAD, "0")}.webp`;
+  }
+  function loadFrame(i, store = activeStore, retries = 1) {
+    if (store.loaded[i]) return Promise.resolve(store.images[i]);
+    if (store.promises[i]) return store.promises[i];
+    store.promises[i] = new Promise((resolve) => {
+      const attempt = (left) => {
+        const img = new Image();
+        store.images[i] = img;
+        img.decoding = "async";
+        img.onload = () => { store.loaded[i] = 1; resolve(img); };
+        img.onerror = () => {
+          if (left > 0) setTimeout(() => attempt(left - 1), 140);
+          else { store.images[i] = null; store.promises[i] = null; resolve(null); }
+        };
+        img.src = frameUrl(i, store);
+      };
+      attempt(retries);
+    });
+    return store.promises[i];
+  }
+  async function loadBatches(list, size = 8, store = activeStore) {
+    for (let s = 0; s < list.length; s += size) {
+      await Promise.all(list.slice(s, s + size).map((i) => loadFrame(i, store)));
+    }
+  }
+  function nearestLoaded(i, store = activeStore) {
+    if (store.loaded[i]) return i;
+    for (let d = 1; d < FRAME_COUNT; d += 1) {
+      if (i - d >= 0 && store.loaded[i - d]) return i - d;
+      if (i + d < FRAME_COUNT && store.loaded[i + d]) return i + d;
+    }
+    return -1;
+  }
+  function resizeCanvas() {
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const w = Math.round(stage.clientWidth * dpr), h = Math.round(stage.clientHeight * dpr);
+    if (canvas.width !== w || canvas.height !== h) { canvas.width = w; canvas.height = h; lastDrawn = -1; }
+  }
+  function metrics() {
+    const r = sequence.getBoundingClientRect();
+    seqTop = window.scrollY + r.top;
+    seqDist = Math.max(1, r.height - window.innerHeight);
+  }
+  function drawFrame(i) {
+    const res = nearestLoaded(Math.max(0, Math.min(FRAME_COUNT - 1, i)));
+    if (res < 0 || res === lastDrawn) return;
+    const img = activeStore.images[res];
+    if (!img || !img.naturalWidth) return;
+    const w = canvas.width, h = canvas.height;
+    ctx.fillStyle = "#0A1216";
+    ctx.fillRect(0, 0, w, h);
+    const sc = Math.max(w / img.naturalWidth, h / img.naturalHeight);
+    const dw = img.naturalWidth * sc, dh = img.naturalHeight * sc;
+    ctx.drawImage(img, (w - dw) / 2, (h - dh) / 2, dw, dh);
+    lastDrawn = res;
+  }
+
+  const lut = new Float64Array(LUT_SIZE + 1);
+  function buildLut() {
+    let total = 0;
+    const density = new Float64Array(LUT_SIZE + 1);
+    for (let i = 0; i <= LUT_SIZE; i += 1) {
+      const e = i / LUT_SIZE;
+      let v = 1;
+      for (const c of DWELL_CENTERS) { const d = (e - c) / DWELL_WIDTH; v += DWELL_PEAK * Math.exp(-0.5 * d * d); }
+      density[i] = v;
+      if (i > 0) total += (density[i - 1] + v) * 0.5;
+      lut[i] = total;
+    }
+    for (let i = 0; i <= LUT_SIZE; i += 1) lut[i] /= total;
+  }
+  function remap(raw) {
+    let lo = 0, hi = LUT_SIZE;
+    while (lo < hi) { const m = (lo + hi) >> 1; if (lut[m] < raw) lo = m + 1; else hi = m; }
+    const i = Math.max(1, lo);
+    const span = lut[i] - lut[i - 1] || 1;
+    return Math.max(0, Math.min(1, (i - 1 + (raw - lut[i - 1]) / span) / LUT_SIZE));
+  }
+  function rawProgress() {
+    return Math.max(0, Math.min(1, (window.scrollY - seqTop) / seqDist));
+  }
+  function updateChapters(e) {
+    for (const ch of chapters) {
+      const on = Math.abs(e - Number(ch.dataset.center)) <= Number(ch.dataset.window);
+      if (chapterState.get(ch) !== on) {
+        chapterState.set(ch, on);
+        ch.classList.toggle("is-on", on);
+        ch.setAttribute("aria-hidden", String(!on));
+      }
+    }
+  }
+  function tick() {
+    if (!pageVisible || reducedMotion) return;
+    const raw = rawProgress();
+    const e = remap(raw);
+    targetFrame = Math.round(e * (FRAME_COUNT - 1));
+    currentFrame += (targetFrame - currentFrame) * LERP_FACTOR;
+    drawFrame(Math.round(currentFrame));
+    updateChapters(e);
+    document.documentElement.style.setProperty("--hero-progress", raw.toFixed(4));
+    rafId = requestAnimationFrame(tick);
+  }
+
+  async function init() {
+    buildLut();
+    resizeCanvas();
+    metrics();
+
+    if (reducedMotion) {
+      const poster = await loadFrame(2);
+      if (poster) drawFrame(2);
+      chapters.forEach((ch, i) => {
+        const on = i === 0;
+        ch.classList.toggle("is-on", on);
+        ch.setAttribute("aria-hidden", String(!on));
+      });
+      loader.classList.add("is-done");
+      setTimeout(() => loader.remove(), 800);
+      return;
+    }
+
+    const critical = Array.from(new Set([
+      0, ...DWELL_CENTERS.map((c) => Math.round(c * (FRAME_COUNT - 1))), FRAME_COUNT - 1
+    ])).sort((a, b) => a - b);
+    const first = await loadFrame(0);
+    if (first) drawFrame(0);
+    await Promise.all(critical.filter((i) => i !== 0).map((i) => loadFrame(i)));
+    if (nearestLoaded(0) < 0) { loader.querySelector("span").textContent = "Reload to retry"; return; }
+    drawFrame(nearestLoaded(0));
+    loader.classList.add("is-done");
+    setTimeout(() => loader.remove(), 800);
+    tick();
+    loadBatches(Array.from({ length: FRAME_COUNT }, (_, i) => i).filter((i) => !critical.includes(i)));
+  }
+
+  async function swapStore(ev) {
+    useMobile = ev.matches;
+    activeStore = useMobile ? frameStores.mobile : frameStores.desktop;
+    lastDrawn = -1;
+    resizeCanvas(); metrics();
+    const f = Math.max(0, Math.min(FRAME_COUNT - 1, Math.round(currentFrame)));
+    const img = await loadFrame(f, activeStore);
+    if (img) drawFrame(f);
+    loadBatches(Array.from({ length: FRAME_COUNT }, (_, i) => i)
+      .sort((a, b) => Math.abs(a - f) - Math.abs(b - f)), 8, activeStore);
+  }
+
+  window.addEventListener("resize", () => { resizeCanvas(); metrics(); }, { passive: true });
+  mobileMedia.addEventListener("change", swapStore);
+  document.addEventListener("visibilitychange", () => {
+    pageVisible = !document.hidden;
+    if (pageVisible && !reducedMotion) { cancelAnimationFrame(rafId); tick(); }
+  });
+
+  init();
+})();
+</script>
+
+<script>
+  // contact form (unchanged from index.html)
+  const form = document.getElementById("contact-form");
+  const btn = document.getElementById("submit-btn");
+  form.addEventListener("submit", async function(event) {
+    event.preventDefault();
+    btn.innerText = "Sending...";
+    btn.disabled = true;
+    const data = new FormData(event.target);
+    fetch(event.target.action, {
+      method: 'POST', body: data, headers: { 'Accept': 'application/json' }
+    }).then(response => {
+      if (response.ok) { window.location.href = "thanks.html"; }
+      else {
+        response.json().then(data => {
+          if (Object.hasOwn(data, 'errors')) alert(data["errors"].map(e => e["message"]).join(", "));
+          else alert("Oops! There was a problem submitting your form.");
+          btn.innerText = "Send Message"; btn.disabled = false;
+        });
+      }
+    }).catch(() => {
+      alert("Oops! There was a problem connecting to the server.");
+      btn.innerText = "Send Message"; btn.disabled = false;
+    });
+  });
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const menuBtn = document.getElementById('mobile-menu-btn');
+        const navLinks = document.getElementById('nav-links');
+        if (menuBtn && navLinks) {
+            menuBtn.addEventListener('click', function() { navLinks.classList.toggle('active'); });
+        }
+        const loginToggle = document.getElementById('login-toggle');
+        const loginSubmenu = document.getElementById('login-submenu');
+        if (loginToggle && loginSubmenu) {
+            loginToggle.addEventListener('click', function(event) {
+                event.preventDefault();
+                const isOpen = loginSubmenu.hasAttribute('hidden');
+                if (isOpen) loginSubmenu.removeAttribute('hidden');
+                else loginSubmenu.setAttribute('hidden', '');
+                loginToggle.setAttribute('aria-expanded', String(isOpen));
+                loginToggle.classList.toggle('open', isOpen);
+            });
+        }
+    });
+</script>
+
+</body>
+</html>
