@@ -10,71 +10,36 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Lora:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
     <style>
-      /* ---------- scroll-driven hero (replaces the static seashore image) ----------
-         Colour bridge: deep space tinted with Harbour ink, type in the site's bone,
-         brass for accents — the dark hero and the light page share one family. */
-      .hero-seq{position:relative;height:520vh;background:#0A1216}
+      /* ---------- full-bleed scroll-driven hero ----------
+         padding:0 overrides style.css `section{padding:80px 8%}`, which was
+         boxing the canvas and leaving black bars either side. The stage now
+         runs edge to edge: sidebar on the left, viewport edge on the right. */
+      .hero-seq{position:relative;height:520vh;background:#0A1216;padding:0;margin:0}
       .hero-stage{position:sticky;top:0;height:100svh;overflow:hidden;background:#0A1216}
       #hero-canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
-      .hero-scrim{position:absolute;inset:0;pointer-events:none;
-        background:radial-gradient(120% 90% at 50% 45%,transparent 30%,rgba(10,24,29,.78) 100%)}
 
-      .hero-chapter{position:absolute;inset:0;padding:0 8%;display:grid;align-content:center;
-        visibility:hidden;pointer-events:none}
-      .hero-chapter.is-on{visibility:visible}
-      .hero-chapter.is-on a{pointer-events:auto}
-      .hero-chapter::before{content:"";position:absolute;inset:0;pointer-events:none;
-        opacity:0;transition:opacity .5s ease}
-      .hero-chapter.is-on::before{opacity:1}
-      .hc-right::before{background:linear-gradient(90deg,transparent 16%,
-        rgba(10,24,29,.82) 46%,rgba(10,24,29,.96) 74%,rgba(10,24,29,.97) 100%)}
-      .hc-left::before{background:linear-gradient(270deg,transparent 16%,
-        rgba(10,24,29,.82) 46%,rgba(10,24,29,.96) 74%,rgba(10,24,29,.97) 100%)}
-      .hc-end::before{background:
-        linear-gradient(0deg,rgba(10,24,29,.95) 0%,rgba(10,24,29,.9) 40%,rgba(10,24,29,.55) 66%,transparent 90%),
-        linear-gradient(270deg,transparent 40%,rgba(10,24,29,.5) 75%,rgba(10,24,29,.72) 100%)}
+      /* Wash and intro share one fade, so as the copy goes the image is left clean. */
+      .hero-wash{position:absolute;inset:0;pointer-events:none;opacity:var(--hero-fade,1);
+        background:linear-gradient(90deg,transparent 14%,rgba(10,24,29,.80) 44%,
+          rgba(10,24,29,.95) 72%,rgba(10,24,29,.96) 100%)}
 
-      .hc-copy{position:relative;z-index:1;max-width:min(520px,42vw)}
-      .hc-right .hc-copy{justify-self:end}
-      .hc-left .hc-copy{justify-self:start}
-      .hc-end{align-content:end;padding-bottom:14vh}
-      .hc-end .hc-copy{justify-self:start}
+      .hero-intro{position:absolute;inset:0;z-index:1;padding:0 6%;display:grid;
+        align-content:center;opacity:var(--hero-fade,1);pointer-events:none}
+      .hero-intro .copy{max-width:min(560px,44vw);justify-self:end}
+      .hero-intro .rule{display:block;width:56px;height:2px;background:#D9B36A;margin:0 0 26px}
+      .hero-seq h1{font-family:var(--font-serif);color:#FAF8F2;margin:0;
+        font-size:clamp(2.2rem,5.2vw,4rem);line-height:1.08;
+        text-shadow:0 2px 28px rgba(7,14,17,.92)}
+      .hero-sub{font-family:var(--font-sans);font-weight:300;color:#E7EFEA;
+        font-size:clamp(1rem,1.55vw,1.35rem);line-height:1.6;margin:22px 0 0;max-width:40ch;
+        text-shadow:0 1px 16px rgba(7,14,17,.92)}
+      .hero-sub strong{color:#FAF8F2;font-weight:600}
 
-      .hc-kicker{font-family:var(--font-sans);font-size:.72rem;font-weight:600;
-        letter-spacing:.16em;text-transform:uppercase;color:#FAF8F2;
-        display:flex;align-items:center;gap:12px;margin:0 0 18px}
-      .hc-kicker::before{content:"";width:44px;height:1px;background:#D9B36A;
-        transform:scaleX(0);transform-origin:0 50%;transition:transform .7s ease .1s}
-      .is-on .hc-kicker::before{transform:scaleX(1)}
-      .hero-seq h1,.hero-seq h2{font-family:var(--font-serif);color:#FAF8F2;
-        font-size:clamp(2.2rem,5.4vw,4rem);line-height:1.08;margin:0;
-        text-shadow:0 2px 28px rgba(7,14,17,.9)}
-      .hc-sub{font-family:var(--font-sans);font-weight:300;color:#E7EFEA;
-        font-size:clamp(1rem,1.5vw,1.3rem);line-height:1.6;margin:20px 0 0;max-width:44ch;
-        text-shadow:0 1px 16px rgba(7,14,17,.9)}
-      .hc-sub strong{color:#D9E7E4;font-weight:600}
-
-      .hc-reveal{display:block;overflow:hidden}
-      .hc-reveal>span{display:block;transform:translateY(112%);transition:transform .7s cubic-bezier(.22,1,.36,1)}
-      .is-on .hc-reveal>span{transform:translateY(0)}
-
-      .hc-ctas{display:flex;flex-wrap:wrap;gap:14px;margin-top:30px}
-      .hc-btn{font-family:var(--font-sans);font-weight:600;font-size:.95rem;text-decoration:none;
-        padding:15px 32px;border-radius:50px;border:2px solid #FAF8F2;min-height:44px;
-        display:inline-flex;align-items:center;transition:.25s}
-      .hc-btn.solid{background:#FAF8F2;color:#123b44}
-      .hc-btn.solid:hover{background:transparent;color:#FAF8F2}
-      .hc-btn.ghost{color:#FAF8F2;border-color:rgba(250,248,242,.55)}
-      .hc-btn.ghost:hover{border-color:#FAF8F2}
-      .hc-btn:focus-visible{outline:3px solid var(--accent-blush);outline-offset:3px}
-
-      .hero-rail{position:absolute;left:8%;right:8%;bottom:26px;z-index:2;display:flex;
-        align-items:center;gap:14px;pointer-events:none}
-      .hero-rail .track{flex:1;height:2px;background:rgba(250,248,242,.18);overflow:hidden;border-radius:2px}
-      .hero-rail .fill{display:block;height:100%;background:var(--accent-blush);
+      /* progress rail — graphic only, no label */
+      .hero-rail{position:absolute;left:6%;right:6%;bottom:30px;z-index:2;height:2px;
+        background:rgba(250,248,242,.16);border-radius:2px;overflow:hidden;pointer-events:none}
+      .hero-rail i{display:block;height:100%;background:#D9B36A;
         transform-origin:0 50%;transform:scaleX(var(--hero-progress,0))}
-      .hero-cue{font-family:var(--font-sans);font-size:.72rem;letter-spacing:.14em;
-        text-transform:uppercase;color:#D9E7E4;opacity:calc(1 - (var(--hero-progress,0)*6))}
 
       .hero-loader{position:absolute;inset:0;z-index:5;background:#0A1216;display:flex;
         align-items:center;justify-content:center;transition:opacity .6s ease}
@@ -84,18 +49,18 @@
 
       @media (max-width:1000px){
         .hero-seq{height:460vh}
-        .hero-chapter{padding:0 25px;align-content:end;padding-bottom:16vh}
-        .hc-copy,.hc-right .hc-copy,.hc-left .hc-copy{max-width:none;justify-self:start}
-        .hc-right::before,.hc-left::before{background:linear-gradient(0deg,
-          rgba(10,24,29,.95) 0%,rgba(10,24,29,.9) 38%,rgba(10,24,29,.5) 66%,transparent 90%)}
+        .hero-intro{padding:0 25px 16vh;align-content:end}
+        .hero-intro .copy{max-width:none;justify-self:start}
+        .hero-wash{background:linear-gradient(0deg,rgba(10,24,29,.95) 0%,
+          rgba(10,24,29,.88) 40%,rgba(10,24,29,.45) 68%,transparent 92%)}
         .hero-rail{left:25px;right:25px}
       }
-      /* Reduce Motion: the scrub itself is user-initiated (frame position is
-         locked to the reader's own scroll), so it stays. What goes is every
-         animation the reader didn't cause: glide, reveals, eased rules. */
+
+      /* Reduce Motion: the scrub is user-initiated (frame locked to the reader's
+         own scroll) so it stays. Only autonomous animation is removed. */
       @media (prefers-reduced-motion:reduce){
         html{scroll-behavior:auto}
-        .hc-reveal>span,.hc-kicker::before,.hero-chapter::before,.hc-btn{transition:none}
+        .hero-loader{transition:none}
       }
     </style>
 </head>
@@ -135,52 +100,26 @@
 
     <main class="content">
 
-        <!-- ============ scroll-driven hero ============ -->
         <section class="hero-seq" id="hero-seq" aria-label="Scroll to travel from the whole brain down to a single synapse">
           <div class="hero-stage" id="hero-stage">
             <canvas id="hero-canvas" role="img"
               aria-label="A translucent human brain; scrolling dives through its surface into neurons and a synapse"></canvas>
-            <div class="hero-scrim" aria-hidden="true"></div>
+            <div class="hero-wash" aria-hidden="true"></div>
 
-            <div class="hero-chapter hc-right hc-first" data-center="0.06" data-window="0.11">
-              <div class="hc-copy">
-                <p class="hc-kicker">R3 Psychology · Melbourne · Telehealth</p>
-                <h1 class="hc-reveal"><span>Explore Psychology Services</span></h1>
-                <p class="hc-sub hc-reveal"><span>Specializing in <strong>AI-assisted CBT</strong> and
-                   <strong>Hypnotherapy</strong> for young professionals.</span></p>
+            <div class="hero-intro" id="hero-intro">
+              <div class="copy">
+                <span class="rule" aria-hidden="true"></span>
+                <h1>Explore Psychology Services</h1>
+                <p class="hero-sub">Specialising in <strong>AI-assisted CBT</strong> and
+                   <strong>Hypnotherapy</strong></p>
               </div>
             </div>
 
-            <div class="hero-chapter hc-left" data-center="0.56" data-window="0.10">
-              <div class="hc-copy">
-                <p class="hc-kicker">Inside the tissue</p>
-                <h2 class="hc-reveal"><span>Change what the network practises</span></h2>
-                <p class="hc-sub hc-reveal"><span>Every habit, worry and pattern lives in connections
-                   like these — and connections respond to <strong>repetition</strong>.</span></p>
-              </div>
-            </div>
-
-            <div class="hero-chapter hc-end" data-center="0.93" data-window="0.12">
-              <div class="hc-copy">
-                <p class="hc-kicker">The synapse — where change happens</p>
-                <h2 class="hc-reveal"><span>Ready to refine your lens?</span></h2>
-                <div class="hc-ctas">
-                  <a class="hc-btn solid" href="#contact">Start a dialogue</a>
-                  <a class="hc-btn ghost" href="first-session.html">How a first session works</a>
-                </div>
-              </div>
-            </div>
-
-            <div class="hero-rail" aria-hidden="true">
-              <span class="track"><span class="fill"></span></span>
-              <span class="hero-cue">Scroll to go deeper</span>
-            </div>
-
+            <div class="hero-rail" aria-hidden="true"><i></i></div>
             <div class="hero-loader" id="hero-loader"><span>Loading</span></div>
           </div>
         </section>
 
-        <!-- ============ unchanged landing sections ============ -->
         <section id="services" class="services">
             <div class="section-header">
                 <h2>How We Work Together</h2>
@@ -247,10 +186,11 @@
   const FRAME_COUNT = 110;
   const FRAME_PAD = 4;
   const LERP_FACTOR = 0.12;
-  const DWELL_WIDTH = 0.045;
-  const DWELL_PEAK = 2.2;
+  const DWELL_WIDTH = 0.05;
+  const DWELL_PEAK = 1.8;
   const LUT_SIZE = 2400;
-  const DWELL_CENTERS = [0.06, 0.56, 0.93];
+  const DWELL_CENTERS = [0.04];      // brief hold while the intro is readable
+  const FADE_END = 0.30;             // copy fully gone by 30% of the dive
   const MOBILE_QUERY = "(max-width: 1000px)";
   const REDUCED_QUERY = "(prefers-reduced-motion: reduce)";
 
@@ -259,55 +199,55 @@
   const canvas = document.getElementById("hero-canvas");
   const ctx = canvas.getContext("2d", { alpha: false, desynchronized: true });
   const loader = document.getElementById("hero-loader");
-  const chapters = Array.from(document.querySelectorAll(".hero-chapter"));
+  const intro = document.getElementById("hero-intro");
+  const root = document.documentElement;
   const reducedMotion = window.matchMedia(REDUCED_QUERY).matches;
   const mobileMedia = window.matchMedia(MOBILE_QUERY);
-  const frameStores = {
-    desktop: createStore("home-frames/desktop"),
-    mobile: createStore("home-frames/mobile")
+  const stores = {
+    desktop: makeStore("home-frames/desktop"),
+    mobile: makeStore("home-frames/mobile")
   };
-  const chapterState = new WeakMap();
   let useMobile = mobileMedia.matches;
-  let activeStore = useMobile ? frameStores.mobile : frameStores.desktop;
+  let store = useMobile ? stores.mobile : stores.desktop;
   let currentFrame = 0, targetFrame = 0, lastDrawn = -1;
   let pageVisible = true, rafId = 0, seqTop = 0, seqDist = 1;
 
-  function createStore(directory) {
-    return { directory, images: new Array(FRAME_COUNT),
+  function makeStore(dir) {
+    return { dir, images: new Array(FRAME_COUNT),
              loaded: new Uint8Array(FRAME_COUNT), promises: new Array(FRAME_COUNT) };
   }
-  function frameUrl(i, store = activeStore) {
-    return `${store.directory}/frame-${String(i + 1).padStart(FRAME_PAD, "0")}.webp`;
+  function url(i, s = store) {
+    return `${s.dir}/frame-${String(i + 1).padStart(FRAME_PAD, "0")}.webp`;
   }
-  function loadFrame(i, store = activeStore, retries = 1) {
-    if (store.loaded[i]) return Promise.resolve(store.images[i]);
-    if (store.promises[i]) return store.promises[i];
-    store.promises[i] = new Promise((resolve) => {
+  function loadFrame(i, s = store, retries = 1) {
+    if (s.loaded[i]) return Promise.resolve(s.images[i]);
+    if (s.promises[i]) return s.promises[i];
+    s.promises[i] = new Promise((resolve) => {
       const attempt = (left) => {
         const img = new Image();
-        store.images[i] = img;
+        s.images[i] = img;
         img.decoding = "async";
-        img.onload = () => { store.loaded[i] = 1; resolve(img); };
+        img.onload = () => { s.loaded[i] = 1; resolve(img); };
         img.onerror = () => {
           if (left > 0) setTimeout(() => attempt(left - 1), 140);
-          else { store.images[i] = null; store.promises[i] = null; resolve(null); }
+          else { s.images[i] = null; s.promises[i] = null; resolve(null); }
         };
-        img.src = frameUrl(i, store);
+        img.src = url(i, s);
       };
       attempt(retries);
     });
-    return store.promises[i];
+    return s.promises[i];
   }
-  async function loadBatches(list, size = 8, store = activeStore) {
-    for (let s = 0; s < list.length; s += size) {
-      await Promise.all(list.slice(s, s + size).map((i) => loadFrame(i, store)));
+  async function loadBatches(list, size = 8, s = store) {
+    for (let k = 0; k < list.length; k += size) {
+      await Promise.all(list.slice(k, k + size).map((i) => loadFrame(i, s)));
     }
   }
-  function nearestLoaded(i, store = activeStore) {
-    if (store.loaded[i]) return i;
+  function nearest(i, s = store) {
+    if (s.loaded[i]) return i;
     for (let d = 1; d < FRAME_COUNT; d += 1) {
-      if (i - d >= 0 && store.loaded[i - d]) return i - d;
-      if (i + d < FRAME_COUNT && store.loaded[i + d]) return i + d;
+      if (i - d >= 0 && s.loaded[i - d]) return i - d;
+      if (i + d < FRAME_COUNT && s.loaded[i + d]) return i + d;
     }
     return -1;
   }
@@ -321,15 +261,15 @@
     seqTop = window.scrollY + r.top;
     seqDist = Math.max(1, r.height - window.innerHeight);
   }
-  function drawFrame(i) {
-    const res = nearestLoaded(Math.max(0, Math.min(FRAME_COUNT - 1, i)));
+  function draw(i) {
+    const res = nearest(Math.max(0, Math.min(FRAME_COUNT - 1, i)));
     if (res < 0 || res === lastDrawn) return;
-    const img = activeStore.images[res];
+    const img = store.images[res];
     if (!img || !img.naturalWidth) return;
     const w = canvas.width, h = canvas.height;
     ctx.fillStyle = "#0A1216";
     ctx.fillRect(0, 0, w, h);
-    const sc = Math.max(w / img.naturalWidth, h / img.naturalHeight);
+    const sc = Math.max(w / img.naturalWidth, h / img.naturalHeight);   // cover
     const dw = img.naturalWidth * sc, dh = img.naturalHeight * sc;
     ctx.drawImage(img, (w - dw) / 2, (h - dh) / 2, dw, dh);
     lastDrawn = res;
@@ -359,25 +299,21 @@
   function rawProgress() {
     return Math.max(0, Math.min(1, (window.scrollY - seqTop) / seqDist));
   }
-  function updateChapters(e) {
-    for (const ch of chapters) {
-      const on = Math.abs(e - Number(ch.dataset.center)) <= Number(ch.dataset.window);
-      if (chapterState.get(ch) !== on) {
-        chapterState.set(ch, on);
-        ch.classList.toggle("is-on", on);
-        ch.setAttribute("aria-hidden", String(!on));
-      }
-    }
-  }
+
   function renderNow() {
     const raw = rawProgress();
     const e = reducedMotion ? raw : remap(raw);
     targetFrame = Math.round(e * (FRAME_COUNT - 1));
     currentFrame = reducedMotion ? targetFrame
                  : currentFrame + (targetFrame - currentFrame) * LERP_FACTOR;
-    drawFrame(Math.round(currentFrame));
-    updateChapters(e);
-    document.documentElement.style.setProperty("--hero-progress", raw.toFixed(4));
+    draw(Math.round(currentFrame));
+
+    // intro fades out smoothly across the first stretch of the dive
+    const t = Math.max(0, Math.min(1, raw / FADE_END));
+    const fade = 1 - (t * t * (3 - 2 * t));          // smoothstep
+    root.style.setProperty("--hero-fade", fade.toFixed(3));
+    root.style.setProperty("--hero-progress", raw.toFixed(4));
+    intro.setAttribute("aria-hidden", String(fade < 0.05));
   }
   function tick() {
     if (!pageVisible) return;
@@ -391,13 +327,15 @@
     metrics();
 
     const critical = Array.from(new Set([
-      0, ...DWELL_CENTERS.map((c) => Math.round(c * (FRAME_COUNT - 1))), FRAME_COUNT - 1
+      0, Math.round(0.25 * (FRAME_COUNT - 1)), Math.round(0.5 * (FRAME_COUNT - 1)),
+      Math.round(0.75 * (FRAME_COUNT - 1)), FRAME_COUNT - 1
     ])).sort((a, b) => a - b);
+
     const first = await loadFrame(0);
-    if (first) drawFrame(0);
+    if (first) draw(0);
     await Promise.all(critical.filter((i) => i !== 0).map((i) => loadFrame(i)));
-    if (nearestLoaded(0) < 0) { loader.querySelector("span").textContent = "Reload to retry"; return; }
-    drawFrame(nearestLoaded(0));
+    if (nearest(0) < 0) { loader.querySelector("span").textContent = "Reload to retry"; return; }
+    draw(nearest(0));
     loader.classList.add("is-done");
     setTimeout(() => loader.remove(), 800);
     renderNow();
@@ -407,18 +345,17 @@
 
   async function swapStore(ev) {
     useMobile = ev.matches;
-    activeStore = useMobile ? frameStores.mobile : frameStores.desktop;
+    store = useMobile ? stores.mobile : stores.desktop;
     lastDrawn = -1;
     resizeCanvas(); metrics();
     const f = Math.max(0, Math.min(FRAME_COUNT - 1, Math.round(currentFrame)));
-    const img = await loadFrame(f, activeStore);
-    if (img) drawFrame(f);
+    const img = await loadFrame(f, store);
+    if (img) draw(f);
     loadBatches(Array.from({ length: FRAME_COUNT }, (_, i) => i)
-      .sort((a, b) => Math.abs(a - f) - Math.abs(b - f)), 8, activeStore);
+      .sort((a, b) => Math.abs(a - f) - Math.abs(b - f)), 8, store);
   }
 
-  window.addEventListener("resize", () => { resizeCanvas(); metrics(); }, { passive: true });
-  // reduce mode renders on the scroll event itself — synchronous, no glide
+  window.addEventListener("resize", () => { resizeCanvas(); metrics(); renderNow(); }, { passive: true });
   window.addEventListener("scroll", () => { if (reducedMotion) renderNow(); }, { passive: true });
   mobileMedia.addEventListener("change", swapStore);
   document.addEventListener("visibilitychange", () => {
@@ -431,7 +368,6 @@
 </script>
 
 <script>
-  // contact form (unchanged from index.html)
   const form = document.getElementById("contact-form");
   const btn = document.getElementById("submit-btn");
   form.addEventListener("submit", async function(event) {
