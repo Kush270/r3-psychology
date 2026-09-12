@@ -4,7 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>R3 Psychology | Resolve · Renew · Recover</title>
-    <meta name="description" content="Psychology services specialising in AI-assisted CBT and Hypnotherapy. Scroll to travel from the whole brain to a single synapse.">
+    <meta name="description" content="An experimental, non-indexed visual preview for R3 Psychology's evidence-informed psychology services.">
+    <meta name="robots" content="noindex,nofollow">
+    <link rel="canonical" href="https://r3psychology.com/">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -73,11 +76,11 @@
                 <span class="logo-text">Psychology</span>
                 <span class="tagline">Resolve · Renew · Recover</span>
             </a>
-            <div class="mobile-toggle" id="mobile-menu-btn">
+            <button class="mobile-toggle" id="mobile-menu-btn" type="button" aria-label="Open navigation" aria-expanded="false" aria-controls="nav-links">
                 <span></span>
                 <span></span>
                 <span></span>
-            </div>
+            </button>
         </div>
 
         <ul class="nav-links" id="nav-links">
@@ -110,8 +113,8 @@
               <div class="copy">
                 <span class="rule" aria-hidden="true"></span>
                 <h1>Explore Psychology Services</h1>
-                <p class="hero-sub">Specialising in <strong>AI-assisted CBT</strong> and
-                   <strong>Hypnotherapy</strong></p>
+                <p class="hero-sub">Evidence-informed psychology using <strong>CBT</strong>,
+                   <strong>schema therapy</strong> and clinical hypnosis where appropriate.</p>
               </div>
             </div>
 
@@ -123,12 +126,12 @@
         <section id="services" class="services">
             <div class="section-header">
                 <h2>How We Work Together</h2>
-                <p>My approach blends clinical precision with a down-to-earth, collaborative energy. We don’t just "talk" about problems; we use a structured, multi-layered toolkit to rewire patterns at the surface and the root.</p>
+                <p>Therapy is collaborative and tailored to your goals. We may use structured strategies, reflection and skills practice while reviewing what is useful for you.</p>
             </div>
             <div class="service-grid">
                 <div class="service-card">
                     <h3>CBT</h3>
-                    <p>Immediate relief and pattern recognition for the "weather" of daily life.</p>
+                    <p>Practical strategies for exploring links between thoughts, feelings and behaviour.</p>
                 </div>
                 <div class="service-card">
                     <h3>Schema Therapy</h3>
@@ -136,7 +139,7 @@
                 </div>
                 <div class="service-card">
                     <h3>Hypnotherapy</h3>
-                    <p>Locking in transformation by engaging the subconscious mind directly.</p>
+                    <p>A focused-attention approach that may complement therapy when suitable and freely chosen.</p>
                 </div>
             </div>
         </section>
@@ -163,11 +166,15 @@
         <section id="contact" class="contact">
             <div class="contact-card">
                 <h2>Ready to refine your lens?</h2>
-                <p>Reach out today to start a dialogue.</p>
+                <p>Use this form for a brief enquiry only. Do not include health information, trauma history or anything urgent.</p>
                 <form id="contact-form" action="https://formspree.io/f/mpqbzgkj" method="POST" class="contact-form">
-                    <input type="text" name="name" placeholder="Your Name" required>
-                    <input type="email" name="email" placeholder="Your Email" required>
-                    <textarea name="message" placeholder="How can I help?" rows="5" required></textarea>
+                    <label for="preview-name">Name</label>
+                    <input id="preview-name" type="text" name="name" autocomplete="name" required>
+                    <label for="preview-email">Email</label>
+                    <input id="preview-email" type="email" name="email" autocomplete="email" required>
+                    <label for="preview-message">Brief enquiry</label>
+                    <textarea id="preview-message" name="message" maxlength="800" rows="5" required></textarea>
+                    <label class="form-consent"><input type="checkbox" name="privacy_acknowledged" value="yes" required> I have read the <a href="privacy.html">privacy notice</a> and understand this is not a secure clinical intake form.</label>
                     <button type="submit" id="submit-btn" class="btn-submit">Send Message</button>
                 </form>
                 <p id="form-status" style="margin-top: 20px; font-weight: 600; color: var(--accent-olive);"></p>
@@ -175,7 +182,7 @@
         </section>
 
         <footer>
-            <p>&copy; 2026 R3 Psychology. All rights reserved.</p>
+            <p>&copy; 2026 R3 Psychology · Khooshraj Mohun, registered psychologist · AHPRA PSY0002273569 · <a href="privacy.html">Privacy</a></p>
         </footer>
     </main>
 

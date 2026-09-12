@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>K10 Assessment | R3 Psychology</title>
+    <meta name="description" content="Complete the K10 psychological distress screening questionnaire. Results are educational and do not provide a diagnosis.">
+    <link rel="canonical" href="https://r3psychology.com/k10.html">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -122,13 +125,13 @@
 
             let interpretation = "";
             if (total <= 19) {
-                interpretation = "Likely to be well. Your score suggests a low level of psychological distress.";
+                interpretation = "Your responses fall in the lowest band used on this screening page. A score still needs to be considered alongside your circumstances.";
             } else if (total <= 24) {
-                interpretation = "Likely to have a mild mental disorder. Monitoring and low-intensity support may be beneficial.";
+                interpretation = "Your responses indicate some psychological distress. Consider discussing the result with a qualified health professional if it reflects a concern for you.";
             } else if (total <= 29) {
-                interpretation = "Likely to have a moderate mental disorder. Clinical consultation is recommended.";
+                interpretation = "Your responses indicate a higher level of psychological distress. A qualified health professional can help interpret this result in context.";
             } else {
-                interpretation = "Likely to have a severe mental disorder. Professional psychological support is highly recommended.";
+                interpretation = "Your responses indicate a very high level of psychological distress. This is not a diagnosis; consider timely support from a qualified health professional. If you are in immediate danger call 000 or Lifeline on 13 11 14.";
             }
 
             localStorage.setItem('lastResult', JSON.stringify({

@@ -18,5 +18,23 @@ create table if not exists public.psychometric_results (
 alter table public.psychometric_results enable row level security;
 
 drop policy if exists "own rows" on public.psychometric_results;
-create policy "own rows" on public.psychometric_results
-  for all using (auth.uid() = user_id) with check (auth.uid() = user_id);
+drop policy if exists "select own psychometrics" on public.psychometric_results;
+drop policy if exists "insert own psychometrics" on public.psychometric_results;
+drop policy if exists "update own psychometrics" on public.psychometric_results;
+drop policy if exists "delete own psychometrics" on public.psychometric_results;
+revoke all on table public.psychometric_results from anon;
+revoke all on table public.psychometric_results from authenticated;
+grant select, insert, update, delete on table public.psychometric_results to authenticated;
+
+create policy "select own psychometrics" on public.psychometric_results for select to authenticated
+  using ((select auth.uid()) = user_id);
+create policy "insert own psychometrics" on public.psychometric_results for insert to authenticated
+  with check ((select auth.uid()) = user_id);
+create policy "update own psychometrics" on public.psychometric_results for update to authenticated
+  using ((select auth.uid()) = user_id)
+  with check ((select auth.uid()) = user_id);
+create policy "delete own psychometrics" on public.psychometric_results for delete to authenticated
+  using ((select auth.uid()) = user_id);
+
+create index if not exists psychometric_results_user_id_idx
+  on public.psychometric_results (user_id);

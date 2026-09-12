@@ -47,7 +47,8 @@ strong { color: var(--accent-sage); font-weight: 600; }
 .logo-area:focus-visible { outline: 2px solid var(--accent-blush); outline-offset: 4px; border-radius: 4px; }
 .logo-r3 { font-family: var(--font-serif); font-size: 2.8rem; color: #FFF; display: block; }
 .logo-text { font-size: 1.15rem; letter-spacing: 2px; text-transform: uppercase; color: #FFF; }
-.tagline { display: block; font-size: 0.65rem; color: var(--accent-blush); margin-top: 10px; }
+.tagline { display: block; font-size: 0.65rem; color: #ead9b5; margin-top: 10px; }
+.mobile-toggle { display: none; appearance: none; border: 0; background: transparent; color: inherit; padding: 4px; }
 
 .nav-links { list-style: none; flex-grow: 1; }
 .nav-links li { margin-bottom: 22px; }
@@ -74,6 +75,8 @@ section { padding: 80px 8%; }
 }
 .page-header { background-color: var(--card-bg); border-bottom: 1px solid #eee; padding: 60px 8%; }
 .sub-headline { font-size: 1.4rem; margin-top: 10px; font-weight: 300; }
+.eyebrow { margin-bottom: 14px; color: var(--text-heading); font-size: 0.78rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; }
+.hero-actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 30px; }
 
 /* 6. UNIVERSAL CARD & GRID SYSTEMS */
 
@@ -128,15 +131,23 @@ section { padding: 80px 8%; }
 /* 10. FORMS & CONTACT */
 .contact-card { max-width: 600px; margin: 0 auto; background: var(--card-bg); padding: 50px; border-radius: 12px; }
 .contact-form { display: flex; flex-direction: column; gap: 15px; margin-top: 30px; }
-.contact-form input, .contact-form textarea { padding: 14px; border: 1px solid #ddd; border-radius: 6px; font-family: var(--font-sans); }
+.contact-form label { color: var(--text-heading); font-size: 0.9rem; font-weight: 600; }
+.contact-form input, .contact-form textarea { padding: 14px; border: 1px solid #8b9799; border-radius: 6px; font-family: var(--font-sans); }
+.contact-form input:focus-visible, .contact-form textarea:focus-visible, .input-group input:focus-visible, .input-group select:focus-visible { outline: 3px solid rgba(47, 107, 117, 0.25); border-color: var(--accent-sage); }
+.form-note { font-size: 0.85rem; font-weight: 400; }
+.form-note a, footer a, .agreement-text a { color: var(--accent-sage); font-weight: 600; }
+.consent-inline { display: flex; align-items: flex-start; gap: 10px; font-weight: 400 !important; line-height: 1.5; }
+.consent-inline input { width: auto; margin-top: 3px; }
 
 /* 11. BUTTONS (Pill Shape) */
-.btn-primary, .btn-submit { 
+.btn-primary, .btn-submit, .btn-secondary {
     padding: 15px 45px; background-color: var(--btn-bg); color: var(--btn-text); 
     text-decoration: none; font-weight: 600; border-radius: 50px; border: 2px solid var(--btn-bg); 
     display: inline-block; cursor: pointer; transition: 0.3s; text-align: center; font-size: 1rem;
 }
 .btn-primary:hover { background-color: transparent; color: var(--btn-bg); }
+.btn-secondary { background: transparent; color: var(--btn-bg); }
+.btn-secondary:hover { background: var(--btn-bg); color: var(--btn-text); }
 
 .cta-sidebar { 
     display: block; padding: 10px 15px; background-color: var(--site-bg); 
@@ -147,6 +158,13 @@ section { padding: 80px 8%; }
 /* 12. MISC UI ELEMENTS */
 .tag { font-size: 0.7rem; background: var(--site-bg); padding: 4px 12px; border-radius: 20px; color: var(--text-heading); font-weight: 600; }
 footer { text-align: center; padding: 50px; font-size: 0.8rem; color: #888; }
+.legal-content { max-width: 900px; margin: 0 auto; padding: 20px 8% 70px; }
+.legal-content section { padding: 34px 0; border-bottom: 1px solid rgba(18, 59, 68, 0.15); }
+.legal-content h2 { margin-bottom: 12px; font-size: 1.55rem; }
+.legal-content p + p { margin-top: 14px; }
+.crisis-notice { margin-top: 24px; padding: 28px !important; border: 2px solid var(--text-heading) !important; border-radius: 12px; }
+.standalone-message { width: min(680px, calc(100% - 40px)); margin: 12vh auto; padding: 50px; background: var(--card-bg); border-radius: 16px; box-shadow: 0 15px 35px rgba(0,0,0,.06); }
+.standalone-message p { margin-bottom: 24px; }
 
 /* 13. IMPROVED RESPONSIVE DESIGN */
 @media (max-width: 1000px) {
@@ -218,6 +236,9 @@ footer { text-align: center; padding: 50px; font-size: 0.8rem; color: #888; }
 
     .hero { height: 70vh; }
     h1 { font-size: 2.2rem; }
+    .hero-actions { align-items: stretch; flex-direction: column; }
+    .hero-actions a { width: 100%; }
+    .standalone-message { margin-top: 8vh; padding: 30px; }
 
     /* Hide the footer CTA in the sidebar on mobile and show as a regular link */
     .nav-footer { display: none; }
@@ -333,11 +354,12 @@ footer { text-align: center; padding: 50px; font-size: 0.8rem; color: #888; }
     color: var(--text-heading);
 }
 
-.input-group input {
+.input-group input, .input-group select {
     padding: 12px;
     border: 1px solid #ddd;
     border-radius: 6px;
     font-family: var(--font-sans);
+    background: #fff;
 }
 
 .input-row {

@@ -3,6 +3,9 @@
   const SUPABASE_ANON_KEY = "sb_publishable_EpMudS-XWR0MNjRydbQSwg_upYj8iKw";
 
   const client = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  const escapeHtml = (value) => String(value ?? "").replace(/[&<>"']/g, (character) => ({
+    "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+  })[character]);
 
   const style = document.createElement("style");
   style.textContent = `
@@ -42,8 +45,9 @@
         <h2>${isSignUp ? "Create account" : "Sign in"}</h2>
         <p class="auth-sub">${isSignUp ? "Set up access to your dashboard and CPD log." : "Sign in to continue."}</p>
         <label>Email<input type="email" name="email" required autocomplete="email" /></label>
-        <label>Password<input type="password" name="password" required autocomplete="${isSignUp ? "new-password" : "current-password"}" minlength="6" /></label>
-        <div class="${message && message.isError === false ? "auth-note" : "auth-error"}">${message ? message.text : ""}</div>
+        <label>Password<input type="password" name="password" required autocomplete="${isSignUp ? "new-password" : "current-password"}" minlength="${isSignUp ? "12" : "6"}" /></label>
+        ${isSignUp ? '<p class="auth-sub">Use at least 12 characters. By creating an account, you acknowledge the <a href="../privacy.html">privacy notice</a>, including that assessment answers may be stored as sensitive health information.</p>' : ""}
+        <div class="${message && message.isError === false ? "auth-note" : "auth-error"}">${message ? escapeHtml(message.text) : ""}</div>
         <button class="auth-submit" type="submit">${isSignUp ? "Sign up" : "Sign in"}</button>
         <div class="auth-toggle">
           ${isSignUp ? "Already have an account?" : "Need an account?"}
@@ -87,7 +91,7 @@
       bar.className = slot ? "auth-bar" : "auth-bar auth-bar--floating";
       (slot || document.body).appendChild(bar);
     }
-    bar.innerHTML = `<a class="auth-home" href="../index.html">← Home</a><span class="auth-email">${session.user.email}</span><button type="button" id="auth-signout">Sign out</button>`;
+    bar.innerHTML = `<a class="auth-home" href="../index.html">← Home</a><span class="auth-email">${escapeHtml(session.user.email)}</span><button type="button" id="auth-signout">Sign out</button>`;
     bar.querySelector("#auth-signout").addEventListener("click", () => client.auth.signOut());
   }
 

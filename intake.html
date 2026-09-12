@@ -3,7 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>New Client Intake | R3 Psychology</title>
+    <title>Request a Private Intake Link | R3 Psychology</title>
+    <meta name="description" content="Request a private intake link from R3 Psychology. Do not submit sensitive clinical or health information through this public enquiry form.">
+    <meta name="robots" content="noindex,follow">
+    <link rel="canonical" href="https://r3psychology.com/intake.html">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -18,11 +22,11 @@
                 <span class="logo-text">Psychology</span>
                 <span class="tagline">Resolve · Renew · Recover</span>
             </a>
-            <div class="mobile-toggle" id="mobile-menu-btn">
+            <button class="mobile-toggle" id="mobile-menu-btn" type="button" aria-label="Open navigation" aria-expanded="false" aria-controls="nav-links">
                 <span></span>
                 <span></span>
                 <span></span>
-            </div>
+            </button>
         </div>
         <ul class="nav-links" id="nav-links">
             <li><a href="index.html">Home</a></li>
@@ -36,101 +40,81 @@
 
     <main class="content">
         <section class="page-header">
-            <h1>New Client Intake</h1>
-            <p class="sub-headline">Please complete this form prior to our first session. All information is handled in accordance with the <strong>Privacy Act 1988</strong>.</p>
+            <h1>Request a private intake link</h1>
+            <p class="sub-headline">For your privacy, health history and emergency-contact details are not collected through this public form.</p>
         </section>
 
         <section class="form-container">
             <form action="https://formspree.io/f/mqenawko" method="POST" id="intake-form">
+                <input type="hidden" name="_subject" value="Private intake link request">
                 
                 <div class="intake-card">
                     <div class="card-header">
                         <span class="step-number">01</span>
-                        <h3>Personal Details</h3>
+                        <h2>Contact details</h2>
                     </div>
                     
                     <div class="input-grid">
-                        <div class="input-group full-width">
+                        <div class="input-group">
                             <label for="full-name">Full Name</label>
-                            <input type="text" id="full-name" name="full-name" placeholder="As it appears on your Medicare card" required>
+                            <input type="text" id="full-name" name="full-name" autocomplete="name" required>
                         </div>
-                        
                         <div class="input-group">
-                            <label for="dob">Date of Birth</label>
-                            <input type="date" id="dob" name="dob" required>
+                            <label for="email">Email address</label>
+                            <input type="email" id="email" name="email" autocomplete="email" required>
                         </div>
-
                         <div class="input-group">
-                            <label for="phone">Phone Number</label>
-                            <input type="tel" id="phone" name="phone" placeholder="e.g. 0400 000 000" required>
+                            <label for="phone">Phone number (optional)</label>
+                            <input type="tel" id="phone" name="phone" autocomplete="tel">
                         </div>
-
-                        <div class="input-group full-width">
-                            <label for="address">Residential Address</label>
-                            <input type="text" id="address" name="address" placeholder="Street, Suburb, State, Postcode" required>
+                        <div class="input-group">
+                            <label for="contact-method">Preferred reply</label>
+                            <select id="contact-method" name="preferred-contact">
+                                <option>Email</option>
+                                <option>Phone</option>
+                            </select>
                         </div>
                     </div>
                 </div>
 
-                <div class="intake-card">
+                <div class="intake-card notice-card">
                     <div class="card-header">
                         <span class="step-number">02</span>
-                        <h3>Emergency Contact</h3>
+                        <h2>What happens next</h2>
                     </div>
-                    
-                    <div class="input-grid">
-                        <div class="input-group">
-                            <label for="emergency-name">Contact Name</label>
-                            <input type="text" id="emergency-name" name="emergency-name" required>
-                        </div>
-
-                        <div class="input-group">
-                            <label for="relationship">Relationship to You</label>
-                            <input type="text" id="relationship" name="relationship" required>
-                        </div>
-
-                        <div class="input-group full-width">
-                            <label for="emergency-phone">Emergency Phone Number</label>
-                            <input type="tel" id="emergency-phone" name="emergency-phone" required>
-                        </div>
-                    </div>
+                    <p>I will reply with the appropriate next step. If an intake form is needed, it will be provided through a private channel after initial contact.</p>
+                    <p><strong>Do not include</strong> symptoms, diagnoses, Medicare details, medication, trauma history, assessment results or another person’s information in this request.</p>
                 </div>
 
                 <div class="intake-card consent-card">
                     <div class="card-header">
                         <span class="step-number">03</span>
-                        <h3>Consent & Confidentiality Agreement</h3>
+                        <h2>Privacy acknowledgement</h2>
                     </div>
                     
                     <div class="agreement-text">
-                        <p>Psychological services provided at <strong>R3 Psychology</strong> are governed by the <strong>APS Code of Ethics</strong>. Please review the following before signing:</p>
-                        
-                        <ul>
-                            <li><strong>Confidentiality:</strong> Everything discussed is confidential. However, we are legally required to break confidentiality if there is a risk of harm to yourself or others, or if files are subpoenaed by a court.</li>
-                            <li><strong>Record Keeping:</strong> Clinical notes are stored in a secure, encrypted system for a minimum of 7 years.</li>
-                            <li><strong>Cancellations:</strong> To ensure fairness to all clients, we require 24 hours notice for cancellations. Late fees may apply.</li>
-                        </ul>
+                        <p>This request is delivered using Formspree. It is intended only to begin contact; it is not a clinical intake or a substitute for informed consent. Please read the <a href="privacy.html">R3 Psychology privacy and collection notice</a> before submitting.</p>
                     </div>
 
                     <div class="consent-action">
                         <label class="custom-checkbox">
                             <input type="checkbox" name="consent-confirmed" required>
                             <span class="checkmark"></span>
-                            <span class="checkbox-text">I have read, understood, and agree to the terms of the Consent & Confidentiality agreement.</span>
+                            <span class="checkbox-text">I have read the privacy and collection notice and understand that this public form is not for sensitive or urgent information.</span>
                         </label>
                     </div>
                 </div>
 
                 <div class="form-submit-area">
-                    <button type="submit" class="btn-primary">Submit Secure Intake Form</button>
-                    <p class="security-note">Your data is encrypted upon submission.</p>
+                    <button type="submit" class="btn-primary">Request private intake link</button>
+                    <p class="security-note">If you need urgent help, call 000 or Lifeline on 13 11 14. This form is not continuously monitored.</p>
                 </div>
 
             </form>
         </section>
 
         <footer>
-            <p>&copy; 2026 R3 Psychology | ABN: XX XXX XXX XXX</p>
+            <p>Khooshraj Mohun · Registered psychologist · AHPRA PSY0002273569 · <a href="privacy.html">Privacy</a></p>
         </footer>
     </main>
 
@@ -138,7 +122,12 @@
         // Mobile Toggle Logic
         const menuBtn = document.getElementById('mobile-menu-btn');
         const navLinks = document.getElementById('nav-links');
-        menuBtn.addEventListener('click', () => { navLinks.classList.toggle('active'); });
+        menuBtn.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            const isOpen = navLinks.classList.contains('active');
+            menuBtn.setAttribute('aria-expanded', String(isOpen));
+            menuBtn.setAttribute('aria-label', isOpen ? 'Close navigation' : 'Open navigation');
+        });
     </script>
 
     <style>
@@ -169,7 +158,7 @@
         .step-number {
             font-family: var(--font-serif);
             font-weight: 700;
-            color: var(--accent-blush);
+            color: #8b6734;
             font-size: 1.2rem;
             opacity: 0.8;
         }
@@ -204,6 +193,13 @@
             transition: 0.3s;
             background: #fafafa;
         }
+
+        .input-group select {
+            width: 100%;
+            font-size: 1rem;
+        }
+
+        .notice-card p + p { margin-top: 14px; }
 
         .input-group input:focus {
             outline: none;
@@ -259,7 +255,7 @@
 
         .security-note {
             font-size: 0.75rem;
-            color: #888;
+            color: #5f5f5f;
             margin-top: 15px;
             text-transform: uppercase;
             letter-spacing: 1px;

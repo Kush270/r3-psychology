@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PCL-5 Assessment | R3 Psychology</title>
+    <meta name="description" content="Complete the PCL-5 trauma symptom screening checklist. A screening score cannot confirm or exclude a PTSD diagnosis.">
+    <link rel="canonical" href="https://r3psychology.com/pcl5.html">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -131,9 +134,9 @@
             // PCL-5 Threshold is typically 31-33
             let interpretation = "";
             if (total < 33) {
-                interpretation = "Your score is below the typical clinical threshold for PTSD. However, if these symptoms cause distress, professional consultation is recommended.";
+                interpretation = "Your score is below the screening cut-off used on this page. This does not rule out PTSD or another concern; a qualified professional can interpret symptoms in context.";
             } else {
-                interpretation = "Your score is above the clinical threshold (33), suggestive of probable PTSD. We recommend discussing this with a professional.";
+                interpretation = "Your score is at or above the screening cut-off used on this page. This is not a diagnosis; consider discussing it with a qualified health professional.";
             }
 
             localStorage.setItem('lastResult', JSON.stringify({

@@ -114,10 +114,10 @@ const TESTS = {
     score(answers) {
       const total = Object.values(answers).reduce((a, v) => a + parseInt(v, 10), 0);
       let interpretation;
-      if (total <= 19) interpretation = "Likely to be well. Your score suggests a low level of psychological distress.";
-      else if (total <= 24) interpretation = "Likely to have a mild mental disorder. Monitoring and low-intensity support may be beneficial.";
-      else if (total <= 29) interpretation = "Likely to have a moderate mental disorder. Clinical consultation is recommended.";
-      else interpretation = "Likely to have a severe mental disorder. Professional psychological support is highly recommended.";
+      if (total <= 19) interpretation = "Your responses fall in the lowest band used in this screening tool. A score still needs to be considered alongside your circumstances.";
+      else if (total <= 24) interpretation = "Your responses indicate some psychological distress. Consider discussing the result with a qualified health professional if it reflects a concern for you.";
+      else if (total <= 29) interpretation = "Your responses indicate a higher level of psychological distress. A qualified health professional can help interpret this result in context.";
+      else interpretation = "Your responses indicate a very high level of psychological distress. This is not a diagnosis; consider timely support from a qualified health professional. If you are in immediate danger call 000 or Lifeline on 13 11 14.";
       const level = total <= 19 ? "Well" : total <= 24 ? "Mild" : total <= 29 ? "Moderate" : "Severe";
       return { score: String(total), interpretation, display: [{ label: "Total Score", value: total, level }] };
     }
@@ -155,8 +155,8 @@ const TESTS = {
     score(answers) {
       const total = Object.values(answers).reduce((a, v) => a + parseInt(v, 10), 0);
       const interpretation = total < 33
-        ? "Your score is below the typical clinical threshold for PTSD. However, if these symptoms cause distress, professional consultation is recommended."
-        : "Your score is above the clinical threshold (33), suggestive of probable PTSD. We recommend discussing this with a professional.";
+        ? "Your score is below the screening cut-off used in this tool. This does not rule out PTSD or another concern; a qualified professional can interpret symptoms in context."
+        : "Your score is at or above the screening cut-off used in this tool. This is not a diagnosis; consider discussing it with a qualified health professional.";
       const level = total < 33 ? "Below threshold" : "Above threshold";
       return { score: String(total), interpretation, display: [{ label: "Total Score", value: total, level }] };
     }

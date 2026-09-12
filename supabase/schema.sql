@@ -115,37 +115,168 @@ alter table public.dashboards enable row level security;
 alter table public.dashboard_tabs enable row level security;
 alter table public.dashboard_widgets enable row level security;
 
+-- RLS and table privileges are separate checks. Anonymous visitors need no
+-- direct table access; signed-in users receive only the operations used by the
+-- browser applications.
+revoke all on table public.cpd_profile, public.cpd_plans, public.cpd_activities,
+  public.psychometric_results, public.dashboards, public.dashboard_tabs,
+  public.dashboard_widgets from anon;
+
+revoke all on table public.cpd_profile, public.cpd_plans, public.cpd_activities,
+  public.psychometric_results, public.dashboards, public.dashboard_tabs,
+  public.dashboard_widgets from authenticated;
+
+grant select, update on table public.cpd_profile to authenticated;
+grant select, insert, update, delete on table public.cpd_plans, public.cpd_activities,
+  public.psychometric_results, public.dashboards, public.dashboard_tabs,
+  public.dashboard_widgets to authenticated;
+
+-- Remove the earlier broad policies when this file is re-run.
 drop policy if exists "own rows" on public.cpd_profile;
-create policy "own rows" on public.cpd_profile for all using (auth.uid() = user_id) with check (auth.uid() = user_id);
-
 drop policy if exists "own rows" on public.cpd_plans;
-create policy "own rows" on public.cpd_plans for all using (auth.uid() = user_id) with check (auth.uid() = user_id);
-
 drop policy if exists "own rows" on public.cpd_activities;
-create policy "own rows" on public.cpd_activities for all using (auth.uid() = user_id) with check (auth.uid() = user_id);
-
 drop policy if exists "own rows" on public.psychometric_results;
-create policy "own rows" on public.psychometric_results for all using (auth.uid() = user_id) with check (auth.uid() = user_id);
-
 drop policy if exists "own rows" on public.dashboards;
-create policy "own rows" on public.dashboards for all using (auth.uid() = user_id) with check (auth.uid() = user_id);
-
 drop policy if exists "own rows" on public.dashboard_tabs;
-create policy "own rows" on public.dashboard_tabs for all using (auth.uid() = user_id) with check (auth.uid() = user_id);
-
 drop policy if exists "own rows" on public.dashboard_widgets;
-create policy "own rows" on public.dashboard_widgets for all using (auth.uid() = user_id) with check (auth.uid() = user_id);
+
+drop policy if exists "select own profile" on public.cpd_profile;
+drop policy if exists "update own profile" on public.cpd_profile;
+drop policy if exists "select own plans" on public.cpd_plans;
+drop policy if exists "insert own plans" on public.cpd_plans;
+drop policy if exists "update own plans" on public.cpd_plans;
+drop policy if exists "delete own plans" on public.cpd_plans;
+drop policy if exists "select own activities" on public.cpd_activities;
+drop policy if exists "insert own activities" on public.cpd_activities;
+drop policy if exists "update own activities" on public.cpd_activities;
+drop policy if exists "delete own activities" on public.cpd_activities;
+drop policy if exists "select own psychometrics" on public.psychometric_results;
+drop policy if exists "insert own psychometrics" on public.psychometric_results;
+drop policy if exists "update own psychometrics" on public.psychometric_results;
+drop policy if exists "delete own psychometrics" on public.psychometric_results;
+drop policy if exists "select own dashboard" on public.dashboards;
+drop policy if exists "insert own dashboard" on public.dashboards;
+drop policy if exists "update own dashboard" on public.dashboards;
+drop policy if exists "delete own dashboard" on public.dashboards;
+drop policy if exists "select own dashboard tabs" on public.dashboard_tabs;
+drop policy if exists "insert own dashboard tabs" on public.dashboard_tabs;
+drop policy if exists "update own dashboard tabs" on public.dashboard_tabs;
+drop policy if exists "delete own dashboard tabs" on public.dashboard_tabs;
+drop policy if exists "select own dashboard widgets" on public.dashboard_widgets;
+drop policy if exists "insert own dashboard widgets" on public.dashboard_widgets;
+drop policy if exists "update own dashboard widgets" on public.dashboard_widgets;
+drop policy if exists "delete own dashboard widgets" on public.dashboard_widgets;
+
+create policy "select own profile" on public.cpd_profile for select to authenticated
+  using ((select auth.uid()) = user_id);
+create policy "update own profile" on public.cpd_profile for update to authenticated
+  using ((select auth.uid()) = user_id)
+  with check ((select auth.uid()) = user_id);
+
+create policy "select own plans" on public.cpd_plans for select to authenticated
+  using ((select auth.uid()) = user_id);
+create policy "insert own plans" on public.cpd_plans for insert to authenticated
+  with check ((select auth.uid()) = user_id);
+create policy "update own plans" on public.cpd_plans for update to authenticated
+  using ((select auth.uid()) = user_id)
+  with check ((select auth.uid()) = user_id);
+create policy "delete own plans" on public.cpd_plans for delete to authenticated
+  using ((select auth.uid()) = user_id);
+
+create policy "select own activities" on public.cpd_activities for select to authenticated
+  using ((select auth.uid()) = user_id);
+create policy "insert own activities" on public.cpd_activities for insert to authenticated
+  with check ((select auth.uid()) = user_id);
+create policy "update own activities" on public.cpd_activities for update to authenticated
+  using ((select auth.uid()) = user_id)
+  with check ((select auth.uid()) = user_id);
+create policy "delete own activities" on public.cpd_activities for delete to authenticated
+  using ((select auth.uid()) = user_id);
+
+create policy "select own psychometrics" on public.psychometric_results for select to authenticated
+  using ((select auth.uid()) = user_id);
+create policy "insert own psychometrics" on public.psychometric_results for insert to authenticated
+  with check ((select auth.uid()) = user_id);
+create policy "update own psychometrics" on public.psychometric_results for update to authenticated
+  using ((select auth.uid()) = user_id)
+  with check ((select auth.uid()) = user_id);
+create policy "delete own psychometrics" on public.psychometric_results for delete to authenticated
+  using ((select auth.uid()) = user_id);
+
+create policy "select own dashboard" on public.dashboards for select to authenticated
+  using ((select auth.uid()) = user_id);
+create policy "insert own dashboard" on public.dashboards for insert to authenticated
+  with check ((select auth.uid()) = user_id);
+create policy "update own dashboard" on public.dashboards for update to authenticated
+  using ((select auth.uid()) = user_id)
+  with check (
+    (select auth.uid()) = user_id
+    and (
+      active_tab_id is null
+      or exists (
+        select 1 from public.dashboard_tabs
+        where dashboard_tabs.id = dashboards.active_tab_id
+          and dashboard_tabs.user_id = (select auth.uid())
+      )
+    )
+  );
+create policy "delete own dashboard" on public.dashboards for delete to authenticated
+  using ((select auth.uid()) = user_id);
+
+create policy "select own dashboard tabs" on public.dashboard_tabs for select to authenticated
+  using ((select auth.uid()) = user_id);
+create policy "insert own dashboard tabs" on public.dashboard_tabs for insert to authenticated
+  with check ((select auth.uid()) = user_id);
+create policy "update own dashboard tabs" on public.dashboard_tabs for update to authenticated
+  using ((select auth.uid()) = user_id)
+  with check ((select auth.uid()) = user_id);
+create policy "delete own dashboard tabs" on public.dashboard_tabs for delete to authenticated
+  using ((select auth.uid()) = user_id);
+
+create policy "select own dashboard widgets" on public.dashboard_widgets for select to authenticated
+  using ((select auth.uid()) = user_id);
+create policy "insert own dashboard widgets" on public.dashboard_widgets for insert to authenticated
+  with check (
+    (select auth.uid()) = user_id
+    and exists (
+      select 1 from public.dashboard_tabs
+      where dashboard_tabs.id = dashboard_widgets.tab_id
+        and dashboard_tabs.user_id = (select auth.uid())
+    )
+  );
+create policy "update own dashboard widgets" on public.dashboard_widgets for update to authenticated
+  using ((select auth.uid()) = user_id)
+  with check (
+    (select auth.uid()) = user_id
+    and exists (
+      select 1 from public.dashboard_tabs
+      where dashboard_tabs.id = dashboard_widgets.tab_id
+        and dashboard_tabs.user_id = (select auth.uid())
+    )
+  );
+create policy "delete own dashboard widgets" on public.dashboard_widgets for delete to authenticated
+  using ((select auth.uid()) = user_id);
+
+create index if not exists cpd_plans_user_id_idx on public.cpd_plans (user_id);
+create index if not exists cpd_activities_user_id_idx on public.cpd_activities (user_id);
+create index if not exists psychometric_results_user_id_idx on public.psychometric_results (user_id);
+create index if not exists dashboard_tabs_user_id_idx on public.dashboard_tabs (user_id);
+create index if not exists dashboard_widgets_user_id_idx on public.dashboard_widgets (user_id);
+create index if not exists dashboard_widgets_tab_id_idx on public.dashboard_widgets (tab_id);
 
 -- ---------- New-user bootstrap ----------
 -- The moment someone signs up, give them an empty CPD profile and a default
 -- dashboard with one "Home" tab, so the apps never have to handle a
 -- no-row-yet case on first login.
 
-create or replace function public.handle_new_user()
+create schema if not exists private;
+revoke all on schema private from public, anon, authenticated;
+
+create or replace function private.handle_new_user()
 returns trigger
 language plpgsql
 security definer
-set search_path = public
+set search_path = ''
 as $$
 declare
   home_tab_id uuid;
@@ -166,4 +297,7 @@ $$;
 drop trigger if exists on_auth_user_created on auth.users;
 create trigger on_auth_user_created
   after insert on auth.users
-  for each row execute function public.handle_new_user();
+  for each row execute function private.handle_new_user();
+
+revoke all on function private.handle_new_user() from public, anon, authenticated;
+drop function if exists public.handle_new_user();

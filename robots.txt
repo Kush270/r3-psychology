@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+Disallow: /dashboard/
+Disallow: /CPD/
+Disallow: /psychometrics/
+Disallow: /results.html
+Disallow: /thanks.html
+
+Sitemap: https://r3psychology.com/sitemap.xml
