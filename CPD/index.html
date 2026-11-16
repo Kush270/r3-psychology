@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#123b44" />
+  <meta name="theme-color" content="#e9eff3" />
   <title>Practice Ledger — CPD logging</title>
   <meta name="description" content="Private CPD planning, activity logging and reporting for signed-in R3 Psychology users." />
   <meta name="robots" content="noindex,nofollow" />
@@ -11,38 +11,28 @@
   <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,500;6..72,600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
   <a class="skip-link" href="#app">Skip to content</a>
   <div class="app-shell">
-    <aside class="sidebar">
-      <a class="brand" href="#summary" aria-label="Practice Ledger home">
-        <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
-        <span>Practice <strong>Ledger</strong></span>
-      </a>
+    <header class="nav glass">
+      <a class="brand" href="#summary" aria-label="Practice Ledger home">Practice <i>Ledger</i></a>
       <nav id="nav" aria-label="CPD sections"></nav>
-      <div class="sidebar-note">
-        <span class="eyebrow" id="sideCycle">Current cycle</span>
-        <strong id="sideHours">0h of 30h</strong>
-        <div class="track"><i id="sideProgress"></i></div>
-        <small id="sideEnds"></small>
-      </div>
-    </aside>
+      <span class="spacer"></span>
+      <a class="sync-chip" id="syncChip" href="#settings" hidden></a>
+      <a class="avatar" id="avatar" href="#settings" title="Profile and settings" aria-label="Profile and settings"></a>
+    </header>
+    <div class="subbar">
+      <label class="cycle-picker">
+        <span class="mono">CPD cycle</span>
+        <select id="cycleSelect" aria-label="CPD cycle"></select>
+      </label>
+      <span class="mono" id="cycleNote"></span>
+      <span id="auth-slot"></span>
+    </div>
 
     <main>
-      <header class="topbar">
-        <label class="cycle-picker">
-          <span>CPD cycle</span>
-          <select id="cycleSelect" aria-label="CPD cycle"></select>
-        </label>
-        <div class="header-actions">
-          <a class="sync-chip" id="syncChip" href="#settings" hidden></a>
-          <span id="auth-slot"></span>
-          <a class="avatar" id="avatar" href="#settings" title="Profile and settings" aria-label="Profile and settings"></a>
-        </div>
-      </header>
       <div id="app" class="content" tabindex="-1">
         <p class="loading">Loading your CPD record…</p>
       </div>
@@ -52,5 +42,6 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.116.0/dist/umd/supabase.js"></script>
   <script src="../shared/auth.js"></script>
   <script src="app.js"></script>
+  <script src="../water.js" defer></script>
 </body>
 </html>

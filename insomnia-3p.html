@@ -7,16 +7,17 @@
 <meta name="description" content="The 3P model of insomnia: the thing that started it and the thing keeping it going are usually not the same thing.">
 <link rel="canonical" href="https://r3psychology.com/insomnia-3p.html">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="water.css">
 <style>
   :root{
     /* Harbour palette, matching the rest of the site */
-    --paper:#faf8f2;
-    --card:#ffffff;
+    --paper:#eef3f6;
+    --card:rgba(255,255,255,.6);
     --ink:#123b44;
     --body:#12303b;
     --teal:#2f6b75;
     --brass:#a9803e;
-    --line:#ded8ca;
+    --line:rgba(60,90,105,.22);
     --muted:#5f7175;
     /* figure layers */
     --set-1:#5f7175;   /* predisposing — locked */
@@ -193,6 +194,10 @@
     .print-only{display:block}
     footer{border:0;margin-top:18pt;padding:0}
   }
+  /* water theme overrides */
+  h1{font-family:"Instrument Serif",Georgia,serif;font-weight:400;font-size:clamp(2.5rem,6.4vw,3.8rem);letter-spacing:-.012em;line-height:1.04}
+  h1 i{color:#3f5560}
+  .masthead{-webkit-backdrop-filter:blur(18px) saturate(1.4);backdrop-filter:blur(18px) saturate(1.4);border-bottom-color:rgba(255,255,255,.85)}
 </style>
 </head>
 <body>
@@ -702,5 +707,6 @@
 })();
 </script>
 
+<script src="water.js" defer></script>
 </body>
 </html>

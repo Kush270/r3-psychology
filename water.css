@@ -1,0 +1,73 @@
+/* Shared water-and-glass theme: tokens, the light/bubble backdrop and glass surfaces.
+   Imported by style.css, CPD/styles.css and dashboard/src/styles.css.
+   The backdrop markup itself is injected by water.js. */
+@import url("https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap");
+
+:root {
+  --w-ink: #14222a;
+  --w-slate: #3f5560;
+  --w-muted: #5a6c75;
+  --w-teal: #2f6b75;
+  --w-line: rgba(60, 90, 105, .17);
+  --w-glass: rgba(255, 255, 255, .5);
+  --w-glass-strong: rgba(255, 255, 255, .78);
+  --w-glass-edge: rgba(255, 255, 255, .88);
+  --w-tint: rgba(214, 228, 236, .5);
+  --w-base: #e9eff3;
+  --w-blur: blur(18px) saturate(1.4);
+  --w-shadow: 0 1px 0 rgba(255, 255, 255, .9) inset, 0 24px 48px -26px rgba(50, 90, 115, .38);
+  --w-serif: "Instrument Serif", "Iowan Old Style", Georgia, serif;
+  --w-mono: "DM Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+/* Instrument Serif ships one weight; never fake a bold from it. */
+/* No background on html: the page background must propagate from body so the
+   z-index:-1 backdrop is not painted over. */
+html { font-synthesis-weight: none; }
+
+.water { position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; background:
+  radial-gradient(60% 50% at 78% 8%, #fff 0, transparent 70%),
+  radial-gradient(50% 45% at 12% 85%, #fbfdfe 0, transparent 70%),
+  linear-gradient(160deg, #f4f7f9 0%, #dfe8ee 55%, #edf2f5 100%); }
+.water .caustics { position: absolute; inset: -20%; width: 140%; height: 140%; opacity: .75; animation: w-drift 38s ease-in-out infinite alternate; }
+.water .shaft, .water .shade { position: absolute; top: -30%; height: 170%; transform: rotate(24deg); }
+.water .shaft { width: 16vw; background: linear-gradient(90deg, transparent, rgba(255, 255, 255, .75), transparent); filter: blur(26px); animation: w-shimmer 14s ease-in-out infinite alternate; }
+.water .shaft.a { left: 18%; }
+.water .shaft.b { left: 52%; width: 9vw; animation-delay: -5s; }
+.water .shaft.c { left: 80%; width: 22vw; animation-delay: -9s; }
+.water .shade { width: 12vw; left: 36%; background: linear-gradient(90deg, transparent, rgba(110, 145, 168, .22), transparent); filter: blur(34px); }
+.water .shade.b { left: 66%; width: 8vw; }
+.water-front { position: fixed; inset: 0; z-index: 40; overflow: hidden; pointer-events: none; }
+
+.drop { position: absolute; width: var(--s); height: var(--s); border-radius: 50%; pointer-events: none;
+  background:
+    radial-gradient(circle at 30% 24%, rgba(255, 255, 255, .98) 0 5%, rgba(255, 255, 255, 0) 17%),
+    radial-gradient(circle at 68% 80%, rgba(255, 255, 255, .7) 0, rgba(255, 255, 255, 0) 38%),
+    radial-gradient(circle at 50% 50%, rgba(255, 255, 255, .04) 42%, rgba(150, 185, 205, .26) 76%, rgba(105, 150, 178, .5) 100%);
+  box-shadow: inset 0 calc(var(--s) * -.07) calc(var(--s) * .14) rgba(255, 255, 255, .75), inset 0 calc(var(--s) * .05) calc(var(--s) * .1) rgba(80, 125, 155, .3), 0 calc(var(--s) * .16) calc(var(--s) * .22) calc(var(--s) * -.1) rgba(60, 105, 135, .4);
+  -webkit-backdrop-filter: blur(1.5px) saturate(1.5) brightness(1.06); backdrop-filter: blur(1.5px) saturate(1.5) brightness(1.06);
+  animation: w-float var(--d, 16s) ease-in-out infinite alternate; }
+
+/* Rising bubbles (opt-in per page with <body data-bubbles="rise">) */
+.drop.rise { bottom: calc(var(--s) * -1.2); -webkit-backdrop-filter: none; backdrop-filter: none; opacity: 0;
+  animation: w-rise var(--d) linear var(--delay, 0s) infinite; will-change: transform; }
+@keyframes w-rise {
+  0% { transform: translate3d(0, 0, 0); opacity: 0; }
+  8% { opacity: var(--o, .9); }
+  25% { transform: translate3d(var(--sway), -32vh, 0); }
+  50% { transform: translate3d(calc(var(--sway) * -.6), -64vh, 0); }
+  75% { transform: translate3d(var(--sway), -96vh, 0); }
+  92% { opacity: var(--o, .9); }
+  100% { transform: translate3d(0, -128vh, 0); opacity: 0; }
+}
+@keyframes w-drift { to { transform: translate3d(-4%, 3%, 0) scale(1.06); } }
+@keyframes w-shimmer { from { opacity: .55; } to { opacity: 1; } }
+@keyframes w-float { to { transform: translate3d(var(--x, 6px), var(--y, -18px), 0); } }
+
+.glass { background: var(--w-glass); border: 1px solid var(--w-glass-edge); -webkit-backdrop-filter: var(--w-blur); backdrop-filter: var(--w-blur); box-shadow: var(--w-shadow); }
+.mono { font: 400 11.5px/1.4 var(--w-mono); letter-spacing: .04em; color: var(--w-muted); }
+
+@media (max-width: 1100px) { .water-front { display: none; } }
+/* Reduce Motion: the light ripples hold still, but the slow bubble drift is kept by the owner's choice. */
+@media (prefers-reduced-motion: reduce) { .water .caustics, .water .shaft { animation: none; } }
+@media print { .water, .water-front { display: none !important; } }

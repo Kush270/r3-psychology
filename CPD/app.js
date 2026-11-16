@@ -222,22 +222,24 @@ function updateChrome() {
   const years = new Set([current, cycle, ...state.activities.map(a => cycleOf(a.date))]);
   $('#cycleSelect').innerHTML = [...years].sort((a, b) => b - a).map(c => `<option value="${c}" ${c === cycle ? 'selected' : ''}>${cycleLabel(c)}${c === current ? ' (current)' : ''}</option>`).join('');
   const t = totals(cycleActivities()), left = daysLeft();
-  $('#sideCycle').textContent = `${cycleShort(cycle)} cycle`;
-  $('#sideHours').textContent = `${fmt(t.total)} of ${TARGET.total}h`;
-  $('#sideProgress').style.width = Math.min(100, t.total / TARGET.total * 100) + '%';
-  $('#sideEnds').textContent = left < 0 ? `Ended 30 Nov ${cycle}` : left === 0 ? 'Ends today' : `${left} day${left === 1 ? '' : 's'} left · ends 30 Nov ${cycle}`;
+  $('#cycleNote').textContent = `${fmt(t.total)} of ${TARGET.total}h · ${left < 0 ? 'ended' : left === 0 ? 'ends today' : `${left} day${left === 1 ? '' : 's'} left`}`;
   $('#avatar').textContent = ((state.profile.firstName[0] || '') + (state.profile.lastName[0] || '')).toUpperCase() || '·';
   renderSyncChip();
 }
 
 // ---- Pages ----
 
-function head(title, desc, actions = '') { return `<div class="page-head"><div><h1>${title}</h1><p>${desc}</p></div><div class="page-actions">${actions}</div></div>`; }
+function head(title, desc, actions = '') {
+  const i = PAGES.findIndex(p => p.id === page);
+  return `<div class="page-head"><div><span class="mono">0${i + 1} / ${PAGES[i].label}</span><h1>${title}</h1><p>${desc}</p></div><div class="page-actions">${actions}</div></div>`;
+}
+/** Large display figure for hours: 6h 30m with the units set small. */
+function figure(n) { const mins = Math.round((+n || 0) * 60), h = Math.floor(mins / 60), m = mins % 60; return (h || !m ? `${h}<small>h</small>` : '') + (m ? `${m}<small>m</small>` : ''); }
 function banner() { return loadError ? `<div class="alert error">${icon('alert')}<span>${esc(loadError)}</span></div>` : ''; }
 
 function metric(title, value, target, kind, note) {
   const pct = Math.min(100, value / target * 100), done = value >= target;
-  return `<article class="metric"><div class="metric-top"><span>${title}</span><span class="pill ${done ? 'ok' : kind === 'recommended' ? '' : 'warn'}">${done ? 'Target met' : kind === 'recommended' ? 'Recommended' : `${fmt(target - value)} to go`}</span></div><strong>${fmt(value)} <small>of ${target}h</small></strong><div class="track"><i style="width:${pct}%"></i></div><p>${note}</p></article>`;
+  return `<article class="metric glass"><div class="metric-top"><span class="mono">${title}</span><span class="pill ${done ? 'ok' : kind === 'recommended' ? '' : 'warn'}">${done ? 'Target met' : kind === 'recommended' ? 'Recommended' : `${fmt(target - value)} to go`}</span></div><div class="figure" aria-label="${fmt(value)}">${figure(value)}</div><span class="mono">of ${target} hours</span><div class="track"><i style="width:${pct}%"></i></div><p>${note}</p></article>`;
 }
 
 function activityItem(a) {
@@ -247,9 +249,9 @@ function checkItem(ok, text, hint) { return `<li class="${ok ? 'done' : ''}"><sp
 
 function renderSummary() {
   const list = cycleActivities(), t = totals(list), left = daysLeft(), hour = new Date().getHours();
-  const greeting = `Good ${hour < 12 ? 'morning' : hour < 18 ? 'afternoon' : 'evening'}${state.profile.firstName ? ', ' + esc(state.profile.firstName) : ''}`;
+  const greeting = `Good ${hour < 12 ? 'morning' : hour < 18 ? 'afternoon' : 'evening'}${state.profile.firstName ? ', ' + esc(state.profile.firstName) : ''}.`;
   const status = left < 0 ? 'This cycle has ended.' : t.total >= TARGET.total && t.peer >= TARGET.peer ? 'Your hour requirements for this cycle are met.' : `${left} day${left === 1 ? '' : 's'} left in this cycle.`;
-  app.innerHTML = banner() + head(greeting, `${cycleLabel(cycle)} · ${status}`, `<a class="btn" href="#report">${icon('file')}View report</a><a class="btn primary" href="#log">${icon('plus')}Log CPD</a>`) + `
+  app.innerHTML = banner() + head('Your learning, <i>clearly accounted for.</i>', `${greeting} ${status}`, `<a class="btn" href="#report">${icon('file')}View report</a><a class="btn primary" href="#log">${icon('plus')}Log CPD</a>`) + `
     <div class="metrics">
       ${metric('Total CPD', t.total, TARGET.total, 'required', 'Minimum 30 hours each cycle')}
       ${metric('Peer consultation', t.peer, TARGET.peer, 'required', 'Mandatory 10 hours within the 30')}
@@ -275,7 +277,7 @@ function renderLog() {
   const editing = draft && draft.id;
   const a = draft || { date: todayISO(), type: 'Active', name: '', activity: '', details: '', peer: 0, active: 1, other: 0, colleagues: '', reflection: '' };
   const formats = [...new Set([...state.activities.map(x => x.activity), ...FORMATS])];
-  app.innerHTML = banner() + head(editing ? 'Edit CPD activity' : 'Log CPD activity', editing ? 'Update the record, then save.' : 'Record what you did, how long it took and what you took from it.') + `
+  app.innerHTML = banner() + head(editing ? 'Edit CPD <i>activity</i>' : 'Log CPD <i>activity</i>', editing ? 'Update the record, then save.' : 'Record what you did, how long it took and what you took from it.') + `
     <form id="activityForm" class="panel form" novalidate>
       <fieldset><legend>Activity</legend>
         <div class="form-grid">
@@ -356,7 +358,7 @@ function activitiesTable() {
 }
 function renderActivities() {
   const list = cycleActivities();
-  app.innerHTML = banner() + head('Activity log', `${list.length} activit${list.length === 1 ? 'y' : 'ies'} · ${fmt(totals(list).total)} recorded in ${cycleLabel(cycle)}`, `<button class="btn" data-action="export-csv">${icon('download')}Export CSV</button><a class="btn primary" href="#log">${icon('plus')}Log CPD</a>`) + `
+  app.innerHTML = banner() + head('Activity <i>log</i>', `${list.length} activit${list.length === 1 ? 'y' : 'ies'} · ${fmt(totals(list).total)} recorded in ${cycleLabel(cycle)}`, `<button class="btn" data-action="export-csv">${icon('download')}Export CSV</button><a class="btn primary" href="#log">${icon('plus')}Log CPD</a>`) + `
     <section class="panel flush">
       <div class="table-tools"><input id="search" class="search" type="search" placeholder="Search name, details or reflection" aria-label="Search activities" value="${esc(logFilter.q)}">
         <select id="typeFilter" aria-label="Filter by type"><option value="">All types</option>${TYPES.map(t => `<option value="${t.value}" ${logFilter.type === t.value ? 'selected' : ''}>${t.label}</option>`).join('')}</select></div>
@@ -375,7 +377,7 @@ function exportCSV() {
 }
 
 function renderPlan() {
-  app.innerHTML = banner() + head('Learning plan', 'Identify your learning needs, the activities that will meet them and the outcomes you expect.', `<button class="btn primary" data-action="plan-form">${icon('plus')}Add learning goal</button>`) + `
+  app.innerHTML = banner() + head('Learning <i>plan</i>', 'Identify your learning needs, the activities that will meet them and the outcomes you expect.', `<button class="btn primary" data-action="plan-form">${icon('plus')}Add learning goal</button>`) + `
     ${state.plans.length ? `<div class="plan-list">${state.plans.map((p, i) => `<article class="panel plan-item"><header><span class="plan-no">${i + 1}</span><h2>${esc(p.need)}</h2><div class="row-actions"><button class="icon-btn" data-action="plan-form" data-id="${p.id}" title="Edit" aria-label="Edit goal ${i + 1}">${icon('edit')}</button><button class="icon-btn danger" data-action="delete-plan" data-id="${p.id}" title="Delete" aria-label="Delete goal ${i + 1}">${icon('trash')}</button></div></header><dl><div><dt>Proposed activities</dt><dd>${esc(p.activities)}</dd></div><div><dt>Proposed dates</dt><dd>${esc(p.dates)}</dd></div><div><dt>Anticipated outcome</dt><dd>${esc(p.outcomes)}</dd></div></dl></article>`).join('')}</div>`
       : `<section class="panel"><div class="empty"><p>No learning goals yet. Your plan should be based on a self-assessment of your learning needs.</p><button class="btn primary" data-action="plan-form">${icon('plus')}Add your first goal</button></div></section>`}
     <section class="panel review"><div><h2>End-of-cycle review</h2><p>Assess progress against your learning needs, evaluate completed CPD and reflect on future goals, ideally in peer consultation.</p></div><label class="switch"><input id="reviewed" type="checkbox" ${state.planReviewed ? 'checked' : ''}><span>Plan reviewed</span></label></section>
@@ -397,7 +399,7 @@ function renderReport() {
   const list = cycleActivities().reverse(), t = totals(list), p = state.profile, name = esc(`${p.title} ${fullName()}`.trim());
   const generated = new Intl.DateTimeFormat('en-AU', { dateStyle: 'long', timeStyle: 'short' }).format(new Date());
   const tick = ok => ok ? '✓' : '✕';
-  app.innerHTML = banner() + head('CPD report', `Audit-ready record for ${cycleLabel(cycle)}. Print it or save it as a PDF.`, `<button class="btn primary" data-action="print">${icon('print')}Print / Save PDF</button>`) + `
+  app.innerHTML = banner() + head('CPD <i>report</i>', `Audit-ready record for ${cycleLabel(cycle)}. Print it or save it as a PDF.`, `<button class="btn primary" data-action="print">${icon('print')}Print / Save PDF</button>`) + `
     <div class="report-preview"><article class="paper">
       <div class="report-brand"><span class="brand-mark"><i></i><i></i><i></i></span><div>Practice <strong>Ledger</strong><br><small>Continuing professional development</small></div></div>
       <h1>CPD logging report</h1>
@@ -443,7 +445,7 @@ function sheetPanel() {
 
 function renderSettings() {
   const p = state.profile;
-  app.innerHTML = banner() + head('Settings', 'Your profile appears on the CPD report. The Google Sheet connection keeps an external copy of your log.') + `
+  app.innerHTML = banner() + head('Profile <i>and settings</i>', 'Your profile appears on the CPD report. The Google Sheet connection keeps an external copy of your log.') + `
     <div class="two-col even">
       <form id="profileForm" class="panel form">
         <fieldset><legend>Profile</legend>
