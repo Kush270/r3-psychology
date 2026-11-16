@@ -37,7 +37,7 @@ html { font-synthesis-weight: none; }
 .water .shaft.c { left: 80%; width: 22vw; animation-delay: -9s; }
 .water .shade { width: 12vw; left: 36%; background: linear-gradient(90deg, transparent, rgba(110, 145, 168, .22), transparent); filter: blur(34px); }
 .water .shade.b { left: 66%; width: 8vw; }
-.water-front { position: fixed; inset: 0; z-index: 40; overflow: hidden; pointer-events: none; }
+.water-front, .water-rise { position: fixed; inset: 0; z-index: 40; overflow: hidden; pointer-events: none; }
 
 .drop { position: absolute; width: var(--s); height: var(--s); border-radius: 50%; pointer-events: none;
   background:
@@ -50,6 +50,10 @@ html { font-synthesis-weight: none; }
 
 /* Rising bubbles (opt-in per page with <body data-bubbles="rise">) */
 .drop.rise { bottom: calc(var(--s) * -1.2); -webkit-backdrop-filter: none; backdrop-filter: none; opacity: 0;
+  background:
+    radial-gradient(circle at 30% 24%, rgba(255, 255, 255, .95) 0 4%, rgba(255, 255, 255, 0) 15%),
+    radial-gradient(circle at 70% 82%, rgba(255, 255, 255, .28) 0, rgba(255, 255, 255, 0) 26%),
+    radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0) 55%, rgba(150, 185, 205, .18) 82%, rgba(105, 150, 178, .42) 100%);
   animation: w-rise var(--d) linear var(--delay, 0s) infinite; will-change: transform; }
 @keyframes w-rise {
   0% { transform: translate3d(0, 0, 0); opacity: 0; }
@@ -70,4 +74,4 @@ html { font-synthesis-weight: none; }
 @media (max-width: 1100px) { .water-front { display: none; } }
 /* Reduce Motion: the light ripples hold still, but the slow bubble drift is kept by the owner's choice. */
 @media (prefers-reduced-motion: reduce) { .water .caustics, .water .shaft { animation: none; } }
-@media print { .water, .water-front { display: none !important; } }
+@media print { .water, .water-front, .water-rise { display: none !important; } }

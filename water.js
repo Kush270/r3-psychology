@@ -28,19 +28,72 @@
     drop('--s:40px;left:5%;top:72%;--d:12s') +
     drop('--s:64px;right:2%;bottom:9%;--d:15s;--y:-12px');
 
-  /* Opt-in: a stream of bubbles rising and swaying up the page. */
+  /* Lens warp: in Chromium a bubble can refract what is behind it, using an SVG
+     displacement map as its backdrop-filter. The map is two crossed gradients
+     (red = horizontal shift, green = vertical), steeper at the rim so text
+     bends as a bubble passes over it. Other browsers get a plain glassy bubble. */
+  var canWarp = /Chrome\//.test(navigator.userAgent);
+  var lensDefs = '';
+  var lensMade = {};
+  var stops = function (c) {
+    /* Smooth curve: gentle magnification in the middle, a stronger bend toward the rim. */
+    var out = '';
+    for (var k = 0; k <= 24; k++) {
+      var u = k / 12 - 1;
+      out += '<stop offset="' + (k / 24).toFixed(4) + '" stop-color="' + c + '" stop-opacity="' + (0.5 - 0.5 * (0.45 * u + 0.55 * u * u * u)).toFixed(4) + '"/>';
+    }
+    return out;
+  };
+  var lensMap = 'data:image/svg+xml,' + encodeURIComponent(
+    '<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256">' +
+    '<linearGradient id="r" x1="0" x2="1" y1="0" y2="0">' + stops('#f00') + '</linearGradient>' +
+    '<linearGradient id="g" x1="0" x2="0" y1="0" y2="1">' + stops('#0f0') + '</linearGradient>' +
+    '<rect width="256" height="256" fill="#000"/><rect width="256" height="256" fill="url(#r)"/>' +
+    '<rect width="256" height="256" fill="url(#g)" style="mix-blend-mode:screen"/></svg>');
+  var lens = function (size) {
+    if (!canWarp) return '';
+    if (!lensMade[size]) {
+      lensMade[size] = true;
+      lensDefs += '<filter id="w-lens-' + size + '" color-interpolation-filters="sRGB" x="0" y="0" width="100%" height="100%">' +
+        '<feImage href="' + lensMap + '" x="0" y="0" width="' + size + '" height="' + size + '" preserveAspectRatio="none" result="map"/>' +
+        '<feDisplacementMap in="SourceGraphic" in2="map" scale="' + Math.round(size * 0.38) + '" xChannelSelector="R" yChannelSelector="G"/><feGaussianBlur stdDeviation=".55"/></filter>';
+    }
+    return ';backdrop-filter:url(#w-lens-' + size + ') saturate(1.25) brightness(1.04)';
+  };
+
+  /* Opt-in (<body data-bubbles="rise">): bubbles rise and sway up the page, in front of the content. */
+  var rise = null;
   if (document.body.dataset.bubbles === 'rise') {
     var rising = '';
-    for (var i = 0; i < 16; i++) {
-      var size = Math.round(16 + Math.pow(Math.random(), 2) * 84);
-      var duration = Math.round(15 + Math.random() * 20 + size / 6);
-      rising += '<i class="drop rise" style="--s:' + size + 'px;left:' + (Math.random() * 96).toFixed(1) + '%;--d:' + duration +
+    for (var i = 0; i < 11; i++) {
+      var size = 10 * Math.round(4 + Math.pow(Math.random(), 1.6) * 10);   /* 40–140px, in 10px steps */
+      var duration = Math.round(16 + Math.random() * 18 + size / 8);
+      rising += '<i class="drop rise" style="--s:' + size + 'px;left:' + (Math.random() * 94).toFixed(1) + '%;--d:' + duration +
         's;--delay:-' + (Math.random() * duration).toFixed(1) + 's;--sway:' + Math.round((Math.random() < .5 ? -1 : 1) * (20 + Math.random() * 50)) +
-        'px;--o:' + (0.65 + Math.random() * 0.35).toFixed(2) + '"></i>';
+        'px;--o:' + (0.8 + Math.random() * 0.2).toFixed(2) + lens(size) + '"></i>';
     }
-    back.insertAdjacentHTML('beforeend', rising);
+    rise = document.createElement('div');
+    rise.className = 'water-rise';
+    rise.setAttribute('aria-hidden', 'true');
+    rise.innerHTML = rising;
+  }
+
+  /* The edge bubbles resting on the glass refract too. */
+  if (canWarp) {
+    front.querySelectorAll('.drop').forEach(function (el) {
+      var size = parseInt(el.style.getPropertyValue('--s'), 10);
+      el.style.cssText += lens(size);
+    });
   }
 
   document.body.prepend(back);
   document.body.append(front);
+  if (rise) document.body.append(rise);
+  if (lensDefs) {
+    var defs = document.createElement('div');
+    defs.setAttribute('aria-hidden', 'true');
+    defs.style.cssText = 'position:absolute;width:0;height:0;overflow:hidden';
+    defs.innerHTML = '<svg width="0" height="0">' + lensDefs + '</svg>';
+    document.body.append(defs);
+  }
 })();
