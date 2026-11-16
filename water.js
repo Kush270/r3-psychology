@@ -34,7 +34,6 @@
      bends as a bubble passes over it. Other browsers get a plain glassy bubble. */
   var canWarp = /Chrome\//.test(navigator.userAgent);
   var lensDefs = '';
-  var lensMade = {};
   var stops = function (c) {
     /* Smooth curve: gentle magnification in the middle, a stronger bend toward the rim. */
     var out = '';
@@ -44,21 +43,26 @@
     }
     return out;
   };
-  var lensMap = 'data:image/svg+xml,' + encodeURIComponent(
-    '<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256">' +
-    '<linearGradient id="r" x1="0" x2="1" y1="0" y2="0">' + stops('#f00') + '</linearGradient>' +
-    '<linearGradient id="g" x1="0" x2="0" y1="0" y2="1">' + stops('#0f0') + '</linearGradient>' +
-    '<rect width="256" height="256" fill="#000"/><rect width="256" height="256" fill="url(#r)"/>' +
-    '<rect width="256" height="256" fill="url(#g)" style="mix-blend-mode:screen"/></svg>');
-  var lens = function (size) {
+  /* Two separate maps (added together inside the filter) so nothing depends on blend modes inside an SVG image. */
+  var mapImage = function (colour, vertical) {
+    return 'data:image/svg+xml,' + encodeURIComponent(
+      '<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256">' +
+      '<linearGradient id="g" x1="0" y1="0" x2="' + (vertical ? 0 : 1) + '" y2="' + (vertical ? 1 : 0) + '">' + stops(colour) + '</linearGradient>' +
+      '<rect width="256" height="256" fill="#000"/><rect width="256" height="256" fill="url(#g)"/></svg>');
+  };
+  /* One filter serves every bubble: objectBoundingBox units keep the map matched to the
+     bubble at any size and any screen density (pixel units break on Retina displays). */
+  var lens = function () {
     if (!canWarp) return '';
-    if (!lensMade[size]) {
-      lensMade[size] = true;
-      lensDefs += '<filter id="w-lens-' + size + '" color-interpolation-filters="sRGB" x="0" y="0" width="100%" height="100%">' +
-        '<feImage href="' + lensMap + '" x="0" y="0" width="' + size + '" height="' + size + '" preserveAspectRatio="none" result="map"/>' +
-        '<feDisplacementMap in="SourceGraphic" in2="map" scale="' + Math.round(size * 0.38) + '" xChannelSelector="R" yChannelSelector="G"/><feGaussianBlur stdDeviation=".55"/></filter>';
+    if (!lensDefs) {
+      lensDefs = '<filter id="w-lens" primitiveUnits="objectBoundingBox" color-interpolation-filters="sRGB" x="0" y="0" width="1" height="1">' +
+        '<feImage href="' + mapImage('#f00', false) + '" x="0" y="0" width="1" height="1" preserveAspectRatio="none" result="mx"/>' +
+        '<feImage href="' + mapImage('#0f0', true) + '" x="0" y="0" width="1" height="1" preserveAspectRatio="none" result="my"/>' +
+        '<feComposite in="mx" in2="my" operator="arithmetic" k1="0" k2="1" k3="1" k4="0" result="map"/>' +
+        '<feDisplacementMap in="SourceGraphic" in2="map" scale="0.38" xChannelSelector="R" yChannelSelector="G"/>' +
+        '<feGaussianBlur stdDeviation="0.003"/></filter>';
     }
-    return ';backdrop-filter:url(#w-lens-' + size + ') saturate(1.25) brightness(1.04)';
+    return ';backdrop-filter:url(#w-lens) saturate(1.25) brightness(1.04)';
   };
 
   /* Opt-in (<body data-bubbles="rise">): bubbles rise and sway up the page, in front of the content. */
